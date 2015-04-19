@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.WebApi", "Rest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.Common", "Restival.Api.Common\Restival.Api.Common.csproj", "{CCD4207F-593D-4BE4-85B1-E6281D30E64A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.OpenRasta", "Restival.Api.OpenRasta\Restival.Api.OpenRasta.csproj", "{6AF997C7-4637-4D60-A4F6-DBA22F219E74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CCD4207F-593D-4BE4-85B1-E6281D30E64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCD4207F-593D-4BE4-85B1-E6281D30E64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCD4207F-593D-4BE4-85B1-E6281D30E64A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF997C7-4637-4D60-A4F6-DBA22F219E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF997C7-4637-4D60-A4F6-DBA22F219E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF997C7-4637-4D60-A4F6-DBA22F219E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF997C7-4637-4D60-A4F6-DBA22F219E74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

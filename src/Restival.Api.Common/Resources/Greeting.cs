@@ -1,6 +1,6 @@
 using System;
 
-namespace Restival.Api.Common.Entities {
+namespace Restival.Api.Common.Resources {
     public class Greeting {
         public string Message { get; set; }
 

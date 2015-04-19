@@ -4,8 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using NUnit.Framework;
-using Restival.Api.Common;
-using Restival.Api.Common.Entities;
+using Restival.Api.Common.Resources;
 using RestSharp;
 using Shouldly;
 
@@ -19,6 +18,7 @@ namespace Restival.ApiTests {
         public void GET_Hello_Returns_Greeting() {
             var client = new RestClient(BaseUri);
             var request = new RestRequest("hello");
+            Console.WriteLine(client.BuildUri(request));
             var status = client.Execute<Greeting>(request);
             status.Data.Message.ShouldBe("Hello, World!");
         }
@@ -31,6 +31,7 @@ namespace Restival.ApiTests {
             var client = new RestClient(BaseUri);
             var request = new RestRequest("hello");
             request.AddParameter("name", name);
+            Console.WriteLine(client.BuildUri(request));
             var status = client.Execute<Greeting>(request);
             status.Data.Message.ShouldBe(String.Format("Hello, {0}!", name));
         }
