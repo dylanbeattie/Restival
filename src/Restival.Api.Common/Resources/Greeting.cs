@@ -4,8 +4,8 @@ namespace Restival.Api.Common.Resources {
     public class Greeting {
         public string Message { get; set; }
 
-        public Greeting() {
-            Message = "Hello, World!";
+        public Greeting()
+            : this("World") {
         }
 
         public Greeting(string name) {
