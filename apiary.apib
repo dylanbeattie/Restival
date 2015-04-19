@@ -1,0 +1,33 @@
+FORMAT: 1A
+
+# Restival
+
+Restival is a sample API implemented in several popular .NET API frameworks.
+
+## Group Greeting
+
+Restival exposes a simple "hello world" endpoint that returns a Greeting resource
+
+## Hello World [/hello]
+
+### Hello [GET]
+
++ Response 200 (application/json)
+
+        {
+            "Message": "Hello, World!"
+        }
+        
+## Hello {name} [/hello?name={name}]
+
+### Hello [GET]
+
++ Parameters
+    + name (string) ... The name of the person to greet
+
++ Response 200 (application/json)
+
+        {
+            "Message": "Hello, {name}!"
+        }
+
