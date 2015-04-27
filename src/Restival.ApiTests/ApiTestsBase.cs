@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using NUnit.Framework;
 using Restival.Api.Common.Resources;
 using RestSharp;
@@ -11,7 +7,6 @@ using Shouldly;
 namespace Restival.ApiTests {
     [TestFixture]
     public abstract class ApiTestsBase {
-
         protected abstract string BaseUri { get; }
 
         [Test]

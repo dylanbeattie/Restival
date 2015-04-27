@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Restival.Api.Common.Resources;
+﻿using Restival.Api.Common.Resources;
 using ServiceStack;
 
 namespace Restival.Api.ServiceStack.Services {
@@ -10,7 +6,6 @@ namespace Restival.Api.ServiceStack.Services {
         public Greeting Get(HelloRequestDto dto) {
             if (dto.Name == null) return (new Greeting());
             return (new Greeting(dto.Name));
-
         }
     }
 }
