@@ -16,7 +16,7 @@ namespace Restival.Api.OpenRasta {
             using (OpenRastaConfiguration.Manual) {
                 ResourceSpace.Has.ResourcesOfType<Greeting>()
                     .AtUri("/hello")
-                    .And.AtUri("/hello?name={name}")
+                    .And.AtUri("/hello/{name}")
                     .HandledBy<HelloHandler>()
                     .AsXmlDataContract()
                     .And.AsJsonDataContract();

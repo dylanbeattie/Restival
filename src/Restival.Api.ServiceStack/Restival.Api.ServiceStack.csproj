@@ -131,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\HelloRequestDto.cs" />
     <Compile Include="Services\HelloService.cs" />
   </ItemGroup>
   <ItemGroup>

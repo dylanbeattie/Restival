@@ -27,10 +27,10 @@ namespace Restival.ApiTests {
         [TestCase("Alice")]
         [TestCase("Bryan")]
         [TestCase("Carol")]
-        public void Get_Hello_Name_Returns_Greeting(string name) {
+        public void Get_Hello_Name_In_Path_Returns_Greeting(string name) {
             var client = new RestClient(BaseUri);
-            var request = new RestRequest("hello");
-            request.AddParameter("name", name);
+            var request = new RestRequest("hello/{name}");
+            request.AddUrlSegment("name", name);
             Console.WriteLine(client.BuildUri(request));
             var status = client.Execute<Greeting>(request);
             status.Data.Message.ShouldBe(String.Format("Hello, {0}!", name));
