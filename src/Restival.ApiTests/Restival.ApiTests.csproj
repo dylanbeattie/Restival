@@ -56,6 +56,7 @@
     <Compile Include="OpenRasta\OpenRastaApiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStack\ServiceStackApiTests.cs" />
+    <Compile Include="Suave\SuaveApiTests.cs" />
     <Compile Include="WebApi\WebApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
