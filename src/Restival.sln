@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.Nancy", "Resti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.ServiceStack", "Restival.Api.ServiceStack\Restival.Api.ServiceStack.csproj", "{DE6FBAC5-CA43-499F-8A80-7E61E4BD28DA}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Restival.Api.Suave", "Restival.Api.Suave\Restival.Api.Suave.fsproj", "{01365B74-FFF9-4B08-AE95-2995771CB4D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{DE6FBAC5-CA43-499F-8A80-7E61E4BD28DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6FBAC5-CA43-499F-8A80-7E61E4BD28DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6FBAC5-CA43-499F-8A80-7E61E4BD28DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01365B74-FFF9-4B08-AE95-2995771CB4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01365B74-FFF9-4B08-AE95-2995771CB4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01365B74-FFF9-4B08-AE95-2995771CB4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01365B74-FFF9-4B08-AE95-2995771CB4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
