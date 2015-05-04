@@ -3,11 +3,12 @@
 namespace Restival.Api.WebApi {
     public static class WebApiConfig {
         public static void Register(HttpConfiguration config) {
-            config.Routes.MapHttpRoute("Hello", "hello/{name}", new { Controller = "Hello", name = RouteParameter.Optional });
-            //    name: "DefaultApi",
-            //    routeTemplate: "{controller}/{id}",
-            //    defaults: new { controller = "Root", id = RouteParameter.Optional }
-            //);
+            // Explicit named route for Hello?
+            config.Routes.MapHttpRoute(
+                "Hello", // route name
+                "hello/{name}", // route template
+                new { Controller = "Hello" } // defaults
+                );
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
             // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
