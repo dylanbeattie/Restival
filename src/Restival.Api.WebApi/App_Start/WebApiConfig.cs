@@ -7,7 +7,7 @@ namespace Restival.Api.WebApi {
             config.Routes.MapHttpRoute(
                 "Hello", // route name
                 "hello/{name}", // route template
-                new { Controller = "Hello" } // defaults
+                new { Controller = "Hello", Name = "World" } // defaults
                 );
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.

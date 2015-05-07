@@ -4,7 +4,7 @@ using Restival.Api.Common.Resources;
 namespace Restival.Api.Nancy {
     public class HelloModule : NancyModule {
         public HelloModule() {
-            Get["/hello"] = _ => new Greeting();
+            Get["/hello"] = _ => new Greeting("World");
             Get["/hello/{name}"] = parameters => new Greeting(parameters.name);
         }
     }
