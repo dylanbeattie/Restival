@@ -7,3 +7,8 @@ One API spec. One test suite. Four implementations, each showcasing a different 
 * NancyFX (http://nancyfx.org/)
 
 http://dylanbeattie.blogspot.co.uk/search/label/restival
+
+## Docker
+
+docker build -t restival src
+docker run -it -p 9000:80 --name restival restival
