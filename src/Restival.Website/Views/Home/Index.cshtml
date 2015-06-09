@@ -1,0 +1,23 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome to Restival</h2>
+<p>API implementations:</p>
+<ul>
+    <li>
+        <a href="@Url.Content("~/api.webapi")">ASP.NET WebAPI</a>
+    </li>
+    <li>
+        <a href="@Url.Content("~/api.servicestack")">ServiceStack</a>
+    </li>
+    <li>
+        <a href="@Url.Content("~/api.nancy")">NancyFX</a>
+    </li>
+    <li>
+        <a href="@Url.Content("~/api.openrasta")">OpenRasta</a>
+    </li>
+
+</ul>
