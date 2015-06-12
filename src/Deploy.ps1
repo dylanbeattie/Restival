@@ -1,0 +1,31 @@
+﻿$webAdminModule = get-module -ListAvailable | ? { $_.Name -eq "webadministration" }
+If ($webAdminModule -ne $null) {
+    import-module WebAdministration
+} else {
+    Add-PSSnapin WebAdministration -ErrorAction SilentlyContinue
+}
+
+if (Test-Path IIS:\Sites\Restival) {
+    $website = Get-Item IIS:\Sites\Restival
+} else {
+    $websitePath = Join-Path -path $(get-location) -childPath "Restival.Website"
+	$website = New-WebSite -Name Restival -Port 80 -HostHeader Restival -PhysicalPath $websitePath
+}
+
+Set-ItemProperty "IIS:\Sites\Restival" ApplicationPool "ASP.NET v4.0"
+
+$machineName = $env:computername.ToLower()
+# Remove all existing bindings - this is MUCH easier than working out which ones to keep
+Get-WebBinding -Name restival | Remove-WebBinding
+
+# restival.<machine-name> - for sandbox deployments accessed via *.machine DNS wildcard
+New-WebBinding -Name restival -IPAddress "*" -Port 80 -HostHeader restival.local
+
+$apps = @("Nancy", "WebApi", "OpenRasta", "ServiceStack")
+foreach($app in $apps) {
+    $iisPath = "IIS:\Sites\Restival\Api.$app"
+    $scriptPath = split-path $MyInvocation.MyCommand.Definition -parent 
+    if (!(Test-Path $iisPath)) { New-WebApplication "Api.$app" -Site "restival" -PhysicalPath "$scriptPath\Restival.Api.$app" | out-null }
+    Set-ItemProperty $iisPath -name applicationPool -value "ASP.NET v4.0"
+    Write-Host "Created application api.$app at $scriptPath\Restival.Api.$app"
+}
