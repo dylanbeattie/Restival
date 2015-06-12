@@ -24,8 +24,9 @@ New-WebBinding -Name restival -IPAddress "*" -Port 80 -HostHeader restival.local
 $apps = @("Nancy", "WebApi", "OpenRasta", "ServiceStack")
 foreach($app in $apps) {
     $iisPath = "IIS:\Sites\Restival\Api.$app"
+    $appName = "api.$app".ToLower();
     $scriptPath = split-path $MyInvocation.MyCommand.Definition -parent 
-    if (!(Test-Path $iisPath)) { New-WebApplication "Api.$app" -Site "restival" -PhysicalPath "$scriptPath\Restival.Api.$app" | out-null }
+    if (!(Test-Path $iisPath)) { New-WebApplication $appName -Site "restival" -PhysicalPath "$scriptPath\Restival.Api.$app" | out-null }
     Set-ItemProperty $iisPath -name applicationPool -value "ASP.NET v4.0"
-    Write-Host "Created application api.$app at $scriptPath\Restival.Api.$app"
+    Write-Host "Created application $appName at $scriptPath\Restival.Api.$app"
 }
