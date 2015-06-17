@@ -31,3 +31,90 @@ Restival exposes a simple "hello world" endpoint that returns a Greeting resourc
             "Message": "Hello, {name}!"
         }
 
+## Group Profiles
+
+Retrieve a list of user profiles. Responses include a maximum of 50 profiles, and 
+include HAL reference links to support pagination of larger result sets.
+
+## profile {id} [/profiles/{id}]
+
+### profile [GET]
+
++ Parameters
+    + id (string) ... The id of the profile to retrieve
+    
++ Response 200 (application/hal+json)
+
+        {
+            "_links": { 
+                "self": { "href": "http://restival.org/api/profiles/{id}" }
+            }
+            "id": "{id}",
+            "name": "Firstname Lastname"
+        }
+
+## profiles [/profiles]
+
+### profiles [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self":  { "href": "http://restival.org/api/profiles?page=5" },
+                "first": { "href": "http://restival.org/api/profiles" },
+                "prev":  { "href": "http://restival.org/api/profiles?page=4" },
+                "next":  { "href": "http://restival.org/api/profiles?page=6" },
+                "last":  { "href": "http://restival.org/api/profiles?page=19" }
+        }
+        "count": 5,
+        "total": 100,
+        "_embedded": {
+            "profiles": [
+                {
+                    "_links": { "self": { "href": "http://restival.org/api/profiles/ironman" } },
+                    "id": "ironman",
+                    "name": "Tony Stark"
+                },
+                {
+                    "_links": { "self": { "href": "http://restival.org/api/profiles/blackwidow" } },
+                    "id": "blackwidow",
+                    "name": "Natasha Romanoff"
+                },
+                {
+                    "_links": { "self": { "href": "http://restival.org/api/profiles/spidey" } },
+                    "id": "spidey",
+                    "name": "Peter Parker"
+                },
+                {
+                    "_links": { "self": { "href": "http://restival.org/api/profiles/daredevil" } },
+                    "id": "daredevil",
+                    "name": "Matt Murdock"
+                },
+                {
+                    "_links": { "self": { "href": "http://restival.org/api/profiles/storm" } },
+                    "id": "storm",
+                    "name": "Ororo Munroe"
+                }            
+            ]
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

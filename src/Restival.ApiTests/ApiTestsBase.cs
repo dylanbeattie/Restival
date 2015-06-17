@@ -15,6 +15,7 @@ namespace Restival.ApiTests {
             var request = new RestRequest("hello");
             Console.WriteLine(client.BuildUri(request));
             var status = client.Execute<Greeting>(request);
+            Console.WriteLine(status.Content);
             status.Data.Message.ShouldBe("Hello, World!");
         }
 
