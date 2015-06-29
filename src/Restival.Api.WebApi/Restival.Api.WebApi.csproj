@@ -161,6 +161,10 @@
       <Project>{CCD4207F-593D-4BE4-85B1-E6281D30E64A}</Project>
       <Name>Restival.Api.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Restival.Data\Restival.Data.csproj">
+      <Project>{D15B3023-0035-4239-B1D4-672D3D514AC0}</Project>
+      <Name>Restival.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

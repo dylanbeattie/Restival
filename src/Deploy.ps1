@@ -5,14 +5,18 @@ If ($webAdminModule -ne $null) {
     Add-PSSnapin WebAdministration -ErrorAction SilentlyContinue
 }
 
+$websitePath = Join-Path -path $(get-location) -childPath "Restival.Website"
+
 if (Test-Path IIS:\Sites\Restival) {
     $website = Get-Item IIS:\Sites\Restival
 } else {
-    $websitePath = Join-Path -path $(get-location) -childPath "Restival.Website"
 	$website = New-WebSite -Name Restival -Port 80 -HostHeader Restival -PhysicalPath $websitePath
 }
 
-Set-ItemProperty "IIS:\Sites\Restival" ApplicationPool "ASP.NET v4.0"
+Write-Host "Setting website path to $websitePath"
+$website.PhysicalPath = $websitePath
+$website.ApplicationPool = "ASP.NET v4.0"
+$website | set-item
 
 $machineName = $env:computername.ToLower()
 # Remove all existing bindings - this is MUCH easier than working out which ones to keep

@@ -5,16 +5,13 @@ using RestSharp;
 using Shouldly;
 
 namespace Restival.ApiTests {
-    [TestFixture]
-    public abstract class ApiTestsBase {
-        protected abstract string BaseUri { get; }
-
+    public abstract class HelloApiTestsBase<TApi> : ApiTestBase<TApi> where TApi : IApiUnderTest, new() {
         [Test]
         public void GET_Hello_Returns_Greeting() {
             var client = new RestClient(BaseUri);
             var request = new RestRequest("hello");
             Console.WriteLine(client.BuildUri(request));
-            var status = client.Execute<Greeting>(request);
+            var status = client.Execute<HelloResponse>(request);
             Console.WriteLine(status.Content);
             status.Data.Message.ShouldBe("Hello, World!");
         }
@@ -28,7 +25,7 @@ namespace Restival.ApiTests {
             var request = new RestRequest("hello/{name}");
             request.AddUrlSegment("name", name);
             Console.WriteLine(client.BuildUri(request));
-            var status = client.Execute<Greeting>(request);
+            var status = client.Execute<HelloResponse>(request);
             status.Data.Message.ShouldBe(String.Format("Hello, {0}!", name));
         }
     }

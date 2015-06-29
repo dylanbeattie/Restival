@@ -2,6 +2,7 @@
 using System.Web;
 using Funq;
 using Restival.Api.ServiceStack.Services;
+using Restival.Data;
 using ServiceStack;
 
 namespace Restival.Api.ServiceStack {
@@ -15,11 +16,11 @@ namespace Restival.Api.ServiceStack {
 
         public class AppHost : AppHostBase {
             //Tell ServiceStack the name of your application and where to find your services
-            public AppHost() : base("Restival", typeof (HelloService).Assembly) { }
+            public AppHost() : base("Restival", typeof(HelloService).Assembly) { }
 
             public override void Configure(Container container) {
                 //register any dependencies your services use, e.g:
-                //container.Register<ICacheClient>(new MemoryCacheClient());
+                container.Register<IProfileDatabase>(c => new FakeProfileDatabase()).ReusedWithin(ReuseScope.Container);
             }
         }
     }

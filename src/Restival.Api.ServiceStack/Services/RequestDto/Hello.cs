@@ -1,6 +1,6 @@
 ﻿using ServiceStack;
 
-namespace Restival.Api.ServiceStack.Services {
+namespace Restival.Api.ServiceStack.Services.RequestDto {
     [Route("/hello")]
     [Route("/hello/{name}")]
     public class Hello {
