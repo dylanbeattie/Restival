@@ -21,4 +21,7 @@ The easiest way to do this is using the Powershell script included in the soluti
 
 1.	Run the deploy.ps1 script in the src/  folder
 2.	Edit your HOSTS file (C:\Windows\System32\drivers\etc\hosts) and add a line that points restival.local at 127.0.0.1
-3.	Point a web browser at http://restival.local/ and verify you can see this wonderful web page:
+3.	Point a web browser at http://restival.local/ and verify you can see the landing page
+4.	Run the unit tests in Restival.ApiTests and verify they're all green
+
+That's it! Happy hacking.
