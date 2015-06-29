@@ -1,4 +1,5 @@
 ﻿using Restival.Api.Common.Resources;
+using Restival.Api.ServiceStack.Services.RequestDto;
 using ServiceStack;
 
 namespace Restival.Api.ServiceStack.Services {

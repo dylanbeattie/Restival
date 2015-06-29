@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ServiceStack">
       <HintPath>..\packages\ServiceStack.4.0.38\lib\net40\ServiceStack.dll</HintPath>
@@ -125,9 +129,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\HelloRequestDto.cs" />
-    <Compile Include="Services\HelloResponse.cs" />
+    <Compile Include="Services\RequestDto\Hello.cs" />
     <Compile Include="Services\HelloService.cs" />
+    <Compile Include="Services\RequestDto\ProfileList.cs" />
+    <Compile Include="Services\ProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -139,7 +144,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\Response\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -147,6 +154,10 @@
     <ProjectReference Include="..\Restival.Api.Common\Restival.Api.Common.csproj">
       <Project>{CCD4207F-593D-4BE4-85B1-E6281D30E64A}</Project>
       <Name>Restival.Api.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Restival.Data\Restival.Data.csproj">
+      <Project>{D15B3023-0035-4239-B1D4-672D3D514AC0}</Project>
+      <Name>Restival.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -184,6 +195,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
