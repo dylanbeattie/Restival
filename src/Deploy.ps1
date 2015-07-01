@@ -1,9 +1,9 @@
-﻿$webAdminModule = get-module -ListAvailable | ? { $_.Name -eq "webadministration" }
-If ($webAdminModule -ne $null) {
+﻿#$webAdminModule = get-module -ListAvailable | ? { $_.Name -eq "webadministration" }
+#If ($webAdminModule -ne $null) {
     import-module WebAdministration
-} else {
-    Add-PSSnapin WebAdministration -ErrorAction SilentlyContinue
-}
+#} else {
+#    Add-PSSnapin WebAdministration -ErrorAction SilentlyContinue
+#}
 
 $websitePath = Join-Path -path $(get-location) -childPath "Restival.Website"
 

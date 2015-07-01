@@ -133,6 +133,7 @@
     <Compile Include="Services\HelloService.cs" />
     <Compile Include="Services\RequestDto\ProfileList.cs" />
     <Compile Include="Services\ProfileService.cs" />
+    <Compile Include="Services\Response\HelloResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -144,9 +145,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Response\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
