@@ -16,4 +16,10 @@ namespace Restival.Api.ServiceStack.Services {
             return (greeting);
         }
     }
+
+    public class WhoAmIService : Service {
+        public WhoAmIResponse Get(WhoAmI dto) {
+            return (new WhoAmIResponse(12345, "username", "Test User"));
+        }
+    }
 }

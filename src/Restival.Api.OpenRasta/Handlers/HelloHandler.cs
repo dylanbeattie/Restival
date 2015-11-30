@@ -6,4 +6,10 @@ namespace Restival.Api.OpenRasta.Handlers {
             return (new Greeting(name));
         }
     }
+
+    public class WhoAmIHandler {
+        public object Get() {
+            return (new WhoAmIResponse(12345, "username", "Test User"));
+        }
+    }
 }

@@ -8,4 +8,11 @@ namespace Restival.Api.WebApi.Controllers {
             return new Greeting(name);
         }
     }
+
+    public class WhoAmIController : ApiController {
+        [Route("whoami")]
+        public WhoAmIResponse Get() {
+            return (new WhoAmIResponse(12345, "username", "Test User"));
+        }
+    }
 }

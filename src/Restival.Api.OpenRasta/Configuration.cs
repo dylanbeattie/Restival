@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using OpenRasta.Configuration;
 using OpenRasta.DI;
 using Restival.Api.Common.Resources;
@@ -21,6 +22,11 @@ namespace Restival.Api.OpenRasta {
                     .AtUri("/profiles")
                     .HandledBy<ProfileListHandler>()
                     .AsJsonDataContract();
+
+                ResourceSpace.Has.ResourcesOfType<WhoAmIResponse>()
+                    .AtUri("/whoami")
+                    .HandledBy<WhoAmIHandler>()
+                    .TranscodedBy<JsonCodec>();
             }
         }
     }

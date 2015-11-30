@@ -4,6 +4,7 @@ using Funq;
 using Restival.Api.ServiceStack.Services;
 using Restival.Data;
 using ServiceStack;
+using ServiceStack.Text;
 
 namespace Restival.Api.ServiceStack {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -19,8 +20,8 @@ namespace Restival.Api.ServiceStack {
             public AppHost() : base("Restival", typeof(HelloService).Assembly) { }
 
             public override void Configure(Container container) {
-                //register any dependencies your services use, e.g:
                 container.Register<IProfileDatabase>(c => new FakeProfileDatabase()).ReusedWithin(ReuseScope.Container);
+                JsConfig.ExcludeTypeInfo = true;
             }
         }
     }

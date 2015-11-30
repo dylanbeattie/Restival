@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +55,7 @@
     <Compile Include="Resources\HelloResponse.cs" />
     <Compile Include="Resources\ProfileListResponse.cs" />
     <Compile Include="Resources\ProfileResponse.cs" />
+    <Compile Include="Resources\WhoAmIResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
