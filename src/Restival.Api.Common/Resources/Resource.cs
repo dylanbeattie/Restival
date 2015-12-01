@@ -10,8 +10,9 @@ namespace Restival.Api.Common.Resources {
         public Dictionary<string, Dictionary<string, string>> Links {
             get {
                 if (links != null) return (links);
-                links = new Dictionary<string, Dictionary<string, string>>();
-                links.Add("self", new Dictionary<string, string> { { "href", SelfUrl } });
+                links = new Dictionary<string, Dictionary<string, string>> {
+                    { "self", new Dictionary<string, string> { { "href", SelfUrl } } }
+                };
                 AddLinks(links);
                 return (links);
             }

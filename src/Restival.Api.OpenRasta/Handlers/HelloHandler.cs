@@ -1,4 +1,5 @@
-﻿using Restival.Api.Common.Resources;
+﻿using System;
+using Restival.Api.Common.Resources;
 
 namespace Restival.Api.OpenRasta.Handlers {
     public class HelloHandler {
@@ -9,7 +10,7 @@ namespace Restival.Api.OpenRasta.Handlers {
 
     public class WhoAmIHandler {
         public object Get() {
-            return (new WhoAmIResponse(12345, "username", "Test User"));
+            return (new WhoAmIResponse(Guid.NewGuid(), "username", "Test User"));
         }
     }
 }

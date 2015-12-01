@@ -1,4 +1,5 @@
-﻿using Restival.Api.Common.Resources;
+﻿using System;
+using Restival.Api.Common.Resources;
 using Restival.Api.ServiceStack.Services.RequestDto;
 using ServiceStack;
 // using HelloResponse = Restival.Api.ServiceStack.Services.Response.HelloResponse;
@@ -19,7 +20,7 @@ namespace Restival.Api.ServiceStack.Services {
 
     public class WhoAmIService : Service {
         public WhoAmIResponse Get(WhoAmI dto) {
-            return (new WhoAmIResponse(12345, "username", "Test User"));
+            return (new WhoAmIResponse(Guid.NewGuid(), "username", "Test User"));
         }
     }
 }

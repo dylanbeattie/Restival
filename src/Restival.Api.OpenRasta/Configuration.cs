@@ -10,7 +10,7 @@ namespace Restival.Api.OpenRasta {
         public void Configure() {
             using (OpenRastaConfiguration.Manual) {
 
-                ResourceSpace.Uses.CustomDependency<IProfileDatabase, FakeProfileDatabase>(DependencyLifetime.Singleton);
+                ResourceSpace.Uses.CustomDependency<IDataStore, FakeDataStore>(DependencyLifetime.Singleton);
 
                 ResourceSpace.Has.ResourcesOfType<Greeting>()
                     .AtUri("/hello")
@@ -18,10 +18,10 @@ namespace Restival.Api.OpenRasta {
                     .HandledBy<HelloHandler>()
                     .AsJsonDataContract();
 
-                ResourceSpace.Has.ResourcesOfType<ProfileListResponse>()
-                    .AtUri("/profiles")
-                    .HandledBy<ProfileListHandler>()
-                    .AsJsonDataContract();
+                //ResourceSpace.Has.ResourcesOfType<ProfileListResponse>()
+                //    .AtUri("/profiles")
+                //    .HandledBy<ProfileListHandler>()
+                //    .AsJsonDataContract();
 
                 ResourceSpace.Has.ResourcesOfType<WhoAmIResponse>()
                     .AtUri("/whoami")

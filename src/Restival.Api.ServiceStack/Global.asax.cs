@@ -20,7 +20,7 @@ namespace Restival.Api.ServiceStack {
             public AppHost() : base("Restival", typeof(HelloService).Assembly) { }
 
             public override void Configure(Container container) {
-                container.Register<IProfileDatabase>(c => new FakeProfileDatabase()).ReusedWithin(ReuseScope.Container);
+                container.Register<IDataStore>(c => new FakeDataStore()).ReusedWithin(ReuseScope.Container);
                 JsConfig.ExcludeTypeInfo = true;
             }
         }

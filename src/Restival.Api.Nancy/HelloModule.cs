@@ -12,12 +12,4 @@ namespace Restival.Api.Nancy {
 
         }
     }
-
-    public class WhoAmIModule : NancyModule {
-        public WhoAmIModule() {
-            Get["/whoami"] = _ => new WhoAmIResponse(12345, "username", "Test User");
-
-
-        }
-    }
 }

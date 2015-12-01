@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Restival.Api.Common.Resources;
 
 namespace Restival.Api.WebApi.Controllers {
@@ -12,7 +13,7 @@ namespace Restival.Api.WebApi.Controllers {
     public class WhoAmIController : ApiController {
         [Route("whoami")]
         public WhoAmIResponse Get() {
-            return (new WhoAmIResponse(12345, "username", "Test User"));
+            return (new WhoAmIResponse(Guid.NewGuid(), "username", "Test User"));
         }
     }
 }
