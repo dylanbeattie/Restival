@@ -45,10 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="OpenRasta, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\openrasta-core.2.5.53\lib\net40\OpenRasta.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="OpenRasta.Hosting.AspNet, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\openrasta-hosting-aspnet.2.5.25\lib\net40\OpenRasta.Hosting.AspNet.dll</HintPath>
       <Private>True</Private>
@@ -133,7 +129,6 @@
     <Compile Include="Handlers\ProfileListHandler.cs" />
     <Compile Include="Handlers\WhoAmIHandler.cs" />
     <Compile Include="JsonCodec.cs" />
-    <Compile Include="MyBasicAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +142,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\openrasta-core\src\OpenRasta\OpenRasta.csproj">
+      <Project>{3d251617-2581-4d9c-a639-5cfb0bb09420}</Project>
+      <Name>OpenRasta</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Restival.Api.Common\Restival.Api.Common.csproj">
       <Project>{CCD4207F-593D-4BE4-85B1-E6281D30E64A}</Project>
       <Name>Restival.Api.Common</Name>

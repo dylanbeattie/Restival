@@ -18,5 +18,9 @@ namespace Restival.Api.OpenRasta {
                 Roles = new string[] { }
             });
         }
+
+        public bool ValidatePassword(Credentials credentials, string suppliedPassword) {
+            return (credentials.Password == suppliedPassword);
+        }
     }
 }

@@ -16,11 +16,6 @@ namespace Restival.Api.OpenRasta {
         public void Configure() {
             using (OpenRastaConfiguration.Manual) {
 
-                ResourceSpace.Uses.CustomDependency<IAuthenticationScheme, BasicAuthenticationScheme>(DependencyLifetime.Singleton);
-
-                // register your basic authenticator in the DI resolver
-                ResourceSpace.Uses.CustomDependency<IBasicAuthenticator, MyBasicAuthenticator>(DependencyLifetime.Transient);
-
                 ResourceSpace.Uses.CustomDependency<IDataStore, FakeDataStore>(DependencyLifetime.Singleton);
                 ResourceSpace.Uses.CustomDependency<IAuthenticationProvider, AuthenticationProvider>(DependencyLifetime.Singleton);
                 ResourceSpace.Uses.PipelineContributor<BasicAuthorizerContributor>();

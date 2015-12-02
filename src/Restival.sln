@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.ApiTests", "Restival.ApiTests\Restival.ApiTests.csproj", "{8DCA5E67-B5A4-49AC-BA42-37DB64EB16BA}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Website", "Restival.Website\Restival.Website.csproj", "{487613A2-0030-4B5A-B310-C919C6FDB6E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Data", "Restival.Data\Restival.Data.csproj", "{D15B3023-0035-4239-B1D4-672D3D514AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta", "..\..\openrasta-core\src\OpenRasta\OpenRasta.csproj", "{3D251617-2581-4D9C-A639-5CFB0BB09420}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,13 +68,17 @@ Global
 		{D15B3023-0035-4239-B1D4-672D3D514AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D15B3023-0035-4239-B1D4-672D3D514AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D15B3023-0035-4239-B1D4-672D3D514AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CCD4207F-593D-4BE4-85B1-E6281D30E64A} = {6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}
 		{8DCA5E67-B5A4-49AC-BA42-37DB64EB16BA} = {6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}
+		{CCD4207F-593D-4BE4-85B1-E6281D30E64A} = {6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}
 		{D15B3023-0035-4239-B1D4-672D3D514AC0} = {6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}
 	EndGlobalSection
 EndGlobal
