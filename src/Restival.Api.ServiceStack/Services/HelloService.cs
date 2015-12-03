@@ -5,15 +5,10 @@ using ServiceStack;
 
 namespace Restival.Api.ServiceStack.Services {
     public class HelloService : Service {
-        //public HelloResponse Any(Hello dto) {
-        //    var greeting = new Greeting(dto.Name);
-        //    var response = new HelloResponse() { Message = greeting.Message };
-        //    return (response);
-        //}
-
-        public Greeting Get(Hello dto) {
+        public HelloResponse Any(Hello dto) {
             var greeting = new Greeting(dto.Name);
-            return (greeting);
+            var response = new HelloResponse() { Message = greeting.Message };
+            return (response);
         }
     }
 }

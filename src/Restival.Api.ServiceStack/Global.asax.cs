@@ -2,7 +2,6 @@
 using System.Web;
 using Funq;
 using Restival.Api.ServiceStack.Services;
-using Restival.Data;
 using ServiceStack;
 
 namespace Restival.Api.ServiceStack {
@@ -20,7 +19,7 @@ namespace Restival.Api.ServiceStack {
 
             public override void Configure(Container container) {
                 //register any dependencies your services use, e.g:
-                container.Register<IProfileDatabase>(c => new FakeProfileDatabase()).ReusedWithin(ReuseScope.Container);
+                // container.Register<IService>(c => new Service()).ReusedWithin(ReuseScope.Container);
             }
         }
     }

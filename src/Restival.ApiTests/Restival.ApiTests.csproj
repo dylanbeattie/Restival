@@ -57,14 +57,9 @@
     <Compile Include="HelloApiTestsBase.cs" />
     <Compile Include="IApiUnderTest.cs" />
     <Compile Include="Nancy\NancyHelloApiTests.cs" />
-    <Compile Include="Nancy\NancyProfileApiTests.cs" />
     <Compile Include="OpenRasta\OpenRastaHelloApiTests.cs" />
-    <Compile Include="OpenRasta\OpenRastaProfileTests.cs" />
-    <Compile Include="ProfilesApiTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStack\ServiceStackHelloApiTests.cs" />
-    <Compile Include="ServiceStack\ServiceStackProfileTests.cs" />
-    <Compile Include="WebApi\WebApiProfileTests.cs" />
     <Compile Include="WebApi\WebHelloApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
