@@ -5,7 +5,7 @@ using Restival.Api.Common.Resources;
 using Restival.Data;
 
 namespace Restival.Api.OpenRasta.Handlers {
-    [RequiresAuthentication]
+    [RequiresBasicAuthentication("Restival.Api.OpenRasta")]
     public class WhoAmIHandler {
         private readonly IDataStore db;
         private readonly ICommunicationContext context;

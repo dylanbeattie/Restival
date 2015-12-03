@@ -26,6 +26,16 @@ namespace Restival.ApiTests {
         }
 
         [Test]
+        public void GET_WhoAmI_Without_Authentication_Returns_WWWAuthenticate_Header() {
+            var client = new RestClient(BaseUri);
+            var request = new RestRequest("whoami");
+            request.AddHeader("Accept", "application/json");
+            Console.WriteLine(client.BuildUri(request));
+            var status = client.Execute<WhoAmIResponse>(request);
+            status.Headers.ShouldContain(h => h.Name == "WWW-Authenticate");
+        }
+
+        [Test]
         public void GET_WhoAmI_Without_Authentication_Returns_401() {
             var client = new RestClient(BaseUri);
             var request = new RestRequest("whoami");

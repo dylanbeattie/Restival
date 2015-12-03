@@ -20,6 +20,7 @@ namespace Restival.Api.OpenRasta {
         }
 
         public bool ValidatePassword(Credentials credentials, string suppliedPassword) {
+            if (credentials == null) return (false);
             return (credentials.Password == suppliedPassword);
         }
     }

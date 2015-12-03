@@ -137,10 +137,20 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\ProfileListController.cs" />
+    <Compile Include="Controllers\WhoAmIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LightInject\LightInject.cs" />
+    <Compile Include="LightInject\WebApi\LightInject.WebApi.cs" />
+    <Compile Include="LightInject\Web\LightInject.Web.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AddChallengeOnUnauthorizedResult.cs" />
+    <Compile Include="Security\AuthenticationFailureResult.cs" />
+    <Compile Include="Security\RequireBasicAuthenticationAttribute.cs" />
+    <Compile Include="Security\BasicAuthenticationIdentity.cs" />
+    <Compile Include="Security\BasicAuthenticationFilterBase.cs" />
+    <Compile Include="Security\HttpAuthenticationChallengeContextExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
