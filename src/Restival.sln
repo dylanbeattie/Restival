@@ -1,8 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C8907D09-60FD-4331-A476-6D1D9A086E75}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.ApiTests", "Restival.ApiTests\Restival.ApiTests.csproj", "{8DCA5E67-B5A4-49AC-BA42-37DB64EB16BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.WebApi", "Restival.Api.WebApi\Restival.Api.WebApi.csproj", "{39D431D8-ECB4-448E-BC9B-E2BE855677CD}"
@@ -11,18 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.Common", "Rest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.OpenRasta", "Restival.Api.OpenRasta\Restival.Api.OpenRasta.csproj", "{6AF997C7-4637-4D60-A4F6-DBA22F219E74}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.Nancy", "Restival.Api.Nancy\Restival.Api.Nancy.csproj", "{887A8565-4A10-44C8-82EF-F2F2D1D2BFBF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Api.ServiceStack", "Restival.Api.ServiceStack\Restival.Api.ServiceStack.csproj", "{DE6FBAC5-CA43-499F-8A80-7E61E4BD28DA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C8907D09-60FD-4331-A476-6D1D9A086E75}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Website", "Restival.Website\Restival.Website.csproj", "{487613A2-0030-4B5A-B310-C919C6FDB6E2}"
 EndProject

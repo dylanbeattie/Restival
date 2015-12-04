@@ -23,6 +23,12 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,8 +140,6 @@
     <Compile Include="RestivalAuthProvider.cs" />
     <Compile Include="Services\RequestDto\Hello.cs" />
     <Compile Include="Services\HelloService.cs" />
-    <Compile Include="Services\RequestDto\ProfileList.cs" />
-    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\Response\HelloResponse.cs" />
     <Compile Include="Services\WhoAmIService.cs" />
   </ItemGroup>

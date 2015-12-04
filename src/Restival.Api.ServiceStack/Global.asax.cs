@@ -29,7 +29,7 @@ namespace Restival.Api.ServiceStack {
                 var auth = new AuthFeature(() => new AuthUserSession(), new IAuthProvider[] { new RestivalAuthProvider(db) }) {
                     HtmlRedirect = null
                 };
-
+                // container.Register<IService>(c => new Service()).ReusedWithin(ReuseScope.Container);
                 Plugins.Add(auth);
 
             }

@@ -19,17 +19,11 @@ namespace Restival.Api.OpenRasta {
                 ResourceSpace.Uses.CustomDependency<IDataStore, FakeDataStore>(DependencyLifetime.Singleton);
                 ResourceSpace.Uses.CustomDependency<IAuthenticationProvider, AuthenticationProvider>(DependencyLifetime.Singleton);
                 ResourceSpace.Uses.PipelineContributor<BasicAuthorizerContributor>();
-
                 ResourceSpace.Has.ResourcesOfType<Greeting>()
                     .AtUri("/hello")
                     .And.AtUri("/hello/{name}")
                     .HandledBy<HelloHandler>()
                     .AsJsonDataContract();
-
-                //ResourceSpace.Has.ResourcesOfType<ProfileListResponse>()
-                //    .AtUri("/profiles")
-                //    .HandledBy<ProfileListHandler>()
-                //    .AsJsonDataContract();
 
                 ResourceSpace.Has.ResourcesOfType<WhoAmIResponse>()
                     .AtUri("/whoami")

@@ -55,11 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProfileExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\HelloResponse.cs" />
-    <Compile Include="Resources\ProfileListResponse.cs" />
-    <Compile Include="Resources\ProfileResponse.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\WhoAmIResponse.cs" />
   </ItemGroup>
