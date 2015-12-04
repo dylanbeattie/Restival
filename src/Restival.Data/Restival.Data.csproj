@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Greeting.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="FakeDataStore.cs" />
+    <Compile Include="IDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

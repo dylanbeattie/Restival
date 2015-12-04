@@ -10,4 +10,7 @@ namespace Restival.Api.ServiceStack.Services.RequestDto {
             set { name = value; }
         }
     }
+
+    [Route("/whoami")]
+    public class WhoAmI { }
 }

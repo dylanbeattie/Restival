@@ -1,0 +1,6 @@
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('639e3c81-2398-e511-b599-005056c00008', N'ali', N'baba', 'Ali Baba')
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('649e3c81-2398-e511-b599-005056c00008', N'bob', N'hope', 'Bob Hope')
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('659e3c81-2398-e511-b599-005056c00008', N'cat', N'flap', 'Catherine Flap')
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('669e3c81-2398-e511-b599-005056c00008', N'dan', N'dare', 'Dan Dare')
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('679e3c81-2398-e511-b599-005056c00008', N'eli', N'roth', 'Eli Roth')
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Name]) VALUES ('689e3c81-2398-e511-b599-005056c00008', N'fox', N'trot', 'Fox Trot')

@@ -57,10 +57,15 @@
     <Compile Include="HelloApiTestsBase.cs" />
     <Compile Include="IApiUnderTest.cs" />
     <Compile Include="Nancy\NancyHelloApiTests.cs" />
+    <Compile Include="Nancy\NancyWhoAmIApiTests.cs" />
     <Compile Include="OpenRasta\OpenRastaHelloApiTests.cs" />
+    <Compile Include="OpenRasta\OpenRastaWhoAmITests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStack\ServiceStackHelloApiTests.cs" />
+    <Compile Include="ServiceStack\ServiceStackWhoAmIApiTests.cs" />
+    <Compile Include="WebApi\WebApiWhoAmITests.cs" />
     <Compile Include="WebApi\WebHelloApiTests.cs" />
+    <Compile Include="WhoAmIApiTestsBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +74,10 @@
     <ProjectReference Include="..\Restival.Api.Common\Restival.Api.Common.csproj">
       <Project>{CCD4207F-593D-4BE4-85B1-E6281D30E64A}</Project>
       <Name>Restival.Api.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Restival.Data\Restival.Data.csproj">
+      <Project>{D15B3023-0035-4239-B1D4-672D3D514AC0}</Project>
+      <Name>Restival.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

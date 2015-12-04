@@ -2,7 +2,11 @@
 using System.Web;
 using Funq;
 using Restival.Api.ServiceStack.Services;
+using Restival.Data;
 using ServiceStack;
+using ServiceStack.Auth;
+using ServiceStack.Caching;
+using ServiceStack.Text;
 
 namespace Restival.Api.ServiceStack {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -18,8 +22,16 @@ namespace Restival.Api.ServiceStack {
             public AppHost() : base("Restival", typeof(HelloService).Assembly) { }
 
             public override void Configure(Container container) {
-                //register any dependencies your services use, e.g:
+                var db = new FakeDataStore();
+                container.Register<IDataStore>(c => db).ReusedWithin(ReuseScope.Container);
+                JsConfig.ExcludeTypeInfo = true;
+
+                var auth = new AuthFeature(() => new AuthUserSession(), new IAuthProvider[] { new RestivalAuthProvider(db) }) {
+                    HtmlRedirect = null
+                };
                 // container.Register<IService>(c => new Service()).ReusedWithin(ReuseScope.Container);
+                Plugins.Add(auth);
+
             }
         }
     }
