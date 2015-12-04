@@ -15,11 +15,7 @@ namespace Restival.Api.Nancy {
             this.RequiresAuthentication();
             Get["/whoami"] = _ => {
                 var user = db.FindUserByUsername(this.Context.CurrentUser.UserName);
-                return (new WhoAmIResponse() {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Name = user.Name
-                });
+                return (new WhoAmIResponse(user.Id, user.Username, user.Name));
             };
         }
     }

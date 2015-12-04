@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using NUnit.Framework;
 using Restival.Api.Common.Resources;
+using Restival.Data;
 using RestSharp;
 using Shouldly;
 
@@ -46,13 +47,14 @@ namespace Restival.ApiTests {
         }
 
         public IEnumerable<string[]> TestUsers {
-            get {
-                yield return new[] { "639E3C81-2398-E511-B599-005056C00008", "ali", "baba", "Ali Baba" };
-                yield return new[] { "649E3C81-2398-E511-B599-005056C00008", "bob", "hope", "Bob Hope" };
-                //yield return new[] { "659E3C81-2398-E511-B599-005056C00008", "cat", "flap", "Catherine Flap" };
-                //yield return new[] { "669E3C81-2398-E511-B599-005056C00008", "dan", "dare", "Dan Dare" };
-                //yield return new[] { "679E3C81-2398-E511-B599-005056C00008", "eli", "roth", "Eli Roth" };
-                //yield return new[] { "689E3C81-2398-E511-B599-005056C00008", "fox", "trot", "Fox Trot" };
+            get
+            {
+                return(FakeDataStore.Users.Select(u => new[] {
+                    u.Id.ToString(),
+                    u.Username,
+                    u.Password,
+                    u.Name
+                }));
             }
         }
 
@@ -75,16 +77,6 @@ namespace Restival.ApiTests {
         public void GET_WhoAmI_Includes_Name(string guid, string username, string password, string name) {
             var me = GetWhoAmI(username, password);
             me.Name.ShouldBe(name);
-        }
-
-        [Test]
-        [TestCaseSource("TestUsers")]
-        public void GET_WhoAmI_Includes_Links(string guid, string username, string password, string name) {
-            var me = GetWhoAmI(username, password);
-            var self = me.Links["self"]["href"];
-            var agencies = me.Links["agencies"]["href"];
-            self.ShouldBe("/users/" + guid, Case.Insensitive);
-            agencies.ShouldBe("/users/" + guid + "/agencies", Case.Insensitive);
         }
     }
 }
