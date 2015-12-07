@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6D92E1EB-FDE9-49C8-8DB2-0F2405A924B2}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Data", "Restival.Data\Restival.Data.csproj", "{D15B3023-0035-4239-B1D4-672D3D514AC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta", "..\..\openrasta-core\src\OpenRasta\OpenRasta.csproj", "{3D251617-2581-4D9C-A639-5CFB0BB09420}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restival.Workbench", "Restival.Workbench\Restival.Workbench.csproj", "{6A97F557-300F-4EF7-B9DC-DD9C1B63519B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,10 @@ Global
 		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D251617-2581-4D9C-A639-5CFB0BB09420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A97F557-300F-4EF7-B9DC-DD9C1B63519B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A97F557-300F-4EF7-B9DC-DD9C1B63519B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A97F557-300F-4EF7-B9DC-DD9C1B63519B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A97F557-300F-4EF7-B9DC-DD9C1B63519B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

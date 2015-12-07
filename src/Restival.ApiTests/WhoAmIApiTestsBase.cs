@@ -58,7 +58,7 @@ namespace Restival.ApiTests {
                     u.Username,
                     u.Password,
                     u.Name
-                }));
+                })).Take(1);
             }
         }
 
@@ -97,10 +97,12 @@ namespace Restival.ApiTests {
         [TestCaseSource("TestUsers")]
         public void GET_WhoAmI_Includes_Exact_HAL_Json(string guid, string username, string password, string name) {
             var json = GetWhoAmIJson(username, password);
+            Console.WriteLine(json);
+
             var jo = JObject.Parse(json);
             var links = jo.SelectToken("$._links");
             links.ShouldNotBe(null);
-            Console.WriteLine(json);
+
         }
     }
 }
