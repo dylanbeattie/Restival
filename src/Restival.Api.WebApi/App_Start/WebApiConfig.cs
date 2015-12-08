@@ -7,10 +7,6 @@ namespace Restival.Api.WebApi {
         public static void Register(HttpConfiguration config) {
             config.MapHttpAttributeRoutes();
             config.EnableSystemDiagnosticsTracing();
-
-            var httpBasicFilter = new BasicAuthenticationFilter(new FakeDataStore());
-            config.Filters.Add(httpBasicFilter);
-
         }
     }
 }

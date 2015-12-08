@@ -5,8 +5,7 @@ using Restival.Api.WebApi.Security;
 using Restival.Data;
 
 namespace Restival.Api.WebApi.Controllers {
-    [RequireBasicAuthentication]
-    [Authorize] // Require authenticated requests.
+    [RequireHttpBasicAuthorization("Restival.WebAPI")]
     public class WhoAmIController : ApiController {
         private readonly IDataStore db;
 
