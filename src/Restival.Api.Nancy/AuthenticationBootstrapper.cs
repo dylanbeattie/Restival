@@ -8,8 +8,6 @@ namespace Restival.Api.Nancy {
     public class AuthenticationBootstrapper : DefaultNancyBootstrapper {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines) {
             base.ApplicationStartup(container, pipelines);
-
-            container.Register<IDataStore, FakeDataStore>();
             pipelines.EnableBasicAuthentication(new BasicAuthenticationConfiguration(container.Resolve<IUserValidator>(), "Restival.Nancy"));
 
         }

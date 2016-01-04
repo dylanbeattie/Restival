@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Greeting.cs" />
+    <Compile Include="Entities\Profile.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="FakeDataStore.cs" />
     <Compile Include="IDataStore.cs" />
