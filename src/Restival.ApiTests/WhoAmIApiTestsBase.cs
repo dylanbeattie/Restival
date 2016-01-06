@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Threading;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Restival.Api.Common;
 using Restival.Api.Common.Resources;
 using Restival.Data;
 using RestSharp;
@@ -150,6 +152,21 @@ namespace Restival.ApiTests {
             }
         }
 
+        [Test]
+        public void GET_Profiles_Returns_Unauthorized_For_Wrong_User() {
+            var ali = FakeDataStore.Users[0];
+            var bob = FakeDataStore.Users[1];
+            var profiles = GetResponse<ProfilesResponse>(ali.Username, ali.Password, String.Format("/users/{0}/profiles", bob.Id));
+            profiles.StatusCode.ShouldBe(HttpStatusCode.Forbidden);
+        }
+
+        [Test]
+        public void GET_Profiles_Returns_Unauthorized_Including_StatusDescription() {
+            var ali = FakeDataStore.Users[0];
+            var bob = FakeDataStore.Users[1];
+            var profiles = GetResponse<ProfilesResponse>(ali.Username, ali.Password, String.Format("/users/{0}/profiles", bob.Id));
+            profiles.StatusDescription.ShouldBe(Messages.YouDoNotHavePermissionToViewThoseProfiles);
+        }
 
         private JObject RetrieveLinkedProfiles(string username, string password) {
             var link = GetLink(username, password, "profiles");

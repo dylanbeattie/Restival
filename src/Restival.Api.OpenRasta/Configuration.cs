@@ -10,6 +10,7 @@ using Restival.Api.OpenRasta.Handlers;
 using Restival.Api.OpenRasta.Security;
 using Restival.Data;
 
+// Disable Visual Studio warning us about elements that are marked as deprecated.
 #pragma warning disable 618
 
 namespace Restival.Api.OpenRasta {

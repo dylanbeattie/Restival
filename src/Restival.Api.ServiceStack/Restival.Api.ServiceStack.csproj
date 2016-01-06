@@ -140,6 +140,7 @@
     <Compile Include="RestivalAuthProvider.cs" />
     <Compile Include="Services\RequestDto\Hello.cs" />
     <Compile Include="Services\HelloService.cs" />
+    <Compile Include="Services\RequestDto\WhoAmI.cs" />
     <Compile Include="Services\Response\HelloResponse.cs" />
     <Compile Include="Services\WhoAmIService.cs" />
   </ItemGroup>
