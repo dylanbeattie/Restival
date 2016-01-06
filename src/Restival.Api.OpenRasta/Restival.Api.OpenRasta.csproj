@@ -135,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\HelloHandler.cs" />
+    <Compile Include="Handlers\ProfilesHandler.cs" />
     <Compile Include="Handlers\WhoAmIHandler.cs" />
     <Compile Include="JsonCodec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

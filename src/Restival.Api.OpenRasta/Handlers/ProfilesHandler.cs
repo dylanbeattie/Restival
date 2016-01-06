@@ -1,22 +1,24 @@
-﻿using OpenRasta.Security;
+﻿using System;
+using OpenRasta.Security;
 using OpenRasta.Web;
 using Restival.Api.Common.Resources;
 using Restival.Data;
 
 namespace Restival.Api.OpenRasta.Handlers {
     [RequiresAuthentication]
-    public class WhoAmIHandler {
+    public class ProfilesHandler {
         private readonly IDataStore db;
         private readonly ICommunicationContext context;
 
-        public WhoAmIHandler(IDataStore db, ICommunicationContext context) {
+        public ProfilesHandler(IDataStore db, ICommunicationContext context) {
             this.db = db;
             this.context = context;
         }
 
-        public object Get() {
+        public object Get(Guid id) {
             var userRecord = db.FindUserByUsername(context.User.Identity.Name);
-            return (new WhoAmIResponse(userRecord.Id, userRecord.Username, userRecord.Name));
+            if (userRecord.Id == id) return new ProfilesResponse(userRecord);
+            return (new OperationResult.Forbidden());
         }
     }
 }

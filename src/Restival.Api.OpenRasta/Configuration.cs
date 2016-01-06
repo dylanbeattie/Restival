@@ -37,6 +37,11 @@ namespace Restival.Api.OpenRasta {
                     .AtUri("/whoami")
                     .HandledBy<WhoAmIHandler>()
                     .TranscodedBy<JsonCodec>().ForMediaType("application/json");
+
+                ResourceSpace.Has.ResourcesOfType<ProfilesResponse>()
+                    .AtUri("/users/{id}/profiles")
+                    .HandledBy<ProfilesHandler>()
+                    .TranscodedBy<JsonCodec>().ForMediaType("application/json");
             }
         }
     }

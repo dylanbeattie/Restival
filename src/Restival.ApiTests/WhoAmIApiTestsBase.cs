@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Restival.Api.Common.Resources;
 using Restival.Data;
@@ -126,22 +127,38 @@ namespace Restival.ApiTests {
 
         [Test]
         [TestCaseSource("TestUsers")]
-        public void GET_WhoAmI_Follow_Profiles_Link_Returns_Profiles(string guid, string username, string password, string name) {
-            var link = GetLink(username, password, "profiles");
-            var profiles = GetResponse<ProfilesResponse>(username, password, (string)link["href"]);
-            Console.WriteLine(profiles.Content);
+        public void GET_Linked_Profiles_Is_Paginated(string guid, string username, string password, string name) {
             var profilesFromData = FakeDataStore.Users.First(u => u.Username == username).Profiles;
-            profiles.Data.Count.ShouldBe(profilesFromData.Count);
-            var entities = (IList<ProfileResponse>)profiles.Data.Embedded;
-            entities.Count().ShouldBe(profilesFromData.Count);
+            var resource = RetrieveLinkedProfiles(username, password);
+            resource["_embedded"]["profiles"].Count().ShouldBe(profilesFromData.Count);
+            resource["count"].ShouldBe(profilesFromData.Count);
+            resource["total"].ShouldBe(profilesFromData.Count);
+            resource["index"].ShouldBe(0);
         }
 
-        //[Test]
-        //[TestCaseSource("TestUsers")]
-        //public void GET_WhoAmI_Includes_HAL_Link_To_Self(string guid, string username, string password, string name) {
-        //    var link = GetLink(username, password, "self");
-        //    link.ShouldNotBe(null);
-        //    link["href"].ShouldNotBe(null);
-        //}
+        [Test]
+        [TestCaseSource("TestUsers")]
+        public void GET_Linked_Profiles_Is_Linked(string guid, string username, string password, string name) {
+            var resource = RetrieveLinkedProfiles(username, password);
+            var profiles = resource["_embedded"]["profiles"];
+            for (var i = 0; i < profiles.Count(); i++) {
+                var profileResource = resource["_embedded"]["profiles"][i];
+                profileResource.ShouldNotBe(null);
+                var profileName = username + i.ToString("0000");
+                profileResource["name"].ShouldBe(profileName);
+                profileResource["_links"]["self"]["href"].ShouldBe(String.Format("/users/{0}/profiles/{1}", guid, profileName));
+            }
+        }
+
+
+        private JObject RetrieveLinkedProfiles(string username, string password) {
+            var link = GetLink(username, password, "profiles");
+            var profiles = GetResponse<ProfilesResponse>(username, password, (string)link["href"]);
+            Console.WriteLine(String.Empty.PadRight(72, '-'));
+            Console.WriteLine(profiles.Content);
+            Console.WriteLine(String.Empty.PadRight(72, '-'));
+            var resource = JObject.Parse(profiles.Content);
+            return resource;
+        }
     }
 }

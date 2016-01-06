@@ -12,36 +12,31 @@ namespace Restival.Api.Common.Resources {
 
         public User User { get; set; }
 
-        [DataMember(Name = "id")]
-        public Guid Id { get; set; }
-
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
         [DataMember(Name = "_links")]
         public dynamic Links {
-            get {
-                return new {
-                    self = new { href = String.Format("/users/{0}/profiles/{1}", User.Id, Id) },
-                };
-            }
+            get { return(new { self = new { href = String.Format("/users/{0}/profiles/{1}", User.Id, Name) } }); }
         }
 
     }
     [DataContract]
     public class ProfilesResponse {
-        private List<ProfileResponse> profiles;
+        private IList<ProfileResponse> profiles = new List<ProfileResponse>();
+
+        public IList<ProfileResponse> Profiles {
+            get { return (profiles); }
+        }
 
         public ProfilesResponse() { }
 
         public ProfilesResponse(User user) {
-            profiles = user.Profiles.Select(p => new ProfileResponse() { Name = p.Name }).ToList();
+            profiles = user.Profiles.Select(p => new ProfileResponse() { Name = p.Name, User = user }).ToList();
         }
 
         [DataMember(Name = "links")]
-        public dynamic Links {
-            get { return (null); }
-        }
+        public dynamic Links { get; set; }
 
         [DataMember(Name = "count")]
         public int Count {
@@ -50,13 +45,18 @@ namespace Restival.Api.Common.Resources {
 
         [DataMember(Name = "total")]
         public int Total {
-            get { return 50; }
+            get { return profiles.Count; }
         }
 
-        [DataMember(Name = "embedded")]
+        [DataMember(Name = "index")]
+        public int Index {
+            get { return 0; }
+        }
+
+        [DataMember(Name = "_embedded")]
         public dynamic Embedded {
-            get { return profiles; }
-            set { profiles = value; }
+            get { return new { profiles }; }
+            // set { profiles = value.profiles; }
         }
     }
 
