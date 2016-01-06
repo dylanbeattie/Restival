@@ -1,0 +1,12 @@
+webapi
+{"id":"649e3c81-2398-e511-b599-005056c00008","username":"bob","name":"Robert Hope","_links":{"self":"me!me!me!","next":"link","prev":"link"},"ObjectFoo":{},"_underscored":"stringy!","NoNameNull":null,"Overridden":{},"OverriddenNull":null}
+========================================================================
+servicestack
+{"id":"649e3c812398e511b599005056c00008","username":"bob","name":"Robert Hope","_links":{"self":"me!me!me!","next":"link","prev":"link"},"ObjectFoo":{},"_underscored":"stringy!","Overridden":{}}
+========================================================================
+openrasta
+{"id":"649e3c81-2398-e511-b599-005056c00008","username":"bob","name":"Robert Hope","_links":{"self":"me!me!me!","next":"link","prev":"link"},"ObjectFoo":{},"_underscored":"stringy!","NoNameNull":null,"Overridden":{},"OverriddenNull":null}
+========================================================================
+nancy
+{"id":"649e3c81-2398-e511-b599-005056c00008","username":"bob","name":"Robert Hope","_links":{"self":"me!me!me!","next":"link","prev":"link"},"ObjectFoo":{},"_underscored":"stringy!","NoNameNull":null,"Overridden":{},"OverriddenNull":null}
+========================================================================

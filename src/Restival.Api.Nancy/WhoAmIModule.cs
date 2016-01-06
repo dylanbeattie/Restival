@@ -8,10 +8,7 @@ using Restival.Data;
 
 namespace Restival.Api.Nancy {
     public class WhoAmIModule : NancyModule {
-        private readonly IDataStore db;
-
         public WhoAmIModule(IDataStore db) {
-            this.db = db;
             this.RequiresAuthentication();
             Get["/whoami"] = _ => {
                 var user = db.FindUserByUsername(this.Context.CurrentUser.UserName);

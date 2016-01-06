@@ -10,6 +10,7 @@ using Restival.Api.OpenRasta.Handlers;
 using Restival.Api.OpenRasta.Security;
 using Restival.Data;
 
+// Disable Visual Studio warning us about elements that are marked as deprecated.
 #pragma warning disable 618
 
 namespace Restival.Api.OpenRasta {
@@ -36,7 +37,12 @@ namespace Restival.Api.OpenRasta {
                 ResourceSpace.Has.ResourcesOfType<WhoAmIResponse>()
                     .AtUri("/whoami")
                     .HandledBy<WhoAmIHandler>()
-                    .TranscodedBy<JsonCodec>();
+                    .TranscodedBy<JsonCodec>().ForMediaType("application/json");
+
+                ResourceSpace.Has.ResourcesOfType<ProfilesResponse>()
+                    .AtUri("/users/{id}/profiles")
+                    .HandledBy<ProfilesHandler>()
+                    .TranscodedBy<JsonCodec>().ForMediaType("application/json");
             }
         }
     }
