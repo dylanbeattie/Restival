@@ -11,15 +11,11 @@ namespace Restival.Api.OpenRasta {
         public object Configuration { get; set; }
 
         public object ReadFrom(IHttpEntity request, IType destinationType, string destinationName) {
-            using (var reader = new StreamReader(request.Stream, Encoding.UTF8)) {
-                return (JsonConvert.DeserializeObject(reader.ReadToEnd()));
-            }
+            using (var reader = new StreamReader(request.Stream, Encoding.UTF8)) { return (JsonConvert.DeserializeObject(reader.ReadToEnd())); }
         }
 
         public void WriteTo(object entity, IHttpEntity response, string[] codecParameters) {
-            using (TextWriter w = new StreamWriter(response.Stream)) {
-                w.Write(JsonConvert.SerializeObject(entity));
-            }
+            using (TextWriter w = new StreamWriter(response.Stream)) { w.Write(JsonConvert.SerializeObject(entity)); }
         }
     }
 }

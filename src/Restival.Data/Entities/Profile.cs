@@ -1,6 +1,6 @@
 ﻿namespace Restival.Data.Entities {
     public class Profile {
-        public Profile() {}
+        public Profile() { }
 
         public Profile(string name) {
             Name = name;

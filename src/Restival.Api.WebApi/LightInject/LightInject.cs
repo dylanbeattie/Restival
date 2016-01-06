@@ -25,6 +25,7 @@
     http://www.lightinject.net/
     http://twitter.com/bernhardrichter
 ******************************************************************************/
+
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "No inheritance")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Single source file deployment.")]
@@ -32,9 +33,8 @@
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "All public members are documented.")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Performance")]
 
-namespace Restival.Api.WebApi.LightInject
-{
-    using System;    
+namespace Restival.Api.WebApi.LightInject {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -59,8 +59,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Defines a set of methods used to register services into the service container.
     /// </summary>
-    internal interface IServiceRegistry
-    {           
+    internal interface IServiceRegistry {
         /// <summary>
         /// Gets a list of <see cref="ServiceRegistration"/> instances that represents the 
         /// registered services.          
@@ -166,7 +165,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
         void Register<TService>();
-                
+
         /// <summary>
         /// Registers a concrete type as a service.
         /// </summary>
@@ -186,7 +185,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The concrete type to register.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
         void Register(Type serviceType, ILifetime lifetime);
-       
+
         /// <summary>
         /// Registers the <typeparamref name="TService"/> with the <paramref name="factory"/> that 
         /// describes the dependencies of the service. 
@@ -331,7 +330,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceRegistration">The <see cref="ServiceRegistration"/> instance that contains service metadata.</param>
         void Register(ServiceRegistration serviceRegistration);
-        
+
         /// <summary>
         /// Registers composition roots from the given <paramref name="assembly"/>.
         /// </summary>
@@ -390,7 +389,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="factory">The factory delegate used to create an instance of the dependency.</param>
         void RegisterConstructorDependency<TDependency>(
             Expression<Func<IServiceFactory, ParameterInfo, TDependency>> factory);
-        
+
         /// <summary>
         /// Registers a factory delegate to be used when resolving a constructor dependency for 
         /// a implicitly registered service.
@@ -404,8 +403,8 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers composition roots from assemblies in the base directory that matches the <paramref name="searchPattern"/>.
         /// </summary>
         /// <param name="searchPattern">The search pattern used to filter the assembly files.</param>
-        void RegisterAssembly(string searchPattern);    
-   
+        void RegisterAssembly(string searchPattern);
+
         /// <summary>
         /// Decorates the <paramref name="serviceType"/> with the given <paramref name="decoratorType"/>.
         /// </summary>
@@ -460,12 +459,11 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="processor">An action delegate that exposes the created service instance.</param>
         void Initialize(Func<ServiceRegistration, bool> predicate, Action<IServiceFactory, object> processor);
     }
-    
+
     /// <summary>
     /// Defines a set of methods used to retrieve service instances.
     /// </summary>
-    internal interface IServiceFactory
-    {
+    internal interface IServiceFactory {
         /// <summary>
         /// Starts a new <see cref="Scope"/>.
         /// </summary>
@@ -687,14 +685,13 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents an inversion of control container.
     /// </summary>
-    internal interface IServiceContainer : IServiceRegistry, IServiceFactory, IDisposable
-    {
+    internal interface IServiceContainer : IServiceRegistry, IServiceFactory, IDisposable {
         /// <summary>
         /// Gets or sets the <see cref="IScopeManagerProvider"/> that is responsible 
         /// for providing the <see cref="ScopeManager"/> used to manage scopes.
         /// </summary>
         IScopeManagerProvider ScopeManagerProvider { get; set; }
-     
+
         /// <summary>
         /// Returns <b>true</b> if the container can create the requested service, otherwise <b>false</b>.
         /// </summary>
@@ -702,20 +699,19 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceName">The name of the service.</param>
         /// <returns><b>true</b> if the container can create the requested service, otherwise <b>false</b>.</returns>
         bool CanGetInstance(Type serviceType, string serviceName);
-        
+
         /// <summary>
         /// Injects the property dependencies for a given <paramref name="instance"/>.
         /// </summary>
         /// <param name="instance">The target instance for which to inject its property dependencies.</param>
         /// <returns>The <paramref name="instance"/> with its property dependencies injected.</returns>
-        object InjectProperties(object instance);        
+        object InjectProperties(object instance);
     }
 
     /// <summary>
     /// Represents a class that manages the lifetime of a service instance.
     /// </summary>
-    internal interface ILifetime
-    {
+    internal interface ILifetime {
         /// <summary>
         /// Returns a service instance according to the specific lifetime characteristics.
         /// </summary>
@@ -728,8 +724,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that acts as a composition root for an <see cref="IServiceRegistry"/> instance.
     /// </summary>
-    internal interface ICompositionRoot
-    {
+    internal interface ICompositionRoot {
         /// <summary>
         /// Composes services by adding services to the <paramref name="serviceRegistry"/>.
         /// </summary>
@@ -740,8 +735,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that extracts a set of types from an <see cref="Assembly"/>.
     /// </summary>
-    internal interface ITypeExtractor
-    {
+    internal interface ITypeExtractor {
         /// <summary>
         /// Extracts types found in the given <paramref name="assembly"/>.
         /// </summary>
@@ -753,8 +747,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is responsible for selecting injectable properties.
     /// </summary>
-    internal interface IPropertySelector
-    {
+    internal interface IPropertySelector {
         /// <summary>
         /// Selects properties that represents a dependency from the given <paramref name="type"/>.
         /// </summary>
@@ -766,8 +759,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is responsible for selecting the property dependencies for a given <see cref="Type"/>.
     /// </summary>
-    internal interface IPropertyDependencySelector
-    {
+    internal interface IPropertyDependencySelector {
         /// <summary>
         /// Selects the property dependencies for the given <paramref name="type"/>.
         /// </summary>
@@ -780,8 +772,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is responsible for selecting the constructor dependencies for a given <see cref="ConstructorInfo"/>.
     /// </summary>
-    internal interface IConstructorDependencySelector
-    {
+    internal interface IConstructorDependencySelector {
         /// <summary>
         /// Selects the constructor dependencies for the given <paramref name="constructor"/>.
         /// </summary>
@@ -795,8 +786,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a class that is capable of building a <see cref="ConstructorInfo"/> instance 
     /// based on a <see cref="Registration"/>.
     /// </summary>
-    internal interface IConstructionInfoBuilder
-    {
+    internal interface IConstructionInfoBuilder {
         /// <summary>
         /// Returns a <see cref="ConstructionInfo"/> instance based on the given <see cref="Registration"/>.
         /// </summary>
@@ -808,8 +798,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that keeps track of a <see cref="ConstructionInfo"/> instance for each <see cref="Registration"/>.
     /// </summary>
-    internal interface IConstructionInfoProvider
-    {
+    internal interface IConstructionInfoProvider {
         /// <summary>
         /// Gets a <see cref="ConstructionInfo"/> instance for the given <paramref name="registration"/>.
         /// </summary>
@@ -827,8 +816,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that builds a <see cref="ConstructionInfo"/> instance based on a <see cref="LambdaExpression"/>.
     /// </summary>
-    internal interface ILambdaConstructionInfoBuilder
-    {
+    internal interface ILambdaConstructionInfoBuilder {
         /// <summary>
         /// Parses the <paramref name="lambdaExpression"/> and returns a <see cref="ConstructionInfo"/> instance.
         /// </summary>
@@ -840,8 +828,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that builds a <see cref="ConstructionInfo"/> instance based on the implementing <see cref="Type"/>.
     /// </summary>
-    internal interface ITypeConstructionInfoBuilder
-    {
+    internal interface ITypeConstructionInfoBuilder {
         /// <summary>
         /// Analyzes the <paramref name="registration"/> and returns a <see cref="ConstructionInfo"/> instance.
         /// </summary>
@@ -853,8 +840,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that selects the constructor to be used for creating a new service instance. 
     /// </summary>
-    internal interface IConstructorSelector
-    {
+    internal interface IConstructorSelector {
         /// <summary>
         /// Selects the constructor to be used when creating a new instance of the <paramref name="implementingType"/>.
         /// </summary>
@@ -867,8 +853,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is responsible loading a set of assemblies based on the given search pattern.
     /// </summary>
-    internal interface IAssemblyLoader
-    {
+    internal interface IAssemblyLoader {
         /// <summary>
         /// Loads a set of assemblies based on the given <paramref name="searchPattern"/>.
         /// </summary>
@@ -880,8 +865,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is capable of scanning an assembly and register services into an <see cref="IServiceContainer"/> instance.
     /// </summary>
-    internal interface IAssemblyScanner
-    {
+    internal interface IAssemblyScanner {
         /// <summary>
         /// Scans the target <paramref name="assembly"/> and registers services found within the assembly.
         /// </summary>
@@ -902,8 +886,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class that is responsible for instantiating and executing an <see cref="ICompositionRoot"/>.
     /// </summary>
-    internal interface ICompositionRootExecutor
-    {
+    internal interface ICompositionRootExecutor {
         /// <summary>
         /// Creates an instance of the <paramref name="compositionRootType"/> and executes the <see cref="ICompositionRoot.Compose"/> method.
         /// </summary>
@@ -915,8 +898,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents an abstraction of the <see cref="ILGenerator"/> class that provides information 
     /// about the <see cref="Type"/> currently on the stack.
     /// </summary>
-    internal interface IEmitter
-    {
+    internal interface IEmitter {
         /// <summary>
         /// Gets the <see cref="Type"/> currently on the stack.
         /// </summary>
@@ -939,7 +921,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="code">The MSIL instruction to be put onto the stream.</param>
         /// <param name="arg">The numerical argument pushed onto the stream immediately after the instruction.</param>
         void Emit(OpCode code, int arg);
-       
+
         /// <summary>
         /// Puts the specified instruction and numerical argument onto the Microsoft intermediate language (MSIL) stream of instructions.
         /// </summary>
@@ -960,7 +942,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="code">The MSIL instruction to be put onto the stream.</param>
         /// <param name="type">A <see cref="Type"/> representing the type metadata token.</param>
         void Emit(OpCode code, Type type);
-        
+
         /// <summary>
         /// Puts the specified instruction and metadata token for the specified constructor onto the Microsoft intermediate language (MSIL) stream of instructions.
         /// </summary>
@@ -974,7 +956,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="code">The MSIL instruction to be emitted onto the stream.</param>
         /// <param name="localBuilder">A local variable.</param>
         void Emit(OpCode code, LocalBuilder localBuilder);
-        
+
         /// <summary>
         /// Puts the specified instruction onto the Microsoft intermediate language (MSIL) stream followed by the metadata token for the given method.
         /// </summary>
@@ -987,14 +969,13 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="type">A <see cref="Type"/> object that represents the type of the local variable.</param>
         /// <returns>The declared local variable.</returns>
-        LocalBuilder DeclareLocal(Type type);        
+        LocalBuilder DeclareLocal(Type type);
     }
 
     /// <summary>
     /// Represents a dynamic method skeleton for emitting the code needed to resolve a service instance.
     /// </summary>
-    internal interface IMethodSkeleton
-    {
+    internal interface IMethodSkeleton {
         /// <summary>
         /// Gets the <see cref="IEmitter"/> for the this dynamic method.
         /// </summary>
@@ -1006,14 +987,13 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="delegateType">A delegate type whose signature matches that of the dynamic method.</param>
         /// <returns>A delegate of the specified type, which can be used to execute the dynamic method.</returns>
-        Delegate CreateDelegate(Type delegateType); 
+        Delegate CreateDelegate(Type delegateType);
     }
 
     /// <summary>
     /// Represents a class that is capable of providing the current <see cref="ScopeManager"/>.
     /// </summary>
-    internal interface IScopeManagerProvider
-    {
+    internal interface IScopeManagerProvider {
         /// <summary>
         /// Returns the <see cref="ScopeManager"/> that is responsible for managing scopes.
         /// </summary>
@@ -1025,31 +1005,26 @@ namespace Restival.Api.WebApi.LightInject
     /// Extends the <see cref="Expression"/> class.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class ExpressionExtensions
-    {
+    internal static class ExpressionExtensions {
         /// <summary>
         /// Flattens the <paramref name="expression"/> into an <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="expression">The target <see cref="Expression"/>.</param>
         /// <returns>The <see cref="Expression"/> represented as a list of sub expressions.</returns>
-        public static IEnumerable<Expression> AsEnumerable(this Expression expression)
-        {
+        public static IEnumerable<Expression> AsEnumerable(this Expression expression) {
             var flattener = new ExpressionTreeFlattener();
             return flattener.Flatten(expression);
         }
 
-        private class ExpressionTreeFlattener : ExpressionVisitor
-        {
+        private class ExpressionTreeFlattener : ExpressionVisitor {
             private readonly ICollection<Expression> nodes = new Collection<Expression>();
 
-            public IEnumerable<Expression> Flatten(Expression expression)
-            {
+            public IEnumerable<Expression> Flatten(Expression expression) {
                 Visit(expression);
                 return nodes;
             }
 
-            public override Expression Visit(Expression node)
-            {
+            public override Expression Visit(Expression node) {
                 nodes.Add(node);
                 return base.Visit(node);
             }
@@ -1061,20 +1036,15 @@ namespace Restival.Api.WebApi.LightInject
     /// user input.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class Ensure
-    {
+    internal static class Ensure {
         /// <summary>
         /// Ensures that the given <paramref name="value"/> is not null.
         /// </summary>
         /// <typeparam name="T">The type of value to be validated.</typeparam>
         /// <param name="value">The value to be validated.</param>
         /// <param name="paramName">The name of the parameter from which the <paramref name="value"/> comes from.</param>
-        public static void IsNotNull<T>(T value, string paramName)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
+        public static void IsNotNull<T>(T value, string paramName) {
+            if (value == null) throw new ArgumentNullException(paramName);
         }
     }
 
@@ -1082,8 +1052,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Extends the <see cref="ImmutableHashTable{TKey,TValue}"/> class.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class ImmutableHashTableExtensions
-    {
+    internal static class ImmutableHashTableExtensions {
         /// <summary>
         /// Searches for a value using the given <paramref name="key"/>.
         /// </summary>
@@ -1092,31 +1061,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="hashTable">The target <see cref="ImmutableHashTable{TKey,TValue}"/> instance.</param>
         /// <param name="key">The key for which to search for a value.</param>
         /// <returns>If found, the <typeparamref name="TValue"/> with the given <paramref name="key"/>, otherwise the default <typeparamref name="TValue"/>.</returns>
-        public static TValue Search<TKey, TValue>(this ImmutableHashTable<TKey, TValue> hashTable, TKey key)
-        {
+        public static TValue Search<TKey, TValue>(this ImmutableHashTable<TKey, TValue> hashTable, TKey key) {
             var hashCode = RuntimeHelpers.GetHashCode(key);
             var bucketIndex = hashCode & (hashTable.Divisor - 1);
             ImmutableHashTree<TKey, TValue> tree = hashTable.Buckets[bucketIndex];
-            while (tree.Height != 0 && tree.HashCode != hashCode)
-            {
-                tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
-            }
+            while (tree.Height != 0 && tree.HashCode != hashCode) tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
 
-            if (!tree.IsEmpty && (ReferenceEquals(tree.Key, key) || Equals(tree.Key, key)))
-            {
-                return tree.Value;
-            }
+            if (!tree.IsEmpty && (ReferenceEquals(tree.Key, key) || Equals(tree.Key, key))) return tree.Value;
 
-            if (tree.Duplicates.Items.Length > 0)
-            {
-                foreach (var keyValue in tree.Duplicates.Items)
-                {
-                    if (ReferenceEquals(keyValue.Key, key) || Equals(tree.Key, key))
-                    {
-                        return keyValue.Value;
-                    }
-                }
-            }
+            if (tree.Duplicates.Items.Length > 0) foreach (var keyValue in tree.Duplicates.Items) if (ReferenceEquals(keyValue.Key, key) || Equals(tree.Key, key)) return keyValue.Value;
 
             return default(TValue);
         }
@@ -1128,31 +1081,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="hashTable">The target <see cref="ImmutableHashTable{TKey,TValue}"/> instance.</param>
         /// <param name="key">The key for which to search for a value.</param>
         /// <returns>If found, the <typeparamref name="TValue"/> with the given <paramref name="key"/>, otherwise the default <typeparamref name="TValue"/>.</returns>
-        public static TValue Search<TValue>(this ImmutableHashTable<Type, TValue> hashTable, Type key)
-        {
+        public static TValue Search<TValue>(this ImmutableHashTable<Type, TValue> hashTable, Type key) {
             var hashCode = RuntimeHelpers.GetHashCode(key);
             var bucketIndex = hashCode & (hashTable.Divisor - 1);
             ImmutableHashTree<Type, TValue> tree = hashTable.Buckets[bucketIndex];
-            while (tree.Height != 0 && tree.HashCode != hashCode)
-            {
-                tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
-            }
+            while (tree.Height != 0 && tree.HashCode != hashCode) tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
 
-            if (!tree.IsEmpty && ReferenceEquals(tree.Key, key))
-            {
-                return tree.Value;
-            }
+            if (!tree.IsEmpty && ReferenceEquals(tree.Key, key)) return tree.Value;
 
-            if (tree.Duplicates.Items.Length > 0)
-            {
-                foreach (var keyValue in tree.Duplicates.Items)
-                {
-                    if (ReferenceEquals(keyValue.Key, key))
-                    {
-                        return keyValue.Value;
-                    }
-                }
-            }
+            if (tree.Duplicates.Items.Length > 0) foreach (var keyValue in tree.Duplicates.Items) if (ReferenceEquals(keyValue.Key, key)) return keyValue.Value;
 
             return default(TValue);
         }
@@ -1166,8 +1103,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="key">The key to be associated with the value.</param>
         /// <param name="value">The value to be added to the tree.</param>
         /// <returns>A new <see cref="ImmutableHashTree{TKey,TValue}"/> that contains the new key/value pair.</returns>
-        public static ImmutableHashTable<TKey, TValue> Add<TKey, TValue>(this ImmutableHashTable<TKey, TValue> hashTable, TKey key, TValue value)
-        {
+        public static ImmutableHashTable<TKey, TValue> Add<TKey, TValue>(this ImmutableHashTable<TKey, TValue> hashTable, TKey key, TValue value) {
             return new ImmutableHashTable<TKey, TValue>(hashTable, key, value);
         }
     }
@@ -1176,8 +1112,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Extends the <see cref="ImmutableHashTree{TKey,TValue}"/> class.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class ImmutableHashTreeExtensions
-    {
+    internal static class ImmutableHashTreeExtensions {
         /// <summary>
         /// Searches for a <typeparamref name="TValue"/> using the given <paramref name="key"/>.
         /// </summary>
@@ -1186,31 +1121,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="tree">The target <see cref="ImmutableHashTree{TKey,TValue}"/>.</param>
         /// <param name="key">The key of the <see cref="ImmutableHashTree{TKey,TValue}"/> to get.</param>
         /// <returns>If found, the <typeparamref name="TValue"/> with the given <paramref name="key"/>, otherwise the default <typeparamref name="TValue"/>.</returns>
-        public static TValue Search<TKey, TValue>(this ImmutableHashTree<TKey, TValue> tree, TKey key)
-        {
+        public static TValue Search<TKey, TValue>(this ImmutableHashTree<TKey, TValue> tree, TKey key) {
             int hashCode = key.GetHashCode();
 
-            while (tree.Height != 0 && tree.HashCode != hashCode)
-            {
-                tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
-            }
+            while (tree.Height != 0 && tree.HashCode != hashCode) tree = hashCode < tree.HashCode ? tree.Left : tree.Right;
 
-            if (!tree.IsEmpty && (ReferenceEquals(tree.Key, key) || Equals(tree.Key, key)))
-            {
-                return tree.Value;
-            }
+            if (!tree.IsEmpty && (ReferenceEquals(tree.Key, key) || Equals(tree.Key, key))) return tree.Value;
 
-            if (tree.Duplicates.Items.Length > 0)
-            {
-                foreach (var keyValue in tree.Duplicates.Items)
-                {
-                    if (ReferenceEquals(keyValue.Key, key) || Equals(keyValue.Key, key))
-                    {
-                        return keyValue.Value;
-                    }
-                }
-            }
-            
+            if (tree.Duplicates.Items.Length > 0) foreach (var keyValue in tree.Duplicates.Items) if (ReferenceEquals(keyValue.Key, key) || Equals(keyValue.Key, key)) return keyValue.Value;
+
             return default(TValue);
         }
 
@@ -1223,24 +1142,14 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="key">The key to be associated with the value.</param>
         /// <param name="value">The value to be added to the tree.</param>
         /// <returns>A new <see cref="ImmutableHashTree{TKey,TValue}"/> that contains the new key/value pair.</returns>
-        public static ImmutableHashTree<TKey, TValue> Add<TKey, TValue>(this ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value)
-        {
-            if (tree.IsEmpty)
-            {
-                return new ImmutableHashTree<TKey, TValue>(key, value, tree, tree);
-            }
+        public static ImmutableHashTree<TKey, TValue> Add<TKey, TValue>(this ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value) {
+            if (tree.IsEmpty) return new ImmutableHashTree<TKey, TValue>(key, value, tree, tree);
 
             int hashCode = key.GetHashCode();
 
-            if (hashCode > tree.HashCode)
-            {
-                return AddToRightBranch(tree, key, value);
-            }
+            if (hashCode > tree.HashCode) return AddToRightBranch(tree, key, value);
 
-            if (hashCode < tree.HashCode)
-            {
-                return AddToLeftBranch(tree, key, value);
-            }
+            if (hashCode < tree.HashCode) return AddToLeftBranch(tree, key, value);
 
             return new ImmutableHashTree<TKey, TValue>(key, value, tree);
         }
@@ -1253,94 +1162,70 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="hashTree">The target <see cref="ImmutableHashTree{TKey,TValue}"/>.</param>
         /// <returns>The nodes using in order traversal.</returns>
         public static IEnumerable<KeyValue<TKey, TValue>> InOrder<TKey, TValue>(
-            this ImmutableHashTree<TKey, TValue> hashTree)
-        {
-            if (!hashTree.IsEmpty)
-            {
-                foreach (var left in InOrder(hashTree.Left))
-                {
-                    yield return new KeyValue<TKey, TValue>(left.Key, left.Value);
-                }
+            this ImmutableHashTree<TKey, TValue> hashTree) {
+            if (!hashTree.IsEmpty) {
+                foreach (var left in InOrder(hashTree.Left)) yield return new KeyValue<TKey, TValue>(left.Key, left.Value);
 
                 yield return new KeyValue<TKey, TValue>(hashTree.Key, hashTree.Value);
 
-                for (int i = 0; i < hashTree.Duplicates.Items.Length; i++)
-                {
-                    yield return hashTree.Duplicates.Items[i];
-                }
+                for (int i = 0; i < hashTree.Duplicates.Items.Length; i++) yield return hashTree.Duplicates.Items[i];
 
-                foreach (var right in InOrder(hashTree.Right))
-                {
-                    yield return new KeyValue<TKey, TValue>(right.Key, right.Value);
-                }
+                foreach (var right in InOrder(hashTree.Right)) yield return new KeyValue<TKey, TValue>(right.Key, right.Value);
             }
         }
 
-        private static ImmutableHashTree<TKey, TValue> AddToLeftBranch<TKey, TValue>(ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value)
-        {
+        private static ImmutableHashTree<TKey, TValue> AddToLeftBranch<TKey, TValue>(ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value) {
             return new ImmutableHashTree<TKey, TValue>(tree.Key, tree.Value, tree.Left.Add(key, value), tree.Right);
         }
 
-        private static ImmutableHashTree<TKey, TValue> AddToRightBranch<TKey, TValue>(ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value)
-        {
+        private static ImmutableHashTree<TKey, TValue> AddToRightBranch<TKey, TValue>(ImmutableHashTree<TKey, TValue> tree, TKey key, TValue value) {
             return new ImmutableHashTree<TKey, TValue>(tree.Key, tree.Value, tree.Left, tree.Right.Add(key, value));
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class LazyTypeExtensions
-    {
+    internal static class LazyTypeExtensions {
         private static readonly ThreadSafeDictionary<Type, ConstructorInfo> Constructors = new ThreadSafeDictionary<Type, ConstructorInfo>();
 
-        public static ConstructorInfo GetLazyConstructor(this Type type)
-        {
+        public static ConstructorInfo GetLazyConstructor(this Type type) {
             return Constructors.GetOrAdd(type, GetConstructor);
         }
 
-        private static ConstructorInfo GetConstructor(Type type)
-        {
+        private static ConstructorInfo GetConstructor(Type type) {
             Type closedGenericLazyType = typeof(Lazy<>).MakeGenericType(type);
             return closedGenericLazyType.GetConstructor(new[] { type.GetFuncType() });
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class EnumerableTypeExtensions
-    {
+    internal static class EnumerableTypeExtensions {
         private static readonly ThreadSafeDictionary<Type, Type> EnumerableTypes = new ThreadSafeDictionary<Type, Type>();
 
-        public static Type GetEnumerableType(this Type returnType)
-        {
+        public static Type GetEnumerableType(this Type returnType) {
             return EnumerableTypes.GetOrAdd(returnType, CreateEnumerableType);
         }
 
-        private static Type CreateEnumerableType(Type type)
-        {
+        private static Type CreateEnumerableType(Type type) {
             return typeof(IEnumerable<>).MakeGenericType(type);
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class FuncTypeExtensions
-    {
+    internal static class FuncTypeExtensions {
         private static readonly ThreadSafeDictionary<Type, Type> FuncTypes = new ThreadSafeDictionary<Type, Type>();
-            
-        public static Type GetFuncType(this Type returnType)
-        {
+
+        public static Type GetFuncType(this Type returnType) {
             return FuncTypes.GetOrAdd(returnType, CreateFuncType);
         }
 
-        private static Type CreateFuncType(Type type)
-        {
+        private static Type CreateFuncType(Type type) {
             return typeof(Func<>).MakeGenericType(type);
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class LifetimeHelper
-    {        
-        static LifetimeHelper()
-        {
+    internal static class LifetimeHelper {
+        static LifetimeHelper() {
             GetInstanceMethod = typeof(ILifetime).GetMethod("GetInstance");
             GetCurrentScopeMethod = typeof(ScopeManager).GetProperty("CurrentScope").GetGetMethod();
             GetScopeManagerMethod = typeof(IScopeManagerProvider).GetMethod("GetScopeManager");
@@ -1354,94 +1239,82 @@ namespace Restival.Api.WebApi.LightInject
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class DelegateTypeExtensions
-    {
+    internal static class DelegateTypeExtensions {
         private static readonly MethodInfo OpenGenericGetInstanceMethodInfo =
             typeof(IServiceFactory).GetMethod("GetInstance", new Type[] { });
 
         private static readonly ThreadSafeDictionary<Type, MethodInfo> GetInstanceMethods =
             new ThreadSafeDictionary<Type, MethodInfo>();
-                
-        public static Delegate CreateGetInstanceDelegate(this Type serviceType, IServiceFactory serviceFactory)
-        {
+
+        public static Delegate CreateGetInstanceDelegate(this Type serviceType, IServiceFactory serviceFactory) {
             Type delegateType = serviceType.GetFuncType();
             MethodInfo getInstanceMethod = GetInstanceMethods.GetOrAdd(serviceType, CreateGetInstanceMethod);
             return getInstanceMethod.CreateDelegate(delegateType, serviceFactory);
         }
 
-        private static MethodInfo CreateGetInstanceMethod(Type type)
-        {
+        private static MethodInfo CreateGetInstanceMethod(Type type) {
             return OpenGenericGetInstanceMethodInfo.MakeGenericMethod(type);
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class NamedDelegateTypeExtensions
-    {        
+    internal static class NamedDelegateTypeExtensions {
         private static readonly MethodInfo CreateInstanceDelegateMethodInfo =
             typeof(NamedDelegateTypeExtensions).GetPrivateStaticMethod("CreateInstanceDelegate");
 
         private static readonly ThreadSafeDictionary<Type, MethodInfo> CreateInstanceDelegateMethods =
             new ThreadSafeDictionary<Type, MethodInfo>();
-       
-        public static Delegate CreateNamedGetInstanceDelegate(this Type serviceType, string serviceName, IServiceFactory factory)
-        {                        
+
+        public static Delegate CreateNamedGetInstanceDelegate(this Type serviceType, string serviceName, IServiceFactory factory) {
             MethodInfo createInstanceDelegateMethodInfo = CreateInstanceDelegateMethods.GetOrAdd(
                 serviceType,
                 CreateClosedGenericCreateInstanceDelegateMethod);
 
-            return (Delegate)createInstanceDelegateMethodInfo.Invoke(null, new object[] { factory, serviceName });                        
+            return (Delegate)createInstanceDelegateMethodInfo.Invoke(null, new object[] { factory, serviceName });
         }
 
-        private static MethodInfo CreateClosedGenericCreateInstanceDelegateMethod(Type type)
-        {
+        private static MethodInfo CreateClosedGenericCreateInstanceDelegateMethod(Type type) {
             return CreateInstanceDelegateMethodInfo.MakeGenericMethod(type);
         }
 
         // ReSharper disable UnusedMember.Local
         private static Func<TService> CreateInstanceDelegate<TService>(IServiceFactory factory, string serviceName)
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             return () => factory.GetInstance<TService>(serviceName);
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class ReflectionHelper
-    {                                        
-        private static readonly Lazy<ThreadSafeDictionary<Type, MethodInfo>> GetInstanceWithParametersMethods;        
-        
-        static ReflectionHelper()
-        {                                    
-            GetInstanceWithParametersMethods = CreateLazyGetInstanceWithParametersMethods();            
+    internal static class ReflectionHelper {
+        private static readonly Lazy<ThreadSafeDictionary<Type, MethodInfo>> GetInstanceWithParametersMethods;
+
+        static ReflectionHelper() {
+            GetInstanceWithParametersMethods = CreateLazyGetInstanceWithParametersMethods();
         }
-                               
-        public static MethodInfo GetGetInstanceWithParametersMethod(Type serviceType)
-        {
+
+        public static MethodInfo GetGetInstanceWithParametersMethod(Type serviceType) {
             return GetInstanceWithParametersMethods.Value.GetOrAdd(serviceType, CreateGetInstanceWithParametersMethod);
         }
-                                                     
-        public static Delegate CreateGetNamedInstanceWithParametersDelegate(IServiceFactory factory, Type delegateType, string serviceName)
-        {
+
+        public static Delegate CreateGetNamedInstanceWithParametersDelegate(IServiceFactory factory, Type delegateType, string serviceName) {
             Type[] genericTypeArguments = delegateType.GetGenericTypeArguments();
             var openGenericMethod =
                 typeof(ReflectionHelper).GetPrivateStaticMethods()
                     .Single(
                         m =>
-                        m.GetGenericArguments().Length == genericTypeArguments.Length
-                        && m.Name == "CreateGenericGetNamedParameterizedInstanceDelegate");
+                            m.GetGenericArguments().Length == genericTypeArguments.Length
+                                && m.Name == "CreateGenericGetNamedParameterizedInstanceDelegate");
             var closedGenericMethod = openGenericMethod.MakeGenericMethod(genericTypeArguments);
             return (Delegate)closedGenericMethod.Invoke(null, new object[] { factory, serviceName });
         }
-        
-        private static Lazy<ThreadSafeDictionary<Type, MethodInfo>> CreateLazyGetInstanceWithParametersMethods()
-        {
+
+        private static Lazy<ThreadSafeDictionary<Type, MethodInfo>> CreateLazyGetInstanceWithParametersMethods() {
             return new Lazy<ThreadSafeDictionary<Type, MethodInfo>>(
                 () => new ThreadSafeDictionary<Type, MethodInfo>());
         }
-                                         
-        private static MethodInfo CreateGetInstanceWithParametersMethod(Type serviceType)
-        {
+
+        private static MethodInfo CreateGetInstanceWithParametersMethod(Type serviceType) {
             Type[] genericTypeArguments = serviceType.GetGenericTypeArguments();
             MethodInfo openGenericMethod =
                 typeof(IServiceFactory).GetMethods().Single(m => m.Name == "GetInstance"
@@ -1451,155 +1324,128 @@ namespace Restival.Api.WebApi.LightInject
 
             return closedGenericMethod;
         }
-                                                                           
+
         // ReSharper disable UnusedMember.Local
         private static Func<TArg, TService> CreateGenericGetNamedParameterizedInstanceDelegate<TArg, TService>(IServiceFactory factory, string serviceName)
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             return arg => factory.GetInstance<TArg, TService>(arg, serviceName);
         }
 
         // ReSharper disable UnusedMember.Local
         private static Func<TArg1, TArg2, TService> CreateGenericGetNamedParameterizedInstanceDelegate<TArg1, TArg2, TService>(IServiceFactory factory, string serviceName)
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             return (arg1, arg2) => factory.GetInstance<TArg1, TArg2, TService>(arg1, arg2, serviceName);
         }
 
         // ReSharper disable UnusedMember.Local
         private static Func<TArg1, TArg2, TArg3, TService> CreateGenericGetNamedParameterizedInstanceDelegate<TArg1, TArg2, TArg3, TService>(IServiceFactory factory, string serviceName)
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             return (arg1, arg2, arg3) => factory.GetInstance<TArg1, TArg2, TArg3, TService>(arg1, arg2, arg3, serviceName);
         }
 
         // ReSharper disable UnusedMember.Local
         private static Func<TArg1, TArg2, TArg3, TArg4, TService> CreateGenericGetNamedParameterizedInstanceDelegate<TArg1, TArg2, TArg3, TArg4, TService>(IServiceFactory factory, string serviceName)
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             return (arg1, arg2, arg3, arg4) => factory.GetInstance<TArg1, TArg2, TArg3, TArg4, TService>(arg1, arg2, arg3, arg4, serviceName);
         }
     }
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class TypeHelper
-    {
-        public static Type[] GetGenericTypeArguments(this Type type)
-        {
+    internal static class TypeHelper {
+        public static Type[] GetGenericTypeArguments(this Type type) {
             return type.GetGenericArguments();
-        }        
-        
-        public static bool IsClass(this Type type)
-        {
+        }
+
+        public static bool IsClass(this Type type) {
             return type.IsClass;
         }
 
-        public static bool IsAbstract(this Type type)
-        {
+        public static bool IsAbstract(this Type type) {
             return type.IsAbstract;
         }
 
-        public static bool IsNestedPrivate(this Type type)
-        {
+        public static bool IsNestedPrivate(this Type type) {
             return type.IsNestedPrivate;
         }
 
-        public static bool IsGenericType(this Type type)
-        {
+        public static bool IsGenericType(this Type type) {
             return type.IsGenericType;
         }
 
-        public static bool ContainsGenericParameters(this Type type)
-        {
+        public static bool ContainsGenericParameters(this Type type) {
             return type.ContainsGenericParameters;
         }
 
-        public static Type GetBaseType(this Type type)
-        {
+        public static Type GetBaseType(this Type type) {
             return type.BaseType;
         }
 
-        public static bool IsGenericTypeDefinition(this Type type)
-        {
+        public static bool IsGenericTypeDefinition(this Type type) {
             return type.IsGenericTypeDefinition;
         }
-   
-        public static Assembly GetAssembly(this Type type)
-        {
+
+        public static Assembly GetAssembly(this Type type) {
             return type.Assembly;
         }
 
-        public static bool IsValueType(this Type type)
-        {
+        public static bool IsValueType(this Type type) {
             return type.IsValueType;
-        }        
+        }
 
-        public static MethodInfo GetMethodInfo(this Delegate del)
-        {
+        public static MethodInfo GetMethodInfo(this Delegate del) {
             return del.Method;
         }
 
-        public static MethodInfo GetPrivateMethod(this Type type, string name)
-        {            
+        public static MethodInfo GetPrivateMethod(this Type type, string name) {
             return type.GetMethod(name, BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        public static MethodInfo GetPrivateStaticMethod(this Type type, string name)
-        {
+        public static MethodInfo GetPrivateStaticMethod(this Type type, string name) {
             return type.GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic);
         }
 
-        public static MethodInfo[] GetPrivateStaticMethods(this Type type)
-        {
+        public static MethodInfo[] GetPrivateStaticMethods(this Type type) {
             return type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
         }
 
-        public static IEnumerable<Attribute> GetCustomAttributes(this Assembly assembly, Type attributeType)
-        {
+        public static IEnumerable<Attribute> GetCustomAttributes(this Assembly assembly, Type attributeType) {
             return assembly.GetCustomAttributes(attributeType, false).Cast<Attribute>();
         }
-        
-        public static bool IsEnumerableOfT(this Type serviceType)
-        {
+
+        public static bool IsEnumerableOfT(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
         }
 
-        public static bool IsListOfT(this Type serviceType)
-        {
+        public static bool IsListOfT(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(IList<>);
         }
 
-        public static bool IsCollectionOfT(this Type serviceType)
-        {
+        public static bool IsCollectionOfT(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(ICollection<>);
         }
-        
-        public static bool IsReadOnlyCollectionOfT(this Type serviceType)
-        {
+
+        public static bool IsReadOnlyCollectionOfT(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>);
         }
 
-        public static bool IsReadOnlyListOfT(this Type serviceType)
-        {
+        public static bool IsReadOnlyListOfT(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
         }
-        
-        public static bool IsLazy(this Type serviceType)
-        {
+
+        public static bool IsLazy(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(Lazy<>);
         }
 
-        public static bool IsFunc(this Type serviceType)
-        {
+        public static bool IsFunc(this Type serviceType) {
             return serviceType.IsGenericType() && serviceType.GetGenericTypeDefinition() == typeof(Func<>);
         }
 
-        public static bool IsFuncWithParameters(this Type serviceType)
-        {
-            if (!serviceType.IsGenericType())
-            {
-                return false;
-            }
+        public static bool IsFuncWithParameters(this Type serviceType) {
+            if (!serviceType.IsGenericType()) return false;
 
             Type genericTypeDefinition = serviceType.GetGenericTypeDefinition();
 
@@ -1607,18 +1453,13 @@ namespace Restival.Api.WebApi.LightInject
                 || genericTypeDefinition == typeof(Func<,,,>) || genericTypeDefinition == typeof(Func<,,,,>);
         }
 
-        public static bool IsClosedGeneric(this Type serviceType)
-        {
+        public static bool IsClosedGeneric(this Type serviceType) {
             return serviceType.IsGenericType() && !serviceType.IsGenericTypeDefinition();
         }
-      
-        public static Type GetElementType(Type type)
-        {
-            if (type.IsGenericType() && type.GetGenericTypeArguments().Count() == 1)
-            {
-                return type.GetGenericTypeArguments()[0];
-            }
-           
+
+        public static Type GetElementType(Type type) {
+            if (type.IsGenericType() && type.GetGenericTypeArguments().Count() == 1) return type.GetGenericTypeArguments()[0];
+
             return type.GetElementType();
         }
     }
@@ -1628,20 +1469,15 @@ namespace Restival.Api.WebApi.LightInject
     /// that optimizes and simplifies emitting MSIL instructions.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class EmitterExtensions
-    {
+    internal static class EmitterExtensions {
         /// <summary>
         /// Performs a cast or unbox operation if the current <see cref="IEmitter.StackType"/> is 
         /// different from the given <paramref name="type"/>.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="type">The requested stack type.</param>
-        public static void UnboxOrCast(this IEmitter emitter, Type type)
-        {
-            if (!type.IsAssignableFrom(emitter.StackType))
-            {
-                emitter.Emit(type.IsValueType() ? OpCodes.Unbox_Any : OpCodes.Castclass, type);
-            }
+        public static void UnboxOrCast(this IEmitter emitter, Type type) {
+            if (!type.IsAssignableFrom(emitter.StackType)) emitter.Emit(type.IsValueType() ? OpCodes.Unbox_Any : OpCodes.Castclass, type);
         }
 
         /// <summary>
@@ -1650,9 +1486,8 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="index">The index of the constant value to be pushed onto the stack.</param>
         /// <param name="type">The requested stack type.</param>
-        public static void PushConstant(this IEmitter emitter, int index, Type type)
-        {
-            emitter.PushConstant(index);           
+        public static void PushConstant(this IEmitter emitter, int index, Type type) {
+            emitter.PushConstant(index);
             emitter.UnboxOrCast(type);
         }
 
@@ -1661,8 +1496,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="index">The index of the constant value to be pushed onto the stack.</param>
-        public static void PushConstant(this IEmitter emitter, int index)
-        {
+        public static void PushConstant(this IEmitter emitter, int index) {
             emitter.PushArgument(0);
             emitter.Push(index);
             emitter.PushArrayElement();
@@ -1672,8 +1506,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Pushes the element containing an object reference at a specified index onto the stack.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
-        public static void PushArrayElement(this IEmitter emitter)
-        {
+        public static void PushArrayElement(this IEmitter emitter) {
             emitter.Emit(OpCodes.Ldelem_Ref);
         }
 
@@ -1685,8 +1518,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="parameters">A list of <see cref="ParameterInfo"/> instances that 
         /// represent the arguments to be pushed onto the stack.</param>
-        public static void PushArguments(this IEmitter emitter, ParameterInfo[] parameters)
-        {
+        public static void PushArguments(this IEmitter emitter, ParameterInfo[] parameters) {
             var argumentArray = emitter.DeclareLocal(typeof(object[]));
             emitter.Emit(OpCodes.Ldarg_0);
             emitter.Emit(OpCodes.Ldarg_0);
@@ -1698,8 +1530,7 @@ namespace Restival.Api.WebApi.LightInject
             emitter.Emit(OpCodes.Castclass, typeof(object[]));
             emitter.Emit(OpCodes.Stloc, argumentArray);
 
-            for (int i = 0; i < parameters.Length; i++)
-            {
+            for (int i = 0; i < parameters.Length; i++) {
                 emitter.Emit(OpCodes.Ldloc, argumentArray);
                 emitter.Emit(OpCodes.Ldc_I4, i);
                 emitter.Emit(OpCodes.Ldelem_Ref);
@@ -1708,14 +1539,13 @@ namespace Restival.Api.WebApi.LightInject
                     parameters[i].ParameterType);
             }
         }
-       
+
         /// <summary>
         /// Calls a late-bound method on an object, pushing the return value onto the stack.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="methodInfo">The <see cref="MethodInfo"/> that represents the method to be called.</param>
-        public static void Call(this IEmitter emitter, MethodInfo methodInfo)
-        {
+        public static void Call(this IEmitter emitter, MethodInfo methodInfo) {
             emitter.Emit(OpCodes.Callvirt, methodInfo);
         }
 
@@ -1724,8 +1554,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="constructorInfo">The <see cref="ConstructionInfo"/> that represent the object to be created.</param>
-        public static void New(this IEmitter emitter, ConstructorInfo constructorInfo)
-        {
+        public static void New(this IEmitter emitter, ConstructorInfo constructorInfo) {
             emitter.Emit(OpCodes.Newobj, constructorInfo);
         }
 
@@ -1734,11 +1563,9 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="localBuilder">The <see cref="LocalBuilder"/> to be pushed onto the stack.</param>
-        public static void Push(this IEmitter emitter, LocalBuilder localBuilder)
-        {
+        public static void Push(this IEmitter emitter, LocalBuilder localBuilder) {
             int index = localBuilder.LocalIndex;
-            switch (index)
-            {
+            switch (index) {
                 case 0:
                     emitter.Emit(OpCodes.Ldloc_0);
                     return;
@@ -1753,25 +1580,17 @@ namespace Restival.Api.WebApi.LightInject
                     return;
             }
 
-            if (index <= 255)
-            {
-                emitter.Emit(OpCodes.Ldloc_S, (byte)index);
-            }
-            else
-            {
-                emitter.Emit(OpCodes.Ldloc, index);
-            }                
+            if (index <= 255) emitter.Emit(OpCodes.Ldloc_S, (byte)index);
+            else emitter.Emit(OpCodes.Ldloc, index);
         }
-        
+
         /// <summary>
         /// Pushes an argument with the given <paramref name="index"/> onto the stack.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="index">The index of the argument to be pushed onto the stack.</param>
-        public static void PushArgument(this IEmitter emitter, int index)
-        {
-            switch (index)
-            {
+        public static void PushArgument(this IEmitter emitter, int index) {
+            switch (index) {
                 case 0:
                     emitter.Emit(OpCodes.Ldarg_0);
                     return;
@@ -1783,17 +1602,11 @@ namespace Restival.Api.WebApi.LightInject
                     return;
                 case 3:
                     emitter.Emit(OpCodes.Ldarg_3);
-                    return;                
+                    return;
             }
 
-            if (index <= 255)
-            {
-                emitter.Emit(OpCodes.Ldarg_S, (byte)index);
-            }
-            else
-            {
-                emitter.Emit(OpCodes.Ldarg, index);
-            }           
+            if (index <= 255) emitter.Emit(OpCodes.Ldarg_S, (byte)index);
+            else emitter.Emit(OpCodes.Ldarg, index);
         }
 
         /// <summary>
@@ -1801,11 +1614,9 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="localBuilder">The <see cref="LocalBuilder"/> for which the value is to be stored.</param>
-        public static void Store(this IEmitter emitter, LocalBuilder localBuilder)
-        {
+        public static void Store(this IEmitter emitter, LocalBuilder localBuilder) {
             int index = localBuilder.LocalIndex;
-            switch (index)
-            {
+            switch (index) {
                 case 0:
                     emitter.Emit(OpCodes.Stloc_0);
                     return;
@@ -1820,23 +1631,16 @@ namespace Restival.Api.WebApi.LightInject
                     return;
             }
 
-            if (index <= 255)
-            {
-                emitter.Emit(OpCodes.Stloc_S, (byte)index);
-            }
-            else
-            {
-                emitter.Emit(OpCodes.Stloc, index);
-            }                                                    
+            if (index <= 255) emitter.Emit(OpCodes.Stloc_S, (byte)index);
+            else emitter.Emit(OpCodes.Stloc, index);
         }
-        
+
         /// <summary>
         /// Pushes a new array of the given <paramref name="elementType"/> onto the stack.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="elementType">The element <see cref="Type"/> of the new array.</param>
-        public static void PushNewArray(this IEmitter emitter, Type elementType)
-        {
+        public static void PushNewArray(this IEmitter emitter, Type elementType) {
             emitter.Emit(OpCodes.Newarr, elementType);
         }
 
@@ -1845,10 +1649,8 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="value">The <see cref="int"/> value to be pushed onto the stack.</param>
-        public static void Push(this IEmitter emitter, int value)
-        {
-            switch (value)
-            {                
+        public static void Push(this IEmitter emitter, int value) {
+            switch (value) {
                 case 0:
                     emitter.Emit(OpCodes.Ldc_I4_0);
                     return;
@@ -1878,14 +1680,8 @@ namespace Restival.Api.WebApi.LightInject
                     return;
             }
 
-            if (value > -129 && value < 128)
-            {
-                emitter.Emit(OpCodes.Ldc_I4_S, (sbyte)value);
-            }
-            else
-            {
-                emitter.Emit(OpCodes.Ldc_I4, value);
-            }
+            if (value > -129 && value < 128) emitter.Emit(OpCodes.Ldc_I4_S, (sbyte)value);
+            else emitter.Emit(OpCodes.Ldc_I4, value);
         }
 
         /// <summary>
@@ -1893,8 +1689,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
         /// <param name="type">The <see cref="Type"/> for which the value will be casted into.</param>
-        public static void Cast(this IEmitter emitter, Type type)
-        {
+        public static void Cast(this IEmitter emitter, Type type) {
             emitter.Emit(OpCodes.Castclass, type);
         }
 
@@ -1902,8 +1697,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Returns from the current method.
         /// </summary>
         /// <param name="emitter">The target <see cref="IEmitter"/>.</param>
-        public static void Return(this IEmitter emitter)
-        {
+        public static void Return(this IEmitter emitter) {
             emitter.Emit(OpCodes.Ret);
         }
     }
@@ -1912,20 +1706,15 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a set of configurable options when creating a new instance of the container.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ContainerOptions
-    {
+    internal class ContainerOptions {
         private static readonly Lazy<ContainerOptions> DefaultOptions =
             new Lazy<ContainerOptions>(CreateDefaultContainerOptions);
 
         /// <summary>
         /// Gets the default <see cref="ContainerOptions"/> used across all <see cref="ServiceContainer"/> instances.
         /// </summary>
-        public static ContainerOptions Default
-        {
-            get
-            {
-                return DefaultOptions.Value;
-            }
+        public static ContainerOptions Default {
+            get { return DefaultOptions.Value; }
         }
 
         /// <summary>
@@ -1935,9 +1724,8 @@ namespace Restival.Api.WebApi.LightInject
         /// The default value is true.
         /// </remarks>
         public bool EnableVariance { get; set; }
-        
-        private static ContainerOptions CreateDefaultContainerOptions()
-        {
+
+        private static ContainerOptions CreateDefaultContainerOptions() {
             return new ContainerOptions { EnableVariance = true };
         }
     }
@@ -1946,15 +1734,14 @@ namespace Restival.Api.WebApi.LightInject
     /// An ultra lightweight service container.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ServiceContainer : IServiceContainer
-    {       
+    internal class ServiceContainer : IServiceContainer {
         private const string UnresolvedDependencyError = "Unresolved dependency {0}";
         private readonly Func<Type, Type[], IMethodSkeleton> methodSkeletonFactory;
         private readonly ServiceRegistry<Action<IEmitter>> emitters = new ServiceRegistry<Action<IEmitter>>();
         private readonly ServiceRegistry<Expression> constructorDependencyFactories = new ServiceRegistry<Expression>();
         private readonly ServiceRegistry<Expression> propertyDependencyFactories = new ServiceRegistry<Expression>();
         private readonly ServiceRegistry<ServiceRegistration> availableServices = new ServiceRegistry<ServiceRegistration>();
-        
+
         private readonly object lockObject = new object();
         private readonly ContainerOptions options;
         private readonly Storage<object> constants = new Storage<object>();
@@ -1964,11 +1751,11 @@ namespace Restival.Api.WebApi.LightInject
         private readonly Storage<Initializer> initializers = new Storage<Initializer>();
 
         private readonly Stack<Action<IEmitter>> dependencyStack = new Stack<Action<IEmitter>>();
-                        
+
         private readonly Lazy<IConstructionInfoProvider> constructionInfoProvider;
         private readonly ICompositionRootExecutor compositionRootExecutor;
         private readonly ITypeExtractor compositionRootTypeExtractor;
-        
+
         private ImmutableHashTable<Type, GetInstanceDelegate> delegates =
             ImmutableHashTable<Type, GetInstanceDelegate>.Empty;
 
@@ -1979,12 +1766,11 @@ namespace Restival.Api.WebApi.LightInject
             ImmutableHashTree<Type, Func<object[], object, object>>.Empty;
 
         private bool isLocked;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceContainer"/> class.
         /// </summary>
-        public ServiceContainer()
-        {
+        public ServiceContainer() {
             options = ContainerOptions.Default;
             var concreteTypeExtractor = new CachedTypeExtractor(new ConcreteTypeExtractor());
             compositionRootTypeExtractor = new CachedTypeExtractor(new CompositionRootTypeExtractor());
@@ -1996,15 +1782,14 @@ namespace Restival.Api.WebApi.LightInject
             constructionInfoProvider = new Lazy<IConstructionInfoProvider>(CreateConstructionInfoProvider);
             methodSkeletonFactory = (returnType, parameterTypes) => new DynamicMethodSkeleton(returnType, parameterTypes);
             ScopeManagerProvider = new PerThreadScopeManagerProvider();
-            AssemblyLoader = new AssemblyLoader();            
+            AssemblyLoader = new AssemblyLoader();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceContainer"/> class.
         /// </summary>
         /// <param name="options">The <see cref="ContainerOptions"/> instances that represents the configurable options.</param>
-        public ServiceContainer(ContainerOptions options) : this()
-        {
+        public ServiceContainer(ContainerOptions options) : this() {
             this.options = options;
         }
 
@@ -2045,12 +1830,8 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Gets a list of <see cref="ServiceRegistration"/> instances that represents the registered services.           
         /// </summary>                  
-        public IEnumerable<ServiceRegistration> AvailableServices
-        {
-            get
-            {
-                return availableServices.Values.SelectMany(t => t.Values);                
-            }
+        public IEnumerable<ServiceRegistration> AvailableServices {
+            get { return availableServices.Values.SelectMany(t => t.Values); }
         }
 
         /// <summary>
@@ -2059,8 +1840,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
         /// <param name="serviceName">The name of the service.</param>
         /// <returns><b>true</b> if the container can create the requested service, otherwise <b>false</b>.</returns>
-        public bool CanGetInstance(Type serviceType, string serviceName)
-        {
+        public bool CanGetInstance(Type serviceType, string serviceName) {
             return GetEmitMethod(serviceType, serviceName) != null;
         }
 
@@ -2068,16 +1848,14 @@ namespace Restival.Api.WebApi.LightInject
         /// Starts a new <see cref="Scope"/>.
         /// </summary>
         /// <returns><see cref="Scope"/></returns>
-        public Scope BeginScope()
-        {
+        public Scope BeginScope() {
             return ScopeManagerProvider.GetScopeManager().BeginScope();
         }
 
         /// <summary>
         /// Ends the current <see cref="Scope"/>.
         /// </summary>
-        public void EndCurrentScope()
-        {
+        public void EndCurrentScope() {
             Scope currentScope = ScopeManagerProvider.GetScopeManager().CurrentScope;
             currentScope.Dispose();
         }
@@ -2087,19 +1865,17 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="instance">The target instance for which to inject its property dependencies.</param>
         /// <returns>The <paramref name="instance"/> with its property dependencies injected.</returns>
-        public object InjectProperties(object instance)
-        {            
+        public object InjectProperties(object instance) {
             var type = instance.GetType();
 
             var del = propertyInjectionDelegates.Search(type);
 
-            if (del == null)
-            {
+            if (del == null) {
                 del = CreatePropertyInjectionDelegate(type);
                 propertyInjectionDelegates = propertyInjectionDelegates.Add(type, del);
             }
 
-            return del(constants.Items, instance);            
+            return del(constants.Items, instance);
         }
 
         /// <summary>
@@ -2110,8 +1886,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="factory">The lambdaExpression that describes the dependencies of the service.</param>
         /// <param name="serviceName">The name of the service.</param>        
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, string serviceName, ILifetime lifetime)
-        {
+        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, string serviceName, ILifetime lifetime) {
             RegisterServiceFromLambdaExpression<TService>(factory, lifetime, serviceName);
         }
 
@@ -2120,8 +1895,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="predicate">Determines if the service can be created by the <paramref name="factory"/> delegate.</param>
         /// <param name="factory">Creates a service instance according to the <paramref name="predicate"/> predicate.</param>
-        public void RegisterFallback(Func<Type, string, bool> predicate, Func<ServiceRequest, object> factory)
-        {
+        public void RegisterFallback(Func<Type, string, bool> predicate, Func<ServiceRequest, object> factory) {
             factoryRules.Add(new FactoryRule { CanCreateInstance = predicate, Factory = factory });
         }
 
@@ -2131,8 +1905,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="predicate">Determines if the service can be created by the <paramref name="factory"/> delegate.</param>
         /// <param name="factory">Creates a service instance according to the <paramref name="predicate"/> predicate.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void RegisterFallback(Func<Type, string, bool> predicate, Func<ServiceRequest, object> factory, ILifetime lifetime)
-        {
+        public void RegisterFallback(Func<Type, string, bool> predicate, Func<ServiceRequest, object> factory, ILifetime lifetime) {
             factoryRules.Add(new FactoryRule { CanCreateInstance = predicate, Factory = factory, LifeTime = lifetime });
         }
 
@@ -2140,16 +1913,15 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers a service based on a <see cref="ServiceRegistration"/> instance.
         /// </summary>
         /// <param name="serviceRegistration">The <see cref="ServiceRegistration"/> instance that contains service metadata.</param>
-        public void Register(ServiceRegistration serviceRegistration)
-        {            
-            var services = GetAvailableServices(serviceRegistration.ServiceType);            
+        public void Register(ServiceRegistration serviceRegistration) {
+            var services = GetAvailableServices(serviceRegistration.ServiceType);
             var sr = serviceRegistration;
             services.AddOrUpdate(
                 serviceRegistration.ServiceName,
                 s => AddServiceRegistration(sr),
-                (k, existing) => UpdateServiceRegistration(existing, sr));            
+                (k, existing) => UpdateServiceRegistration(existing, sr));
         }
-      
+
         /// <summary>
         /// Registers composition roots from the given <paramref name="assembly"/>.
         /// </summary>
@@ -2158,17 +1930,10 @@ namespace Restival.Api.WebApi.LightInject
         /// If the target <paramref name="assembly"/> contains an implementation of the <see cref="ICompositionRoot"/> interface, this 
         /// will be used to configure the container.
         /// </remarks>             
-        public void RegisterAssembly(Assembly assembly)
-        {
+        public void RegisterAssembly(Assembly assembly) {
             Type[] compositionRootTypes = compositionRootTypeExtractor.Execute(assembly);
-            if (compositionRootTypes.Length == 0)
-            {
-                RegisterAssembly(assembly, (serviceType, implementingType) => true);
-            }
-            else
-            {
-                AssemblyScanner.Scan(assembly, this);
-            }    
+            if (compositionRootTypes.Length == 0) RegisterAssembly(assembly, (serviceType, implementingType) => true);
+            else AssemblyScanner.Scan(assembly, this);
         }
 
         /// <summary>
@@ -2180,8 +1945,7 @@ namespace Restival.Api.WebApi.LightInject
         /// If the target <paramref name="assembly"/> contains an implementation of the <see cref="ICompositionRoot"/> interface, this 
         /// will be used to configure the container.
         /// </remarks>     
-        public void RegisterAssembly(Assembly assembly, Func<Type, Type, bool> shouldRegister)
-        {
+        public void RegisterAssembly(Assembly assembly, Func<Type, Type, bool> shouldRegister) {
             AssemblyScanner.Scan(assembly, this, () => null, shouldRegister);
         }
 
@@ -2194,8 +1958,7 @@ namespace Restival.Api.WebApi.LightInject
         /// If the target <paramref name="assembly"/> contains an implementation of the <see cref="ICompositionRoot"/> interface, this 
         /// will be used to configure the container.
         /// </remarks>     
-        public void RegisterAssembly(Assembly assembly, Func<ILifetime> lifetimeFactory)
-        {
+        public void RegisterAssembly(Assembly assembly, Func<ILifetime> lifetimeFactory) {
             AssemblyScanner.Scan(assembly, this, lifetimeFactory, (serviceType, implementingType) => true);
         }
 
@@ -2209,8 +1972,7 @@ namespace Restival.Api.WebApi.LightInject
         /// If the target <paramref name="assembly"/> contains an implementation of the <see cref="ICompositionRoot"/> interface, this 
         /// will be used to configure the container.
         /// </remarks>     
-        public void RegisterAssembly(Assembly assembly, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister)
-        {
+        public void RegisterAssembly(Assembly assembly, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister) {
             AssemblyScanner.Scan(assembly, this, lifetimeFactory, shouldRegister);
         }
 
@@ -2218,8 +1980,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers services from the given <typeparamref name="TCompositionRoot"/> type.
         /// </summary>
         /// <typeparam name="TCompositionRoot">The type of <see cref="ICompositionRoot"/> to register from.</typeparam>
-        public void RegisterFrom<TCompositionRoot>() where TCompositionRoot : ICompositionRoot, new()
-        {
+        public void RegisterFrom<TCompositionRoot>() where TCompositionRoot : ICompositionRoot, new() {
             compositionRootExecutor.Execute(typeof(TCompositionRoot));
         }
 
@@ -2229,8 +1990,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TDependency">The dependency type.</typeparam>
         /// <param name="factory">The factory delegate used to create an instance of the dependency.</param>
-        public void RegisterConstructorDependency<TDependency>(Expression<Func<IServiceFactory, ParameterInfo, TDependency>> factory)
-        {
+        public void RegisterConstructorDependency<TDependency>(Expression<Func<IServiceFactory, ParameterInfo, TDependency>> factory) {
             GetConstructorDependencyFactories(typeof(TDependency)).AddOrUpdate(
                 string.Empty,
                 s => factory,
@@ -2243,8 +2003,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TDependency">The dependency type.</typeparam>
         /// <param name="factory">The factory delegate used to create an instance of the dependency.</param>
-        public void RegisterPropertyDependency<TDependency>(Expression<Func<IServiceFactory, PropertyInfo, TDependency>> factory)
-        {
+        public void RegisterPropertyDependency<TDependency>(Expression<Func<IServiceFactory, PropertyInfo, TDependency>> factory) {
             GetPropertyDependencyFactories(typeof(TDependency)).AddOrUpdate(
                 string.Empty,
                 s => factory,
@@ -2255,14 +2014,10 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers composition roots from assemblies in the base directory that matches the <paramref name="searchPattern"/>.
         /// </summary>
         /// <param name="searchPattern">The search pattern used to filter the assembly files.</param>
-        public void RegisterAssembly(string searchPattern)
-        {
-            foreach (Assembly assembly in AssemblyLoader.Load(searchPattern))
-            {                
-                RegisterAssembly(assembly);               
-            }
-        }    
-    
+        public void RegisterAssembly(string searchPattern) {
+            foreach (Assembly assembly in AssemblyLoader.Load(searchPattern)) RegisterAssembly(assembly);
+        }
+
         /// <summary>
         /// Decorates the <paramref name="serviceType"/> with the given <paramref name="decoratorType"/>.
         /// </summary>
@@ -2270,8 +2025,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="decoratorType">The decorator type used to decorate the <paramref name="serviceType"/>.</param>
         /// <param name="predicate">A function delegate that determines if the <paramref name="decoratorType"/>
         /// should be applied to the target <paramref name="serviceType"/>.</param>
-        public void Decorate(Type serviceType, Type decoratorType, Func<ServiceRegistration, bool> predicate)
-        {
+        public void Decorate(Type serviceType, Type decoratorType, Func<ServiceRegistration, bool> predicate) {
             var decoratorRegistration = new DecoratorRegistration { ServiceType = serviceType, ImplementingType = decoratorType, CanDecorate = predicate };
             Decorate(decoratorRegistration);
         }
@@ -2281,8 +2035,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The target service type.</param>
         /// <param name="decoratorType">The decorator type used to decorate the <paramref name="serviceType"/>.</param>        
-        public void Decorate(Type serviceType, Type decoratorType)
-        {
+        public void Decorate(Type serviceType, Type decoratorType) {
             Decorate(serviceType, decoratorType, si => true);
         }
 
@@ -2291,8 +2044,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The target service type.</typeparam>
         /// <typeparam name="TDecorator">The decorator type used to decorate the <typeparamref name="TService"/>.</typeparam>
-        public void Decorate<TService, TDecorator>() where TDecorator : TService
-        {
+        public void Decorate<TService, TDecorator>() where TDecorator : TService {
             Decorate(typeof(TService), typeof(TDecorator));
         }
 
@@ -2301,20 +2053,18 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The target service type.</typeparam>
         /// <param name="factory">A factory delegate used to create a decorator instance.</param>
-        public void Decorate<TService>(Expression<Func<IServiceFactory, TService, TService>> factory)
-        {
+        public void Decorate<TService>(Expression<Func<IServiceFactory, TService, TService>> factory) {
             var decoratorRegistration = new DecoratorRegistration { FactoryExpression = factory, ServiceType = typeof(TService), CanDecorate = si => true };
-            Decorate(decoratorRegistration);            
+            Decorate(decoratorRegistration);
         }
 
         /// <summary>
         /// Registers a decorator based on a <see cref="DecoratorRegistration"/> instance.
         /// </summary>
         /// <param name="decoratorRegistration">The <see cref="DecoratorRegistration"/> instance that contains the decorator metadata.</param>
-        public void Decorate(DecoratorRegistration decoratorRegistration)
-        {
+        public void Decorate(DecoratorRegistration decoratorRegistration) {
             int index = decorators.Add(decoratorRegistration);
-            decoratorRegistration.Index = index;            
+            decoratorRegistration.Index = index;
         }
 
         /// <summary>
@@ -2324,13 +2074,11 @@ namespace Restival.Api.WebApi.LightInject
         /// overridden using the <see cref="ServiceRegistration"/> returned from the <paramref name="serviceRegistrationFactory"/>.</param>
         /// <param name="serviceRegistrationFactory">The factory delegate used to create a <see cref="ServiceRegistration"/> that overrides
         /// the incoming <see cref="ServiceRegistration"/>.</param>
-        public void Override(Func<ServiceRegistration, bool> serviceSelector, Func<IServiceFactory, ServiceRegistration, ServiceRegistration> serviceRegistrationFactory)
-        {
-            var serviceOverride = new ServiceOverride
-                                      {
-                                          CanOverride = serviceSelector,
-                                          ServiceRegistrationFactory = serviceRegistrationFactory
-                                      };
+        public void Override(Func<ServiceRegistration, bool> serviceSelector, Func<IServiceFactory, ServiceRegistration, ServiceRegistration> serviceRegistrationFactory) {
+            var serviceOverride = new ServiceOverride {
+                CanOverride = serviceSelector,
+                ServiceRegistrationFactory = serviceRegistrationFactory
+            };
             overrides.Add(serviceOverride);
         }
 
@@ -2339,8 +2087,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="predicate">A function delegate that determines if the given service can be post-processed.</param>
         /// <param name="processor">An action delegate that exposes the created service instance.</param>
-        public void Initialize(Func<ServiceRegistration, bool> predicate, Action<IServiceFactory, object> processor)
-        {
+        public void Initialize(Func<ServiceRegistration, bool> predicate, Action<IServiceFactory, object> processor) {
             initializers.Add(new Initializer { Predicate = predicate, Initialize = processor });
         }
 
@@ -2350,8 +2097,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The service type to register.</param>
         /// <param name="implementingType">The implementing type.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register(Type serviceType, Type implementingType, ILifetime lifetime)
-        {
+        public void Register(Type serviceType, Type implementingType, ILifetime lifetime) {
             Register(serviceType, implementingType, string.Empty, lifetime);
         }
 
@@ -2362,8 +2108,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="implementingType">The implementing type.</param>
         /// <param name="serviceName">The name of the service.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register(Type serviceType, Type implementingType, string serviceName, ILifetime lifetime)
-        {
+        public void Register(Type serviceType, Type implementingType, string serviceName, ILifetime lifetime) {
             RegisterService(serviceType, implementingType, lifetime, serviceName);
         }
 
@@ -2372,8 +2117,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <typeparam name="TImplementation">The implementing type.</typeparam>
-        public void Register<TService, TImplementation>() where TImplementation : TService
-        {
+        public void Register<TService, TImplementation>() where TImplementation : TService {
             Register(typeof(TService), typeof(TImplementation));
         }
 
@@ -2383,8 +2127,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <typeparam name="TImplementation">The implementing type.</typeparam>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register<TService, TImplementation>(ILifetime lifetime) where TImplementation : TService
-        {
+        public void Register<TService, TImplementation>(ILifetime lifetime) where TImplementation : TService {
             Register(typeof(TService), typeof(TImplementation), lifetime);
         }
 
@@ -2394,8 +2137,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <typeparam name="TImplementation">The implementing type.</typeparam>
         /// <param name="serviceName">The name of the service.</param>
-        public void Register<TService, TImplementation>(string serviceName) where TImplementation : TService
-        {
+        public void Register<TService, TImplementation>(string serviceName) where TImplementation : TService {
             Register<TService, TImplementation>(serviceName, lifetime: null);
         }
 
@@ -2406,11 +2148,10 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TImplementation">The implementing type.</typeparam>
         /// <param name="serviceName">The name of the service.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register<TService, TImplementation>(string serviceName, ILifetime lifetime) where TImplementation : TService
-        {
+        public void Register<TService, TImplementation>(string serviceName, ILifetime lifetime) where TImplementation : TService {
             Register(typeof(TService), typeof(TImplementation), serviceName, lifetime);
         }
-       
+
         /// <summary>
         /// Registers the <typeparamref name="TService"/> with the <paramref name="factory"/> that 
         /// describes the dependencies of the service. 
@@ -2418,8 +2159,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="factory">The lambdaExpression that describes the dependencies of the service.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, ILifetime lifetime)
-        {
+        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, ILifetime lifetime) {
             RegisterServiceFromLambdaExpression<TService>(factory, lifetime, string.Empty);
         }
 
@@ -2430,8 +2170,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="factory">The lambdaExpression that describes the dependencies of the service.</param>
         /// <param name="serviceName">The name of the service.</param>        
-        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, string serviceName)
-        {
+        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory, string serviceName) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, serviceName);
         }
 
@@ -2439,8 +2178,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers a concrete type as a service.
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
-        public void Register<TService>()
-        {
+        public void Register<TService>() {
             Register<TService, TService>();
         }
 
@@ -2448,8 +2186,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers a concrete type as a service.
         /// </summary>
         /// <param name="serviceType">The concrete type to register.</param>
-        public void Register(Type serviceType)
-        {
+        public void Register(Type serviceType) {
             Register(serviceType, serviceType);
         }
 
@@ -2458,8 +2195,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The concrete type to register.</param>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register(Type serviceType, ILifetime lifetime)
-        {
+        public void Register(Type serviceType, ILifetime lifetime) {
             Register(serviceType, serviceType, lifetime);
         }
 
@@ -2468,8 +2204,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="lifetime">The <see cref="ILifetime"/> instance that controls the lifetime of the registered service.</param>
-        public void Register<TService>(ILifetime lifetime)
-        {
+        public void Register<TService>(ILifetime lifetime) {
             Register<TService, TService>(lifetime);
         }
 
@@ -2479,8 +2214,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="instance">The instance returned when this service is requested.</param>
         /// <param name="serviceName">The name of the service.</param>
-        public void RegisterInstance<TService>(TService instance, string serviceName)
-        {
+        public void RegisterInstance<TService>(TService instance, string serviceName) {
             RegisterInstance(typeof(TService), instance, serviceName);
         }
 
@@ -2489,8 +2223,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="instance">The instance returned when this service is requested.</param>
-        public void RegisterInstance<TService>(TService instance)
-        {
+        public void RegisterInstance<TService>(TService instance) {
             RegisterInstance(typeof(TService), instance);
         }
 
@@ -2499,19 +2232,17 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The service type to register.</param>
         /// <param name="instance">The instance returned when this service is requested.</param>
-        public void RegisterInstance(Type serviceType, object instance)
-        {
+        public void RegisterInstance(Type serviceType, object instance) {
             RegisterInstance(serviceType, instance, string.Empty);
         }
-       
+
         /// <summary>
         /// Registers the <paramref name="serviceType"/> with the given <paramref name="instance"/>. 
         /// </summary>
         /// <param name="serviceType">The service type to register.</param>
         /// <param name="instance">The instance returned when this service is requested.</param>
         /// <param name="serviceName">The name of the service.</param>
-        public void RegisterInstance(Type serviceType, object instance, string serviceName)
-        {
+        public void RegisterInstance(Type serviceType, object instance, string serviceName) {
             Ensure.IsNotNull(instance, "instance");
             Ensure.IsNotNull(serviceType, "serviceType");
             Ensure.IsNotNull(serviceName, "serviceName");
@@ -2524,8 +2255,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The service type to register.</typeparam>
         /// <param name="factory">The lambdaExpression that describes the dependencies of the service.</param>       
-        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory)
-        {
+        public void Register<TService>(Expression<Func<IServiceFactory, TService>> factory) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, string.Empty);
         }
 
@@ -2536,8 +2266,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="T">The parameter type.</typeparam>
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
-        public void Register<T, TService>(Expression<Func<IServiceFactory, T, TService>> factory)
-        {
+        public void Register<T, TService>(Expression<Func<IServiceFactory, T, TService>> factory) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, string.Empty);
         }
 
@@ -2549,8 +2278,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param> 
         /// <param name="serviceName">The name of the service.</param>        
-        public void Register<T, TService>(Expression<Func<IServiceFactory, T, TService>> factory, string serviceName)
-        {
+        public void Register<T, TService>(Expression<Func<IServiceFactory, T, TService>> factory, string serviceName) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, serviceName);
         }
 
@@ -2562,8 +2290,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="T2">The type of the second parameter.</typeparam>
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
-        public void Register<T1, T2, TService>(Expression<Func<IServiceFactory, T1, T2, TService>> factory)
-        {
+        public void Register<T1, T2, TService>(Expression<Func<IServiceFactory, T1, T2, TService>> factory) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, string.Empty);
         }
 
@@ -2576,8 +2303,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
         /// <param name="serviceName">The name of the service.</param>
-        public void Register<T1, T2, TService>(Expression<Func<IServiceFactory, T1, T2, TService>> factory, string serviceName)
-        {
+        public void Register<T1, T2, TService>(Expression<Func<IServiceFactory, T1, T2, TService>> factory, string serviceName) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, serviceName);
         }
 
@@ -2590,8 +2316,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="T3">The type of the third parameter.</typeparam>
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
-        public void Register<T1, T2, T3, TService>(Expression<Func<IServiceFactory, T1, T2, T3, TService>> factory)
-        {
+        public void Register<T1, T2, T3, TService>(Expression<Func<IServiceFactory, T1, T2, T3, TService>> factory) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, string.Empty);
         }
 
@@ -2605,8 +2330,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
         /// <param name="serviceName">The name of the service.</param>
-        public void Register<T1, T2, T3, TService>(Expression<Func<IServiceFactory, T1, T2, T3, TService>> factory, string serviceName)
-        {
+        public void Register<T1, T2, T3, TService>(Expression<Func<IServiceFactory, T1, T2, T3, TService>> factory, string serviceName) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, serviceName);
         }
 
@@ -2620,8 +2344,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="T4">The type of the fourth parameter.</typeparam>
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
-        public void Register<T1, T2, T3, T4, TService>(Expression<Func<IServiceFactory, T1, T2, T3, T4, TService>> factory)
-        {
+        public void Register<T1, T2, T3, T4, TService>(Expression<Func<IServiceFactory, T1, T2, T3, T4, TService>> factory) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, string.Empty);
         }
 
@@ -2636,8 +2359,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The service type to register.</typeparam>        
         /// <param name="factory">A factory delegate used to create the <typeparamref name="TService"/> instance.</param>    
         /// <param name="serviceName">The name of the service.</param>
-        public void Register<T1, T2, T3, T4, TService>(Expression<Func<IServiceFactory, T1, T2, T3, T4, TService>> factory, string serviceName)
-        {
+        public void Register<T1, T2, T3, T4, TService>(Expression<Func<IServiceFactory, T1, T2, T3, T4, TService>> factory, string serviceName) {
             RegisterServiceFromLambdaExpression<TService>(factory, null, serviceName);
         }
 
@@ -2647,8 +2369,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The service type to register.</param>
         /// <param name="implementingType">The implementing type.</param>
         /// <param name="serviceName">The name of the service.</param>
-        public void Register(Type serviceType, Type implementingType, string serviceName)
-        {
+        public void Register(Type serviceType, Type implementingType, string serviceName) {
             RegisterService(serviceType, implementingType, null, serviceName);
         }
 
@@ -2657,8 +2378,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The service type to register.</param>
         /// <param name="implementingType">The implementing type.</param>
-        public void Register(Type serviceType, Type implementingType)
-        {            
+        public void Register(Type serviceType, Type implementingType) {
             RegisterService(serviceType, implementingType, null, string.Empty);
         }
 
@@ -2667,15 +2387,11 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The type of the requested service.</param>
         /// <returns>The requested service instance.</returns>
-        public object GetInstance(Type serviceType)
-        {
+        public object GetInstance(Type serviceType) {
             var instanceDelegate = delegates.Search(serviceType);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateDefaultDelegate(serviceType, throwError: true);
-            }
+            if (instanceDelegate == null) instanceDelegate = CreateDefaultDelegate(serviceType, throwError: true);
 
-            return instanceDelegate(constants.Items);            
+            return instanceDelegate(constants.Items);
         }
 
         /// <summary>
@@ -2684,17 +2400,13 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The type of the requested service.</param>
         /// <param name="arguments">The arguments to be passed to the target instance.</param>
         /// <returns>The requested service instance.</returns>
-        public object GetInstance(Type serviceType, object[] arguments)
-        {
+        public object GetInstance(Type serviceType, object[] arguments) {
             var instanceDelegate = delegates.Search(serviceType);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateDefaultDelegate(serviceType, throwError: true);
-            }
+            if (instanceDelegate == null) instanceDelegate = CreateDefaultDelegate(serviceType, throwError: true);
 
             object[] constantsWithArguments = constants.Items.Concat(new object[] { arguments }).ToArray();
 
-            return instanceDelegate(constantsWithArguments);                         
+            return instanceDelegate(constantsWithArguments);
         }
 
         /// <summary>
@@ -2704,18 +2416,14 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceName">The name of the requested service.</param>
         /// <param name="arguments">The arguments to be passed to the target instance.</param>        
         /// <returns>The requested service instance.</returns>
-        public object GetInstance(Type serviceType, string serviceName, object[] arguments)
-        {
+        public object GetInstance(Type serviceType, string serviceName, object[] arguments) {
             var key = Tuple.Create(serviceType, serviceName);
             var instanceDelegate = namedDelegates.Search(key);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateNamedDelegate(key, throwError: true);
-            }
-            
+            if (instanceDelegate == null) instanceDelegate = CreateNamedDelegate(key, throwError: true);
+
             object[] constantsWithArguments = constants.Items.Concat(new object[] { arguments }).ToArray();
 
-            return instanceDelegate(constantsWithArguments);                                    
+            return instanceDelegate(constantsWithArguments);
         }
 
         /// <summary>
@@ -2723,8 +2431,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The type of the requested service.</typeparam>
         /// <returns>The requested service instance.</returns>
-        public TService GetInstance<TService>()
-        {
+        public TService GetInstance<TService>() {
             return (TService)GetInstance(typeof(TService));
         }
 
@@ -2734,8 +2441,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The type of the requested service.</typeparam>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<TService>(string serviceName)
-        {
+        public TService GetInstance<TService>(string serviceName) {
             return (TService)GetInstance(typeof(TService), serviceName);
         }
 
@@ -2746,8 +2452,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The type of the requested service.</typeparam>        
         /// <param name="value">The argument value.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T, TService>(T value)
-        {
+        public TService GetInstance<T, TService>(T value) {
             return (TService)GetInstance(typeof(TService), new object[] { value });
         }
 
@@ -2759,8 +2464,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="value">The argument value.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T, TService>(T value, string serviceName)
-        {
+        public TService GetInstance<T, TService>(T value, string serviceName) {
             return (TService)GetInstance(typeof(TService), serviceName, new object[] { value });
         }
 
@@ -2773,8 +2477,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg1">The first argument value.</param>
         /// <param name="arg2">The second argument value.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, TService>(T1 arg1, T2 arg2)
-        {
+        public TService GetInstance<T1, T2, TService>(T1 arg1, T2 arg2) {
             return (TService)GetInstance(typeof(TService), new object[] { arg1, arg2 });
         }
 
@@ -2788,8 +2491,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg2">The second argument value.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, TService>(T1 arg1, T2 arg2, string serviceName)
-        {
+        public TService GetInstance<T1, T2, TService>(T1 arg1, T2 arg2, string serviceName) {
             return (TService)GetInstance(typeof(TService), serviceName, new object[] { arg1, arg2 });
         }
 
@@ -2804,8 +2506,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg2">The second argument value.</param>
         /// <param name="arg3">The third argument value.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, T3, TService>(T1 arg1, T2 arg2, T3 arg3)
-        {
+        public TService GetInstance<T1, T2, T3, TService>(T1 arg1, T2 arg2, T3 arg3) {
             return (TService)GetInstance(typeof(TService), new object[] { arg1, arg2, arg3 });
         }
 
@@ -2821,8 +2522,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg3">The third argument value.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, T3, TService>(T1 arg1, T2 arg2, T3 arg3, string serviceName)
-        {
+        public TService GetInstance<T1, T2, T3, TService>(T1 arg1, T2 arg2, T3 arg3, string serviceName) {
             return (TService)GetInstance(typeof(TService), serviceName, new object[] { arg1, arg2, arg3 });
         }
 
@@ -2839,8 +2539,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg3">The third argument value.</param>
         /// <param name="arg4">The fourth argument value.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, T3, T4, TService>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-        {
+        public TService GetInstance<T1, T2, T3, T4, TService>(T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
             return (TService)GetInstance(typeof(TService), new object[] { arg1, arg2, arg3, arg4 });
         }
 
@@ -2858,8 +2557,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="arg4">The fourth argument value.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>    
-        public TService GetInstance<T1, T2, T3, T4, TService>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, string serviceName)
-        {
+        public TService GetInstance<T1, T2, T3, T4, TService>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, string serviceName) {
             return (TService)GetInstance(typeof(TService), serviceName, new object[] { arg1, arg2, arg3, arg4 });
         }
 
@@ -2868,15 +2566,11 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The type of the requested service.</param>
         /// <returns>The requested service instance if available, otherwise null.</returns>
-        public object TryGetInstance(Type serviceType)
-        {
+        public object TryGetInstance(Type serviceType) {
             var instanceDelegate = delegates.Search(serviceType);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateDefaultDelegate(serviceType, throwError: false);
-            }
+            if (instanceDelegate == null) instanceDelegate = CreateDefaultDelegate(serviceType, throwError: false);
 
-            return instanceDelegate(constants.Items); 
+            return instanceDelegate(constants.Items);
         }
 
         /// <summary>
@@ -2885,16 +2579,12 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The type of the requested service.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance if available, otherwise null.</returns>
-        public object TryGetInstance(Type serviceType, string serviceName)
-        {
+        public object TryGetInstance(Type serviceType, string serviceName) {
             var key = Tuple.Create(serviceType, serviceName);
             var instanceDelegate = namedDelegates.Search(key);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateNamedDelegate(key, throwError: false);
-            }
+            if (instanceDelegate == null) instanceDelegate = CreateNamedDelegate(key, throwError: false);
 
-            return instanceDelegate(constants.Items);       
+            return instanceDelegate(constants.Items);
         }
 
         /// <summary>
@@ -2902,8 +2592,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The type of the requested service.</typeparam>
         /// <returns>The requested service instance if available, otherwise default(T).</returns>
-        public TService TryGetInstance<TService>()
-        {
+        public TService TryGetInstance<TService>() {
             return (TService)TryGetInstance(typeof(TService));
         }
 
@@ -2913,8 +2602,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The type of the requested service.</typeparam>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance if available, otherwise default(T).</returns>
-        public TService TryGetInstance<TService>(string serviceName)
-        {
+        public TService TryGetInstance<TService>(string serviceName) {
             return (TService)TryGetInstance(typeof(TService), serviceName);
         }
 
@@ -2924,16 +2612,12 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceType">The type of the requested service.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <returns>The requested service instance.</returns>
-        public object GetInstance(Type serviceType, string serviceName)
-        {
+        public object GetInstance(Type serviceType, string serviceName) {
             var key = Tuple.Create(serviceType, serviceName);
             var instanceDelegate = namedDelegates.Search(key);
-            if (instanceDelegate == null)
-            {
-                instanceDelegate = CreateNamedDelegate(key, throwError: true);
-            }
+            if (instanceDelegate == null) instanceDelegate = CreateNamedDelegate(key, throwError: true);
 
-            return instanceDelegate(constants.Items);              
+            return instanceDelegate(constants.Items);
         }
 
         /// <summary>
@@ -2941,8 +2625,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The type of services to resolve.</param>
         /// <returns>A list that contains all implementations of the <paramref name="serviceType"/>.</returns>
-        public IEnumerable<object> GetAllInstances(Type serviceType)
-        {
+        public IEnumerable<object> GetAllInstances(Type serviceType) {
             return (IEnumerable<object>)GetInstance(serviceType.GetEnumerableType());
         }
 
@@ -2951,8 +2634,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <typeparam name="TService">The type of services to resolve.</typeparam>
         /// <returns>A list that contains all implementations of the <typeparamref name="TService"/> type.</returns>
-        public IEnumerable<TService> GetAllInstances<TService>()
-        {
+        public IEnumerable<TService> GetAllInstances<TService>() {
             return GetInstance<IEnumerable<TService>>();
         }
 
@@ -2962,8 +2644,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <typeparam name="TService">The type of class for which to create an instance.</typeparam>
         /// <returns>An instance of <typeparamref name="TService"/>.</returns>
         /// <remarks>The concrete type will be registered if not already registered with the container.</remarks>
-        public TService Create<TService>() where TService : class
-        {
+        public TService Create<TService>() where TService : class {
             Register(typeof(TService));
             return GetInstance<TService>();
         }
@@ -2973,8 +2654,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceType">The type of class for which to create an instance.</param>
         /// <returns>An instance of the <paramref name="serviceType"/>.</returns>
-        public object Create(Type serviceType)
-        {
+        public object Create(Type serviceType) {
             Register(serviceType);
             return GetInstance(serviceType);
         }
@@ -2982,23 +2662,18 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Disposes any services registered using the <see cref="PerContainerLifetime"/>.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             var disposableLifetimeInstances = availableServices.Values.SelectMany(t => t.Values)
                 .Where(sr => sr.Lifetime != null)
                 .Select(sr => sr.Lifetime)
                 .Where(lt => lt is IDisposable).Cast<IDisposable>();
-            foreach (var disposableLifetimeInstance in disposableLifetimeInstances)
-            {
-                disposableLifetimeInstance.Dispose();
-            }            
+            foreach (var disposableLifetimeInstance in disposableLifetimeInstances) disposableLifetimeInstance.Dispose();
         }
 
         /// <summary>
         /// Invalidates the container and causes the compiler to "recompile".
         /// </summary>
-        public void Invalidate()
-        {
+        public void Invalidate() {
             Interlocked.Exchange(ref delegates, ImmutableHashTable<Type, GetInstanceDelegate>.Empty);
             Interlocked.Exchange(ref namedDelegates, ImmutableHashTable<Tuple<Type, string>, GetInstanceDelegate>.Empty);
             Interlocked.Exchange(ref propertyInjectionDelegates, ImmutableHashTree<Type, Func<object[], object, object>>.Empty);
@@ -3007,51 +2682,45 @@ namespace Restival.Api.WebApi.LightInject
             isLocked = false;
         }
 
-        private static void EmitNewArray(IList<Action<IEmitter>> emitMethods, Type elementType, IEmitter emitter)
-        {
+        private static void EmitNewArray(IList<Action<IEmitter>> emitMethods, Type elementType, IEmitter emitter) {
             LocalBuilder array = emitter.DeclareLocal(elementType.MakeArrayType());
-            emitter.Push(emitMethods.Count);            
+            emitter.Push(emitMethods.Count);
             emitter.PushNewArray(elementType);
-            emitter.Store(array);            
+            emitter.Store(array);
 
-            for (int index = 0; index < emitMethods.Count; index++)
-            {                
+            for (int index = 0; index < emitMethods.Count; index++) {
                 emitter.Push(array);
                 emitter.Push(index);
-                emitMethods[index](emitter);                
-                emitter.UnboxOrCast(elementType);                                    
+                emitMethods[index](emitter);
+                emitter.UnboxOrCast(elementType);
                 emitter.Emit(OpCodes.Stelem, elementType);
             }
 
             emitter.Push(array);
         }
-        
-        private static ILifetime CloneLifeTime(ILifetime lifetime)
-        {
+
+        private static ILifetime CloneLifeTime(ILifetime lifetime) {
             return lifetime == null ? null : (ILifetime)Activator.CreateInstance(lifetime.GetType());
         }
 
         private static ConstructorDependency GetConstructorDependencyThatRepresentsDecoratorTarget(
-            DecoratorRegistration decoratorRegistration, ConstructionInfo constructionInfo)
-        {
+            DecoratorRegistration decoratorRegistration, ConstructionInfo constructionInfo) {
             var constructorDependency =
                 constructionInfo.ConstructorDependencies.FirstOrDefault(
                     cd =>
-                    cd.ServiceType == decoratorRegistration.ServiceType
-                    || (cd.ServiceType.IsLazy()
-                        && cd.ServiceType.GetGenericTypeArguments()[0] == decoratorRegistration.ServiceType));
+                        cd.ServiceType == decoratorRegistration.ServiceType
+                            || (cd.ServiceType.IsLazy()
+                                && cd.ServiceType.GetGenericTypeArguments()[0] == decoratorRegistration.ServiceType));
             return constructorDependency;
         }
 
         private static DecoratorRegistration CreateClosedGenericDecoratorRegistration(
-            ServiceRegistration serviceRegistration, DecoratorRegistration openGenericDecorator)
-        {
+            ServiceRegistration serviceRegistration, DecoratorRegistration openGenericDecorator) {
             Type implementingType = openGenericDecorator.ImplementingType;
             Type[] genericTypeArguments = serviceRegistration.ServiceType.GetGenericTypeArguments();
             Type closedGenericDecoratorType = implementingType.MakeGenericType(genericTypeArguments);
-                               
-            var decoratorInfo = new DecoratorRegistration
-            {
+
+            var decoratorInfo = new DecoratorRegistration {
                 ServiceType = serviceRegistration.ServiceType,
                 ImplementingType = closedGenericDecoratorType,
                 CanDecorate = openGenericDecorator.CanDecorate,
@@ -3060,38 +2729,24 @@ namespace Restival.Api.WebApi.LightInject
             return decoratorInfo;
         }
 
-        private static Type TryMakeGenericType(Type implementingType, Type[] closedGenericArguments)
-        {
-            try
-            {
-                return implementingType.MakeGenericType(closedGenericArguments);
-            }
-            catch (Exception)
-            {
+        private static Type TryMakeGenericType(Type implementingType, Type[] closedGenericArguments) {
+            try { return implementingType.MakeGenericType(closedGenericArguments); } catch (Exception) {
                 return null;
             }
         }
-       
-        private void EmitEnumerable(IList<Action<IEmitter>> serviceEmitters, Type elementType, IEmitter emitter)
-        {
-            EmitNewArray(serviceEmitters, elementType, emitter);                       
+
+        private void EmitEnumerable(IList<Action<IEmitter>> serviceEmitters, Type elementType, IEmitter emitter) {
+            EmitNewArray(serviceEmitters, elementType, emitter);
         }
 
-        private Func<object[], object, object> CreatePropertyInjectionDelegate(Type concreteType)
-        {
-            lock (lockObject)
-            {
+        private Func<object[], object, object> CreatePropertyInjectionDelegate(Type concreteType) {
+            lock (lockObject) {
                 IMethodSkeleton methodSkeleton = methodSkeletonFactory(typeof(object), new[] { typeof(object[]), typeof(object) });
-                ConstructionInfo constructionInfo = GetContructionInfoForConcreteType(concreteType);                
+                ConstructionInfo constructionInfo = GetContructionInfoForConcreteType(concreteType);
                 var emitter = methodSkeleton.GetEmitter();
                 emitter.PushArgument(1);
-                emitter.Cast(concreteType);                
-                try
-                {
-                    EmitPropertyDependencies(constructionInfo, emitter);
-                }
-                catch (Exception)
-                {
+                emitter.Cast(concreteType);
+                try { EmitPropertyDependencies(constructionInfo, emitter); } catch (Exception) {
                     dependencyStack.Clear();
                     throw;
                 }
@@ -3100,26 +2755,22 @@ namespace Restival.Api.WebApi.LightInject
 
                 isLocked = true;
 
-                return (Func<object[], object, object>)methodSkeleton.CreateDelegate(typeof(Func<object[], object, object>));                                        
-            }            
+                return (Func<object[], object, object>)methodSkeleton.CreateDelegate(typeof(Func<object[], object, object>));
+            }
         }
 
-        private ConstructionInfo GetContructionInfoForConcreteType(Type concreteType)
-        {
-            var serviceRegistration = GetServiceRegistrationForConcreteType(concreteType);                        
+        private ConstructionInfo GetContructionInfoForConcreteType(Type concreteType) {
+            var serviceRegistration = GetServiceRegistrationForConcreteType(concreteType);
             return GetConstructionInfo(serviceRegistration);
         }
 
-        private ServiceRegistration GetServiceRegistrationForConcreteType(Type concreteType)
-        {
-            var services = GetAvailableServices(concreteType);            
-            return services.GetOrAdd(string.Empty, s => CreateServiceRegistrationBasedOnConcreteType(concreteType));            
+        private ServiceRegistration GetServiceRegistrationForConcreteType(Type concreteType) {
+            var services = GetAvailableServices(concreteType);
+            return services.GetOrAdd(string.Empty, s => CreateServiceRegistrationBasedOnConcreteType(concreteType));
         }
 
-        private ServiceRegistration CreateServiceRegistrationBasedOnConcreteType(Type type)
-        {
-            var serviceRegistration = new ServiceRegistration
-            {
+        private ServiceRegistration CreateServiceRegistrationBasedOnConcreteType(Type type) {
+            var serviceRegistration = new ServiceRegistration {
                 ServiceType = type,
                 ImplementingType = type,
                 ServiceName = string.Empty,
@@ -3128,18 +2779,15 @@ namespace Restival.Api.WebApi.LightInject
             return serviceRegistration;
         }
 
-        private ConstructionInfoProvider CreateConstructionInfoProvider()
-        {
+        private ConstructionInfoProvider CreateConstructionInfoProvider() {
             return new ConstructionInfoProvider(CreateConstructionInfoBuilder());
         }
 
-        private ConstructionInfoBuilder CreateConstructionInfoBuilder()
-        {
+        private ConstructionInfoBuilder CreateConstructionInfoBuilder() {
             return new ConstructionInfoBuilder(() => new LambdaConstructionInfoBuilder(), CreateTypeConstructionInfoBuilder);
         }
 
-        private TypeConstructionInfoBuilder CreateTypeConstructionInfoBuilder()
-        {
+        private TypeConstructionInfoBuilder CreateTypeConstructionInfoBuilder() {
             return new TypeConstructionInfoBuilder(
                 ConstructorSelector,
                 ConstructorDependencySelector,
@@ -3148,78 +2796,58 @@ namespace Restival.Api.WebApi.LightInject
                 GetPropertyDependencyExpression);
         }
 
-        private Expression GetConstructorDependencyExpression(Type type, string serviceName)
-        {
+        private Expression GetConstructorDependencyExpression(Type type, string serviceName) {
             Expression expression;
             GetConstructorDependencyFactories(type).TryGetValue(serviceName, out expression);
             return expression;
         }
 
-        private Expression GetPropertyDependencyExpression(Type type, string serviceName)
-        {
+        private Expression GetPropertyDependencyExpression(Type type, string serviceName) {
             Expression expression;
             GetPropertyDependencyFactories(type).TryGetValue(serviceName, out expression);
             return expression;
         }
 
-        private GetInstanceDelegate CreateDynamicMethodDelegate(Action<IEmitter> serviceEmitter)
-        {
+        private GetInstanceDelegate CreateDynamicMethodDelegate(Action<IEmitter> serviceEmitter) {
             var methodSkeleton = methodSkeletonFactory(typeof(object), new[] { typeof(object[]) });
             IEmitter emitter = methodSkeleton.GetEmitter();
             serviceEmitter(emitter);
-            if (emitter.StackType.IsValueType())
-            {
-                emitter.Emit(OpCodes.Box, emitter.StackType);
-            }
+            if (emitter.StackType.IsValueType()) emitter.Emit(OpCodes.Box, emitter.StackType);
 
             Instruction lastInstruction = emitter.Instructions.Last();
 
-            if (lastInstruction.Code == OpCodes.Castclass)
-            {
-                emitter.Instructions.Remove(lastInstruction);
-            }
+            if (lastInstruction.Code == OpCodes.Castclass) emitter.Instructions.Remove(lastInstruction);
 
             emitter.Return();
 
             isLocked = true;
 
-            return (GetInstanceDelegate)methodSkeleton.CreateDelegate(typeof(GetInstanceDelegate));                                    
+            return (GetInstanceDelegate)methodSkeleton.CreateDelegate(typeof(GetInstanceDelegate));
         }
 
-        private Func<object> WrapAsFuncDelegate(GetInstanceDelegate instanceDelegate)
-        {
+        private Func<object> WrapAsFuncDelegate(GetInstanceDelegate instanceDelegate) {
             return () => instanceDelegate(constants.Items);
         }
-       
-        private Action<IEmitter> GetEmitMethod(Type serviceType, string serviceName)
-        {           
+
+        private Action<IEmitter> GetEmitMethod(Type serviceType, string serviceName) {
             Action<IEmitter> emitMethod = GetRegisteredEmitMethod(serviceType, serviceName);
 
-            if (emitMethod == null)
-            {
-                emitMethod = TryGetFallbackEmitMethod(serviceType, serviceName);
+            if (emitMethod == null) emitMethod = TryGetFallbackEmitMethod(serviceType, serviceName);
+
+            if (emitMethod == null) {
+                AssemblyScanner.Scan(serviceType.GetAssembly(), this);
+                emitMethod = GetRegisteredEmitMethod(serviceType, serviceName);
             }
 
-            if (emitMethod == null)
-            {
-                AssemblyScanner.Scan(serviceType.GetAssembly(), this);                
-                emitMethod = GetRegisteredEmitMethod(serviceType, serviceName);                
-            }
-
-            if (emitMethod == null)
-            {
-                emitMethod = TryGetFallbackEmitMethod(serviceType, serviceName);
-            }
+            if (emitMethod == null) emitMethod = TryGetFallbackEmitMethod(serviceType, serviceName);
 
             return CreateEmitMethodWrapper(emitMethod, serviceType, serviceName);
         }
 
-        private Action<IEmitter> TryGetFallbackEmitMethod(Type serviceType, string serviceName)
-        {
+        private Action<IEmitter> TryGetFallbackEmitMethod(Type serviceType, string serviceName) {
             Action<IEmitter> emitMethod = null;
             var rule = factoryRules.Items.FirstOrDefault(r => r.CanCreateInstance(serviceType, serviceName));
-            if (rule != null)
-            {
+            if (rule != null) {
                 emitMethod = CreateServiceEmitterBasedOnFactoryRule(rule, serviceType, serviceName);
                 UpdateEmitMethod(serviceType, serviceName, emitMethod);
             }
@@ -3227,134 +2855,92 @@ namespace Restival.Api.WebApi.LightInject
             return emitMethod;
         }
 
-        private Action<IEmitter> CreateEmitMethodWrapper(Action<IEmitter> emitter, Type serviceType, string serviceName)
-        {
-            if (emitter == null)
-            {
-                return null;
-            }
+        private Action<IEmitter> CreateEmitMethodWrapper(Action<IEmitter> emitter, Type serviceType, string serviceName) {
+            if (emitter == null) return null;
 
-            return ms =>
-            {
-                if (dependencyStack.Contains(emitter))
-                {
+            return ms => {
+                if (dependencyStack.Contains(emitter)) {
                     throw new InvalidOperationException(
                         string.Format("Recursive dependency detected: ServiceType:{0}, ServiceName:{1}]", serviceType, serviceName));
                 }
 
                 dependencyStack.Push(emitter);
-                try
-                {
-                    emitter(ms);
-                }
-                finally
-                {
-                    if (dependencyStack.Count > 0)
-                    {
-                        dependencyStack.Pop();
-                    }
-                }
+                try { emitter(ms); } finally { if (dependencyStack.Count > 0) dependencyStack.Pop(); }
             };
         }
 
-        private Action<IEmitter> GetRegisteredEmitMethod(Type serviceType, string serviceName)
-        {
+        private Action<IEmitter> GetRegisteredEmitMethod(Type serviceType, string serviceName) {
             Action<IEmitter> emitMethod;
             var registrations = GetEmitMethods(serviceType);
             registrations.TryGetValue(serviceName, out emitMethod);
             return emitMethod ?? CreateEmitMethodForUnknownService(serviceType, serviceName);
         }
 
-        private void UpdateEmitMethod(Type serviceType, string serviceName, Action<IEmitter> emitMethod)
-        {
-            if (emitMethod != null)
-            {
-                GetEmitMethods(serviceType).AddOrUpdate(serviceName, s => emitMethod, (s, m) => emitMethod);
-            }
+        private void UpdateEmitMethod(Type serviceType, string serviceName, Action<IEmitter> emitMethod) {
+            if (emitMethod != null) GetEmitMethods(serviceType).AddOrUpdate(serviceName, s => emitMethod, (s, m) => emitMethod);
         }
-        
-        private ServiceRegistration AddServiceRegistration(ServiceRegistration serviceRegistration)
-        {
+
+        private ServiceRegistration AddServiceRegistration(ServiceRegistration serviceRegistration) {
             var emitDelegate = ResolveEmitMethod(serviceRegistration);
-            GetEmitMethods(serviceRegistration.ServiceType).TryAdd(serviceRegistration.ServiceName, emitDelegate);                
+            GetEmitMethods(serviceRegistration.ServiceType).TryAdd(serviceRegistration.ServiceName, emitDelegate);
             return serviceRegistration;
         }
 
-        private ServiceRegistration UpdateServiceRegistration(ServiceRegistration existingRegistration, ServiceRegistration newRegistration)
-        {
-            if (existingRegistration.IsReadOnly || isLocked)
-            {
-                return existingRegistration;
-            }
+        private ServiceRegistration UpdateServiceRegistration(ServiceRegistration existingRegistration, ServiceRegistration newRegistration) {
+            if (existingRegistration.IsReadOnly || isLocked) return existingRegistration;
 
             Invalidate();
-            Action<IEmitter> emitMethod = ResolveEmitMethod(newRegistration);            
-            
+            Action<IEmitter> emitMethod = ResolveEmitMethod(newRegistration);
+
             var serviceEmitters = GetEmitMethods(newRegistration.ServiceType);
-            serviceEmitters[newRegistration.ServiceName] = emitMethod;                                               
+            serviceEmitters[newRegistration.ServiceName] = emitMethod;
             return newRegistration;
         }
 
-        private void EmitNewInstanceWithDecorators(ServiceRegistration serviceRegistration, IEmitter emitter)
-        {
+        private void EmitNewInstanceWithDecorators(ServiceRegistration serviceRegistration, IEmitter emitter) {
             var serviceOverrides = overrides.Items.Where(so => so.CanOverride(serviceRegistration)).ToArray();
-            foreach (var serviceOverride in serviceOverrides)
-            {
-                serviceRegistration = serviceOverride.ServiceRegistrationFactory(this, serviceRegistration);
-            }
-                                   
+            foreach (var serviceOverride in serviceOverrides) serviceRegistration = serviceOverride.ServiceRegistrationFactory(this, serviceRegistration);
+
             var serviceDecorators = GetDecorators(serviceRegistration);
-            if (serviceDecorators.Length > 0)
-            {
-                EmitDecorators(serviceRegistration, serviceDecorators, emitter, dm => EmitNewInstance(serviceRegistration, dm));
-            }
-            else
-            {
-                EmitNewInstance(serviceRegistration, emitter);
-            }
+            if (serviceDecorators.Length > 0) EmitDecorators(serviceRegistration, serviceDecorators, emitter, dm => EmitNewInstance(serviceRegistration, dm));
+            else EmitNewInstance(serviceRegistration, emitter);
         }
 
-        private DecoratorRegistration[] GetDecorators(ServiceRegistration serviceRegistration)
-        {
-            var registeredDecorators = decorators.Items.Where(d => d.ServiceType == serviceRegistration.ServiceType).ToList();            
+        private DecoratorRegistration[] GetDecorators(ServiceRegistration serviceRegistration) {
+            var registeredDecorators = decorators.Items.Where(d => d.ServiceType == serviceRegistration.ServiceType).ToList();
 
-            registeredDecorators.AddRange(GetOpenGenericDecoratorRegistrations(serviceRegistration));            
-            registeredDecorators.AddRange(GetDeferredDecoratorRegistrations(serviceRegistration));                      
+            registeredDecorators.AddRange(GetOpenGenericDecoratorRegistrations(serviceRegistration));
+            registeredDecorators.AddRange(GetDeferredDecoratorRegistrations(serviceRegistration));
             return registeredDecorators.OrderBy(d => d.Index).ToArray();
         }
 
         private IEnumerable<DecoratorRegistration> GetOpenGenericDecoratorRegistrations(
-            ServiceRegistration serviceRegistration)
-        {
+            ServiceRegistration serviceRegistration) {
             var registrations = new List<DecoratorRegistration>();
-            if (serviceRegistration.ServiceType.IsGenericType())
-            {
+            if (serviceRegistration.ServiceType.IsGenericType()) {
                 var openGenericServiceType = serviceRegistration.ServiceType.GetGenericTypeDefinition();
                 var openGenericDecorators = decorators.Items.Where(d => d.ServiceType == openGenericServiceType);
                 registrations.AddRange(
                     openGenericDecorators.Select(
                         openGenericDecorator =>
-                        CreateClosedGenericDecoratorRegistration(serviceRegistration, openGenericDecorator)));
+                            CreateClosedGenericDecoratorRegistration(serviceRegistration, openGenericDecorator)));
             }
 
             return registrations;
         }
 
         private IEnumerable<DecoratorRegistration> GetDeferredDecoratorRegistrations(
-            ServiceRegistration serviceRegistration)
-        {
+            ServiceRegistration serviceRegistration) {
             var registrations = new List<DecoratorRegistration>();
-            
+
             var deferredDecorators =
-                decorators.Items.Where(ds => ds.CanDecorate(serviceRegistration) && ds.HasDeferredImplementingType);            
-            foreach (var deferredDecorator in deferredDecorators)
-            {
-                var decoratorRegistration = new DecoratorRegistration
-                {
+                decorators.Items.Where(ds => ds.CanDecorate(serviceRegistration) && ds.HasDeferredImplementingType);
+            foreach (var deferredDecorator in deferredDecorators) {
+                var decoratorRegistration = new DecoratorRegistration {
                     ServiceType = serviceRegistration.ServiceType,
                     ImplementingType =
                         deferredDecorator.ImplementingTypeFactory(this, serviceRegistration),
-                    CanDecorate = sr => true, 
+                    CanDecorate = sr => true,
                     Index = deferredDecorator.Index
                 };
                 registrations.Add(decoratorRegistration);
@@ -3363,138 +2949,98 @@ namespace Restival.Api.WebApi.LightInject
             return registrations;
         }
 
-        private void EmitNewDecoratorInstance(DecoratorRegistration decoratorRegistration, IEmitter emitter, Action<IEmitter> pushInstance)
-        {
+        private void EmitNewDecoratorInstance(DecoratorRegistration decoratorRegistration, IEmitter emitter, Action<IEmitter> pushInstance) {
             ConstructionInfo constructionInfo = GetConstructionInfo(decoratorRegistration);
             var constructorDependency = GetConstructorDependencyThatRepresentsDecoratorTarget(
                 decoratorRegistration, constructionInfo);
-                
-            if (constructorDependency != null)
-            {
-                constructorDependency.IsDecoratorTarget = true;
-            }
 
-            if (constructionInfo.FactoryDelegate != null)
-            {
-                EmitNewDecoratorUsingFactoryDelegate(constructionInfo.FactoryDelegate, emitter, pushInstance);
-            }
-            else
-            {
-                EmitNewInstanceUsingImplementingType(emitter, constructionInfo, pushInstance);
-            }
+            if (constructorDependency != null) constructorDependency.IsDecoratorTarget = true;
+
+            if (constructionInfo.FactoryDelegate != null) EmitNewDecoratorUsingFactoryDelegate(constructionInfo.FactoryDelegate, emitter, pushInstance);
+            else EmitNewInstanceUsingImplementingType(emitter, constructionInfo, pushInstance);
         }
 
-        private void EmitNewDecoratorUsingFactoryDelegate(Delegate factoryDelegate, IEmitter emitter, Action<IEmitter> pushInstance)
-        {
+        private void EmitNewDecoratorUsingFactoryDelegate(Delegate factoryDelegate, IEmitter emitter, Action<IEmitter> pushInstance) {
             var factoryDelegateIndex = constants.Add(factoryDelegate);
             var serviceFactoryIndex = constants.Add(this);
             Type funcType = factoryDelegate.GetType();
             emitter.PushConstant(factoryDelegateIndex, funcType);
-            emitter.PushConstant(serviceFactoryIndex, typeof(IServiceFactory));            
-            pushInstance(emitter);            
+            emitter.PushConstant(serviceFactoryIndex, typeof(IServiceFactory));
+            pushInstance(emitter);
             MethodInfo invokeMethod = funcType.GetMethod("Invoke");
             emitter.Emit(OpCodes.Callvirt, invokeMethod);
         }
 
-        private void EmitNewInstance(ServiceRegistration serviceRegistration, IEmitter emitter)
-        {
-            if (serviceRegistration.Value != null)
-            {
+        private void EmitNewInstance(ServiceRegistration serviceRegistration, IEmitter emitter) {
+            if (serviceRegistration.Value != null) {
                 int index = constants.Add(serviceRegistration.Value);
                 Type serviceType = serviceRegistration.ServiceType;
-                emitter.PushConstant(index, serviceType);                
-            }
-            else
-            {
+                emitter.PushConstant(index, serviceType);
+            } else {
                 var constructionInfo = GetConstructionInfo(serviceRegistration);
 
-                if (constructionInfo.FactoryDelegate != null)
-                {
-                    EmitNewInstanceUsingFactoryDelegate(constructionInfo.FactoryDelegate, emitter);
-                }
-                else
-                {
-                    EmitNewInstanceUsingImplementingType(emitter, constructionInfo, null);
-                }    
+                if (constructionInfo.FactoryDelegate != null) EmitNewInstanceUsingFactoryDelegate(constructionInfo.FactoryDelegate, emitter);
+                else EmitNewInstanceUsingImplementingType(emitter, constructionInfo, null);
             }
 
             var processors = initializers.Items.Where(i => i.Predicate(serviceRegistration)).ToArray();
-            if (processors.Length == 0)
-            {
-                return;
-            }
+            if (processors.Length == 0) return;
 
             LocalBuilder instanceVariable = emitter.DeclareLocal(serviceRegistration.ServiceType);
             emitter.Store(instanceVariable);
-            foreach (var postProcessor in processors)
-            {
-                Type delegateType = postProcessor.Initialize.GetType();               
+            foreach (var postProcessor in processors) {
+                Type delegateType = postProcessor.Initialize.GetType();
                 var delegateIndex = constants.Add(postProcessor.Initialize);
                 emitter.PushConstant(delegateIndex, delegateType);
                 var serviceFactoryIndex = constants.Add(this);
                 emitter.PushConstant(serviceFactoryIndex, typeof(IServiceFactory));
-                emitter.Push(instanceVariable);                
+                emitter.Push(instanceVariable);
                 MethodInfo invokeMethod = delegateType.GetMethod("Invoke");
-                emitter.Call(invokeMethod);                
+                emitter.Call(invokeMethod);
             }
 
             emitter.Push(instanceVariable);
         }
 
-        private void EmitDecorators(ServiceRegistration serviceRegistration, IEnumerable<DecoratorRegistration> serviceDecorators, IEmitter emitter, Action<IEmitter> decoratorTargetEmitMethod)
-        {
-            foreach (DecoratorRegistration decorator in serviceDecorators)
-            {
-                if (!decorator.CanDecorate(serviceRegistration))
-                {
-                    continue;
-                }
-                
+        private void EmitDecorators(ServiceRegistration serviceRegistration, IEnumerable<DecoratorRegistration> serviceDecorators, IEmitter emitter, Action<IEmitter> decoratorTargetEmitMethod) {
+            foreach (DecoratorRegistration decorator in serviceDecorators) {
+                if (!decorator.CanDecorate(serviceRegistration)) continue;
+
                 Action<IEmitter> currentDecoratorTargetEmitter = decoratorTargetEmitMethod;
-                DecoratorRegistration currentDecorator = decorator;                
+                DecoratorRegistration currentDecorator = decorator;
                 decoratorTargetEmitMethod = e => EmitNewDecoratorInstance(currentDecorator, e, currentDecoratorTargetEmitter);
             }
 
-            decoratorTargetEmitMethod(emitter);            
+            decoratorTargetEmitMethod(emitter);
         }
 
-        private void EmitNewInstanceUsingImplementingType(IEmitter emitter, ConstructionInfo constructionInfo, Action<IEmitter> decoratorTargetEmitMethod)
-        {
+        private void EmitNewInstanceUsingImplementingType(IEmitter emitter, ConstructionInfo constructionInfo, Action<IEmitter> decoratorTargetEmitMethod) {
             EmitConstructorDependencies(constructionInfo, emitter, decoratorTargetEmitMethod);
             emitter.Emit(OpCodes.Newobj, constructionInfo.Constructor);
             EmitPropertyDependencies(constructionInfo, emitter);
         }
 
-        private void EmitNewInstanceUsingFactoryDelegate(Delegate factoryDelegate, IEmitter emitter)
-        {                        
+        private void EmitNewInstanceUsingFactoryDelegate(Delegate factoryDelegate, IEmitter emitter) {
             var factoryDelegateIndex = constants.Add(factoryDelegate);
             var serviceFactoryIndex = constants.Add(this);
             Type funcType = factoryDelegate.GetType();
             emitter.PushConstant(factoryDelegateIndex, funcType);
-            emitter.PushConstant(serviceFactoryIndex, typeof(IServiceFactory));            
-            if (factoryDelegate.GetMethodInfo().GetParameters().Length > 2)
-            {
+            emitter.PushConstant(serviceFactoryIndex, typeof(IServiceFactory));
+            if (factoryDelegate.GetMethodInfo().GetParameters().Length > 2) {
                 var parameters = factoryDelegate.GetMethodInfo().GetParameters().Skip(2).ToArray();
-                emitter.PushArguments(parameters);                
+                emitter.PushArguments(parameters);
             }
-                                   
-            MethodInfo invokeMethod = funcType.GetMethod("Invoke");            
+
+            MethodInfo invokeMethod = funcType.GetMethod("Invoke");
             emitter.Call(invokeMethod);
         }
 
-        private void EmitConstructorDependencies(ConstructionInfo constructionInfo, IEmitter emitter, Action<IEmitter> decoratorTargetEmitter)
-        {
-            foreach (ConstructorDependency dependency in constructionInfo.ConstructorDependencies)
-            {
-                if (!dependency.IsDecoratorTarget)
-                {
-                    EmitConstructorDependency(emitter, dependency);
-                }
-                else
-                {                    
-                    if (dependency.ServiceType.IsLazy())
-                    {
-                        Action<IEmitter> instanceEmitter = decoratorTargetEmitter;                        
+        private void EmitConstructorDependencies(ConstructionInfo constructionInfo, IEmitter emitter, Action<IEmitter> decoratorTargetEmitter) {
+            foreach (ConstructorDependency dependency in constructionInfo.ConstructorDependencies) {
+                if (!dependency.IsDecoratorTarget) EmitConstructorDependency(emitter, dependency);
+                else {
+                    if (dependency.ServiceType.IsLazy()) {
+                        Action<IEmitter> instanceEmitter = decoratorTargetEmitter;
                         decoratorTargetEmitter = CreateEmitMethodBasedOnLazyServiceRequest(
                             dependency.ServiceType, t => CreateTypedInstanceDelegate(instanceEmitter, t));
                     }
@@ -3504,8 +3050,7 @@ namespace Restival.Api.WebApi.LightInject
             }
         }
 
-        private Delegate CreateTypedInstanceDelegate(Action<IEmitter> emitter, Type serviceType)
-        {                        
+        private Delegate CreateTypedInstanceDelegate(Action<IEmitter> emitter, Type serviceType) {
             var openGenericMethod = GetType().GetPrivateMethod("CreateGenericDynamicMethodDelegate");
             var closedGenericMethod = openGenericMethod.MakeGenericMethod(serviceType);
             var del = WrapAsFuncDelegate(CreateDynamicMethodDelegate(emitter));
@@ -3514,195 +3059,112 @@ namespace Restival.Api.WebApi.LightInject
 
         // ReSharper disable UnusedMember.Local
         private Func<T> CreateGenericDynamicMethodDelegate<T>(Func<object> del)
-        // ReSharper restore UnusedMember.Local
-        {            
+            // ReSharper restore UnusedMember.Local
+        {
             return () => (T)del();
         }
-        
-        private void EmitConstructorDependency(IEmitter emitter, Dependency dependency)
-        {
+
+        private void EmitConstructorDependency(IEmitter emitter, Dependency dependency) {
             var emitMethod = GetEmitMethodForDependency(dependency);
-                        
-            try
-            {
-                emitMethod(emitter);                
-                emitter.UnboxOrCast(dependency.ServiceType);                                    
-            }
-            catch (InvalidOperationException ex)
-            {
+
+            try {
+                emitMethod(emitter);
+                emitter.UnboxOrCast(dependency.ServiceType);
+            } catch (InvalidOperationException ex) {
                 throw new InvalidOperationException(string.Format(UnresolvedDependencyError, dependency), ex);
             }
         }
 
-        private void EmitPropertyDependency(IEmitter emitter, PropertyDependency propertyDependency, LocalBuilder instanceVariable)
-        {
+        private void EmitPropertyDependency(IEmitter emitter, PropertyDependency propertyDependency, LocalBuilder instanceVariable) {
             var propertyDependencyEmitMethod = GetEmitMethodForDependency(propertyDependency);
 
-            if (propertyDependencyEmitMethod == null)
-            {
-                return;
-            }
+            if (propertyDependencyEmitMethod == null) return;
 
             emitter.Push(instanceVariable);
-            propertyDependencyEmitMethod(emitter);                
+            propertyDependencyEmitMethod(emitter);
             emitter.UnboxOrCast(propertyDependency.ServiceType);
             emitter.Call(propertyDependency.Property.GetSetMethod());
         }
 
-        private Action<IEmitter> GetEmitMethodForDependency(Dependency dependency)
-        {
-            if (dependency.FactoryExpression != null)
-            {
-                return skeleton => EmitDependencyUsingFactoryExpression(skeleton, dependency);
-            }
+        private Action<IEmitter> GetEmitMethodForDependency(Dependency dependency) {
+            if (dependency.FactoryExpression != null) return skeleton => EmitDependencyUsingFactoryExpression(skeleton, dependency);
 
             Action<IEmitter> emitter = GetEmitMethod(dependency.ServiceType, dependency.ServiceName);
-            if (emitter == null)
-            {
-                emitter = GetEmitMethod(dependency.ServiceType, dependency.Name);                
-                if (emitter == null && dependency.IsRequired)
-                {
-                    throw new InvalidOperationException(string.Format(UnresolvedDependencyError, dependency));
-                }
+            if (emitter == null) {
+                emitter = GetEmitMethod(dependency.ServiceType, dependency.Name);
+                if (emitter == null && dependency.IsRequired) throw new InvalidOperationException(string.Format(UnresolvedDependencyError, dependency));
             }
 
             return emitter;
         }
 
-        private void EmitDependencyUsingFactoryExpression(IEmitter emitter, Dependency dependency)
-        {
+        private void EmitDependencyUsingFactoryExpression(IEmitter emitter, Dependency dependency) {
             var actions = new List<Action<IEmitter>>();
             var parameterExpressions = dependency.FactoryExpression.AsEnumerable().Where(e => e is ParameterExpression).Distinct().Cast<ParameterExpression>().ToList();
-           
+
             Expression factoryExpression = dependency.FactoryExpression;
 
-            if (dependency.FactoryExpression.NodeType == ExpressionType.Lambda)
-            {
-                factoryExpression = ((LambdaExpression)factoryExpression).Body;
-            }
-           
-            foreach (var parametersExpression in parameterExpressions)
-            {
-                if (parametersExpression.Type == typeof(IServiceFactory))
-                {
-                    actions.Add(e => e.PushConstant(constants.Add(this), typeof(IServiceFactory)));
-                }
+            if (dependency.FactoryExpression.NodeType == ExpressionType.Lambda) factoryExpression = ((LambdaExpression)factoryExpression).Body;
 
-                if (parametersExpression.Type == typeof(ParameterInfo))
-                {
-                    actions.Add(e => e.PushConstant(constants.Add(((ConstructorDependency)dependency).Parameter), typeof(ParameterInfo)));
-                }
+            foreach (var parametersExpression in parameterExpressions) {
+                if (parametersExpression.Type == typeof(IServiceFactory)) actions.Add(e => e.PushConstant(constants.Add(this), typeof(IServiceFactory)));
 
-                if (parametersExpression.Type == typeof(PropertyInfo))
-                {
-                    actions.Add(e => e.PushConstant(constants.Add(((PropertyDependency)dependency).Property), typeof(PropertyInfo)));
-                }
+                if (parametersExpression.Type == typeof(ParameterInfo)) actions.Add(e => e.PushConstant(constants.Add(((ConstructorDependency)dependency).Parameter), typeof(ParameterInfo)));
+
+                if (parametersExpression.Type == typeof(PropertyInfo)) actions.Add(e => e.PushConstant(constants.Add(((PropertyDependency)dependency).Property), typeof(PropertyInfo)));
             }
-            
+
             var lambda = Expression.Lambda(factoryExpression, parameterExpressions.ToArray()).Compile();
 
             MethodInfo methodInfo = lambda.GetType().GetMethod("Invoke");
             emitter.PushConstant(constants.Add(lambda), lambda.GetType());
-            foreach (var action in actions)
-            {
-                action(emitter);
-            }
+            foreach (var action in actions) action(emitter);
 
             emitter.Call(methodInfo);
-        }        
-
-        private void EmitPropertyDependencies(ConstructionInfo constructionInfo, IEmitter emitter)
-        {
-            if (constructionInfo.PropertyDependencies.Count == 0)
-            {
-                return;
-            }
-
-            LocalBuilder instanceVariable = emitter.DeclareLocal(constructionInfo.ImplementingType);
-            emitter.Store(instanceVariable);            
-            foreach (var propertyDependency in constructionInfo.PropertyDependencies)
-            {
-                EmitPropertyDependency(emitter, propertyDependency, instanceVariable);
-            }
-
-            emitter.Push(instanceVariable);            
         }
 
-        private Action<IEmitter> CreateEmitMethodForUnknownService(Type serviceType, string serviceName)
-        {
+        private void EmitPropertyDependencies(ConstructionInfo constructionInfo, IEmitter emitter) {
+            if (constructionInfo.PropertyDependencies.Count == 0) return;
+
+            LocalBuilder instanceVariable = emitter.DeclareLocal(constructionInfo.ImplementingType);
+            emitter.Store(instanceVariable);
+            foreach (var propertyDependency in constructionInfo.PropertyDependencies) EmitPropertyDependency(emitter, propertyDependency, instanceVariable);
+
+            emitter.Push(instanceVariable);
+        }
+
+        private Action<IEmitter> CreateEmitMethodForUnknownService(Type serviceType, string serviceName) {
             Action<IEmitter> emitter = null;
-            if (serviceType.IsLazy())
-            {                
-                emitter = CreateEmitMethodBasedOnLazyServiceRequest(serviceType, t => t.CreateGetInstanceDelegate(this));
-            }
-            else if (serviceType.IsFuncWithParameters())
-            {
-                emitter = CreateEmitMethodBasedParameterizedFuncRequest(serviceType, serviceName);
-            }
-            else if (serviceType.IsFunc())
-            {
-                emitter = CreateEmitMethodBasedOnFuncServiceRequest(serviceType, serviceName);
-            }
-            else if (serviceType.IsEnumerableOfT())
-            {
-                emitter = CreateEmitMethodForEnumerableServiceServiceRequest(serviceType);
-            }
-            else if (serviceType.IsArray)
-            {
-                emitter = CreateEmitMethodForArrayServiceRequest(serviceType);
-            }
-            else if (serviceType.IsReadOnlyCollectionOfT() || serviceType.IsReadOnlyListOfT())
-            {
-                emitter = CreateEmitMethodForReadOnlyCollectionServiceRequest(serviceType);
-            }            
-            else if (serviceType.IsListOfT())
-            {
-                emitter = CreateEmitMethodForListServiceRequest(serviceType);
-            }
-            else if (serviceType.IsCollectionOfT())
-            {
-                emitter = CreateEmitMethodForListServiceRequest(serviceType);
-            }     
-            else if (CanRedirectRequestForDefaultServiceToSingleNamedService(serviceType, serviceName))
-            {
-                emitter = CreateServiceEmitterBasedOnSingleNamedInstance(serviceType);
-            }
-            else if (serviceType.IsClosedGeneric())
-            {
-                emitter = CreateEmitMethodBasedOnClosedGenericServiceRequest(serviceType, serviceName);
-            }
+            if (serviceType.IsLazy()) emitter = CreateEmitMethodBasedOnLazyServiceRequest(serviceType, t => t.CreateGetInstanceDelegate(this));
+            else if (serviceType.IsFuncWithParameters()) emitter = CreateEmitMethodBasedParameterizedFuncRequest(serviceType, serviceName);
+            else if (serviceType.IsFunc()) emitter = CreateEmitMethodBasedOnFuncServiceRequest(serviceType, serviceName);
+            else if (serviceType.IsEnumerableOfT()) emitter = CreateEmitMethodForEnumerableServiceServiceRequest(serviceType);
+            else if (serviceType.IsArray) emitter = CreateEmitMethodForArrayServiceRequest(serviceType);
+            else if (serviceType.IsReadOnlyCollectionOfT() || serviceType.IsReadOnlyListOfT()) emitter = CreateEmitMethodForReadOnlyCollectionServiceRequest(serviceType);
+            else if (serviceType.IsListOfT()) emitter = CreateEmitMethodForListServiceRequest(serviceType);
+            else if (serviceType.IsCollectionOfT()) emitter = CreateEmitMethodForListServiceRequest(serviceType);
+            else if (CanRedirectRequestForDefaultServiceToSingleNamedService(serviceType, serviceName)) emitter = CreateServiceEmitterBasedOnSingleNamedInstance(serviceType);
+            else if (serviceType.IsClosedGeneric()) emitter = CreateEmitMethodBasedOnClosedGenericServiceRequest(serviceType, serviceName);
 
             UpdateEmitMethod(serviceType, serviceName, emitter);
 
             return emitter;
         }
-        
-        private Action<IEmitter> CreateEmitMethodBasedOnFuncServiceRequest(Type serviceType, string serviceName)
-        {            
+
+        private Action<IEmitter> CreateEmitMethodBasedOnFuncServiceRequest(Type serviceType, string serviceName) {
             Delegate getInstanceDelegate;
             var returnType = serviceType.GetGenericTypeArguments().Single();
-            if (string.IsNullOrEmpty(serviceName))
-            {
-                getInstanceDelegate = returnType.CreateGetInstanceDelegate(this);
-            }
-            else
-            {                
-                getInstanceDelegate = returnType.CreateNamedGetInstanceDelegate(serviceName, this);
-            }  
-                      
+            if (string.IsNullOrEmpty(serviceName)) getInstanceDelegate = returnType.CreateGetInstanceDelegate(this);
+            else getInstanceDelegate = returnType.CreateNamedGetInstanceDelegate(serviceName, this);
+
             var constantIndex = constants.Add(getInstanceDelegate);
-            return e => e.PushConstant(constantIndex, serviceType);            
+            return e => e.PushConstant(constantIndex, serviceType);
         }
-                      
-        private Action<IEmitter> CreateEmitMethodBasedParameterizedFuncRequest(Type serviceType, string serviceName)
-        {
+
+        private Action<IEmitter> CreateEmitMethodBasedParameterizedFuncRequest(Type serviceType, string serviceName) {
             Delegate getInstanceDelegate;
-            if (string.IsNullOrEmpty(serviceName))
-            {
-                getInstanceDelegate = CreateGetInstanceWithParametersDelegate(serviceType);
-            }
-            else
-            {
+            if (string.IsNullOrEmpty(serviceName)) getInstanceDelegate = CreateGetInstanceWithParametersDelegate(serviceType);
+            else {
                 getInstanceDelegate = ReflectionHelper.CreateGetNamedInstanceWithParametersDelegate(
                     this,
                     serviceType,
@@ -3712,15 +3174,13 @@ namespace Restival.Api.WebApi.LightInject
             var constantIndex = constants.Add(getInstanceDelegate);
             return e => e.PushConstant(constantIndex, serviceType);
         }
-        
-        private Delegate CreateGetInstanceWithParametersDelegate(Type serviceType)
-        {
+
+        private Delegate CreateGetInstanceWithParametersDelegate(Type serviceType) {
             var getInstanceMethod = ReflectionHelper.GetGetInstanceWithParametersMethod(serviceType);
             return getInstanceMethod.CreateDelegate(serviceType, this);
         }
 
-        private Action<IEmitter> CreateServiceEmitterBasedOnFactoryRule(FactoryRule rule, Type serviceType, string serviceName)
-        {
+        private Action<IEmitter> CreateServiceEmitterBasedOnFactoryRule(FactoryRule rule, Type serviceType, string serviceName) {
             var serviceRegistration = new ServiceRegistration { ServiceType = serviceType, ServiceName = serviceName, Lifetime = CloneLifeTime(rule.LifeTime) };
             ParameterExpression serviceFactoryParameterExpression = Expression.Parameter(typeof(IServiceFactory));
             ConstantExpression serviceRequestConstantExpression = Expression.Constant(new ServiceRequest(serviceType, serviceName, this));
@@ -3732,226 +3192,168 @@ namespace Restival.Api.WebApi.LightInject
             LambdaExpression lambdaExpression = Expression.Lambda(delegateType, convertExpression, serviceFactoryParameterExpression);
             serviceRegistration.FactoryExpression = lambdaExpression;
 
-            if (rule.LifeTime != null)
-            {
-                return methodSkeleton => EmitLifetime(serviceRegistration, ms => EmitNewInstanceWithDecorators(serviceRegistration, ms), methodSkeleton);
-            }
+            if (rule.LifeTime != null) return methodSkeleton => EmitLifetime(serviceRegistration, ms => EmitNewInstanceWithDecorators(serviceRegistration, ms), methodSkeleton);
 
             return methodSkeleton => EmitNewInstanceWithDecorators(serviceRegistration, methodSkeleton);
         }
 
-        private Action<IEmitter> CreateEmitMethodForArrayServiceRequest(Type serviceType)
-        {
+        private Action<IEmitter> CreateEmitMethodForArrayServiceRequest(Type serviceType) {
             Action<IEmitter> enumerableEmitter = CreateEmitMethodForEnumerableServiceServiceRequest(serviceType);
-            return enumerableEmitter;            
+            return enumerableEmitter;
         }
 
-        private Action<IEmitter> CreateEmitMethodForListServiceRequest(Type serviceType)
-        {
+        private Action<IEmitter> CreateEmitMethodForListServiceRequest(Type serviceType) {
             // Note replace this with getEmitMethod();
             Action<IEmitter> enumerableEmitter = CreateEmitMethodForEnumerableServiceServiceRequest(serviceType);
 
             MethodInfo openGenericToArrayMethod = typeof(Enumerable).GetMethod("ToList");
             MethodInfo closedGenericToListMethod = openGenericToArrayMethod.MakeGenericMethod(TypeHelper.GetElementType(serviceType));
-            return ms =>
-            {
+            return ms => {
                 enumerableEmitter(ms);
                 ms.Emit(OpCodes.Call, closedGenericToListMethod);
             };
         }
-        
-        private Action<IEmitter> CreateEmitMethodForReadOnlyCollectionServiceRequest(Type serviceType)
-        {
+
+        private Action<IEmitter> CreateEmitMethodForReadOnlyCollectionServiceRequest(Type serviceType) {
             Type elementType = TypeHelper.GetElementType(serviceType);
             Type closedGenericReadOnlyCollectionType = typeof(ReadOnlyCollection<>).MakeGenericType(elementType);
             ConstructorInfo constructorInfo = closedGenericReadOnlyCollectionType.GetConstructors()[0];
 
             Action<IEmitter> listEmitMethod = CreateEmitMethodForListServiceRequest(serviceType);
-            
-            return emitter =>
-            {
+
+            return emitter => {
                 listEmitMethod(emitter);
-                emitter.New(constructorInfo);                
+                emitter.New(constructorInfo);
             };
         }
-        
-        private void EnsureEmitMethodsForOpenGenericTypesAreCreated(Type actualServiceType)
-        {
+
+        private void EnsureEmitMethodsForOpenGenericTypesAreCreated(Type actualServiceType) {
             var openGenericServiceType = actualServiceType.GetGenericTypeDefinition();
             var openGenericServiceEmitters = GetAvailableServices(openGenericServiceType);
-            foreach (var openGenericEmitterEntry in openGenericServiceEmitters.Keys)
-            {
-                GetRegisteredEmitMethod(actualServiceType, openGenericEmitterEntry);
-            }
+            foreach (var openGenericEmitterEntry in openGenericServiceEmitters.Keys) GetRegisteredEmitMethod(actualServiceType, openGenericEmitterEntry);
         }
 
-        private Action<IEmitter> CreateEmitMethodBasedOnLazyServiceRequest(Type serviceType, Func<Type, Delegate> valueFactoryDelegate)
-        {            
+        private Action<IEmitter> CreateEmitMethodBasedOnLazyServiceRequest(Type serviceType, Func<Type, Delegate> valueFactoryDelegate) {
             Type actualServiceType = serviceType.GetGenericTypeArguments()[0];
             Type funcType = actualServiceType.GetFuncType();
             ConstructorInfo lazyConstructor = actualServiceType.GetLazyConstructor();
             Delegate getInstanceDelegate = valueFactoryDelegate(actualServiceType);
             var constantIndex = constants.Add(getInstanceDelegate);
 
-            return emitter =>
-                {
-                    emitter.PushConstant(constantIndex, funcType);      
-                    emitter.New(lazyConstructor);                    
-                };
+            return emitter => {
+                emitter.PushConstant(constantIndex, funcType);
+                emitter.New(lazyConstructor);
+            };
         }
-             
-        private ServiceRegistration GetOpenGenericServiceRegistration(Type openGenericServiceType, string serviceName)
-        {
+
+        private ServiceRegistration GetOpenGenericServiceRegistration(Type openGenericServiceType, string serviceName) {
             var services = GetAvailableServices(openGenericServiceType);
-            if (services.Count == 0)
-            {
-                return null;
-            } 
-           
+            if (services.Count == 0) return null;
+
             ServiceRegistration openGenericServiceRegistration;
             services.TryGetValue(serviceName, out openGenericServiceRegistration);
-            if (openGenericServiceRegistration == null && string.IsNullOrEmpty(serviceName) && services.Count == 1)
-            {
-                return services.First().Value;
-            }
+            if (openGenericServiceRegistration == null && string.IsNullOrEmpty(serviceName) && services.Count == 1) return services.First().Value;
 
             return openGenericServiceRegistration;
         }
 
-        private Action<IEmitter> CreateEmitMethodBasedOnClosedGenericServiceRequest(Type closedGenericServiceType, string serviceName)
-        {
+        private Action<IEmitter> CreateEmitMethodBasedOnClosedGenericServiceRequest(Type closedGenericServiceType, string serviceName) {
             Type openGenericServiceType = closedGenericServiceType.GetGenericTypeDefinition();
             ServiceRegistration openGenericServiceRegistration =
                 GetOpenGenericServiceRegistration(openGenericServiceType, serviceName);
-           
-            if (openGenericServiceRegistration == null)
-            {
-                return null;
-            }
-            
+
+            if (openGenericServiceRegistration == null) return null;
+
             Type[] closedGenericArguments = closedGenericServiceType.GetGenericTypeArguments();
 
             Type closedGenericImplementingType = TryMakeGenericType(
                 openGenericServiceRegistration.ImplementingType,
                 closedGenericArguments);
 
-            if (closedGenericImplementingType == null)
-            {
-                return null;
-            }
+            if (closedGenericImplementingType == null) return null;
 
-            var serviceRegistration = new ServiceRegistration
-                                                          {
-                                                              ServiceType = closedGenericServiceType,
-                                                              ImplementingType =
-                                                                  closedGenericImplementingType,
-                                                              ServiceName = serviceName,
-                                                              Lifetime =
-                                                                  CloneLifeTime(
-                                                                      openGenericServiceRegistration
-                                                                  .Lifetime)
-                                                          };            
+            var serviceRegistration = new ServiceRegistration {
+                ServiceType = closedGenericServiceType,
+                ImplementingType =
+                    closedGenericImplementingType,
+                ServiceName = serviceName,
+                Lifetime =
+                    CloneLifeTime(
+                        openGenericServiceRegistration
+                            .Lifetime)
+            };
             Register(serviceRegistration);
-            return GetEmitMethod(serviceRegistration.ServiceType, serviceRegistration.ServiceName);            
+            return GetEmitMethod(serviceRegistration.ServiceType, serviceRegistration.ServiceName);
         }
 
-        private Action<IEmitter> CreateEmitMethodForEnumerableServiceServiceRequest(Type serviceType)
-        {
+        private Action<IEmitter> CreateEmitMethodForEnumerableServiceServiceRequest(Type serviceType) {
             Type actualServiceType = TypeHelper.GetElementType(serviceType);
-            if (actualServiceType.IsGenericType())
-            {
-                EnsureEmitMethodsForOpenGenericTypesAreCreated(actualServiceType);
-            }
+            if (actualServiceType.IsGenericType()) EnsureEmitMethodsForOpenGenericTypesAreCreated(actualServiceType);
 
             List<Action<IEmitter>> emitMethods;
 
-            if (options.EnableVariance)
-            {
-                emitMethods = emitters.Where(kv => actualServiceType.IsAssignableFrom(kv.Key)).SelectMany(kv => kv.Value.Values).ToList();
-            }
-            else
-            {
-                emitMethods = GetEmitMethods(actualServiceType).Values.ToList();
-            }
-            
-            if (dependencyStack.Count > 0 && emitMethods.Contains(dependencyStack.Peek()))
-            {
-                emitMethods.Remove(dependencyStack.Peek());
-            }
+            if (options.EnableVariance) emitMethods = emitters.Where(kv => actualServiceType.IsAssignableFrom(kv.Key)).SelectMany(kv => kv.Value.Values).ToList();
+            else emitMethods = GetEmitMethods(actualServiceType).Values.ToList();
+
+            if (dependencyStack.Count > 0 && emitMethods.Contains(dependencyStack.Peek())) emitMethods.Remove(dependencyStack.Peek());
 
             return e => EmitEnumerable(emitMethods, actualServiceType, e);
         }
 
-        private Action<IEmitter> CreateServiceEmitterBasedOnSingleNamedInstance(Type serviceType)
-        {
+        private Action<IEmitter> CreateServiceEmitterBasedOnSingleNamedInstance(Type serviceType) {
             return GetEmitMethod(serviceType, GetEmitMethods(serviceType).First().Key);
         }
 
-        private bool CanRedirectRequestForDefaultServiceToSingleNamedService(Type serviceType, string serviceName)
-        {
+        private bool CanRedirectRequestForDefaultServiceToSingleNamedService(Type serviceType, string serviceName) {
             return string.IsNullOrEmpty(serviceName) && GetEmitMethods(serviceType).Count == 1;
         }
-        
-        private ConstructionInfo GetConstructionInfo(Registration registration)
-        {
+
+        private ConstructionInfo GetConstructionInfo(Registration registration) {
             return constructionInfoProvider.Value.GetConstructionInfo(registration);
         }
 
-        private ThreadSafeDictionary<string, Action<IEmitter>> GetEmitMethods(Type serviceType)
-        {
+        private ThreadSafeDictionary<string, Action<IEmitter>> GetEmitMethods(Type serviceType) {
             return emitters.GetOrAdd(serviceType, s => new ThreadSafeDictionary<string, Action<IEmitter>>(StringComparer.CurrentCultureIgnoreCase));
         }
-       
-        private ThreadSafeDictionary<string, ServiceRegistration> GetAvailableServices(Type serviceType)
-        {
+
+        private ThreadSafeDictionary<string, ServiceRegistration> GetAvailableServices(Type serviceType) {
             return availableServices.GetOrAdd(serviceType, s => new ThreadSafeDictionary<string, ServiceRegistration>(StringComparer.CurrentCultureIgnoreCase));
         }
 
-        private ThreadSafeDictionary<string, Expression> GetConstructorDependencyFactories(Type dependencyType)
-        {
+        private ThreadSafeDictionary<string, Expression> GetConstructorDependencyFactories(Type dependencyType) {
             return constructorDependencyFactories.GetOrAdd(
                 dependencyType,
                 d => new ThreadSafeDictionary<string, Expression>(StringComparer.CurrentCultureIgnoreCase));
         }
 
-        private ThreadSafeDictionary<string, Expression> GetPropertyDependencyFactories(Type dependencyType)
-        {
+        private ThreadSafeDictionary<string, Expression> GetPropertyDependencyFactories(Type dependencyType) {
             return propertyDependencyFactories.GetOrAdd(
                 dependencyType,
                 d => new ThreadSafeDictionary<string, Expression>(StringComparer.CurrentCultureIgnoreCase));
         }
 
-        private void RegisterService(Type serviceType, Type implementingType, ILifetime lifetime, string serviceName)
-        {
+        private void RegisterService(Type serviceType, Type implementingType, ILifetime lifetime, string serviceName) {
             Ensure.IsNotNull(serviceType, "serviceType");
             Ensure.IsNotNull(implementingType, "implementingType");
             Ensure.IsNotNull(serviceName, "serviceName");
             var serviceRegistration = new ServiceRegistration { ServiceType = serviceType, ImplementingType = implementingType, ServiceName = serviceName, Lifetime = lifetime };
-            Register(serviceRegistration);         
+            Register(serviceRegistration);
         }
-        
-        private Action<IEmitter> ResolveEmitMethod(ServiceRegistration serviceRegistration)
-        {                    
-            if (serviceRegistration.Lifetime == null)
-            {
-                return methodSkeleton => EmitNewInstanceWithDecorators(serviceRegistration, methodSkeleton);
-            }
+
+        private Action<IEmitter> ResolveEmitMethod(ServiceRegistration serviceRegistration) {
+            if (serviceRegistration.Lifetime == null) return methodSkeleton => EmitNewInstanceWithDecorators(serviceRegistration, methodSkeleton);
 
             return methodSkeleton => EmitLifetime(serviceRegistration, ms => EmitNewInstanceWithDecorators(serviceRegistration, ms), methodSkeleton);
         }
-        
-        private void EmitLifetime(ServiceRegistration serviceRegistration, Action<IEmitter> emitMethod, IEmitter emitter)
-        {
-            if (serviceRegistration.Lifetime is PerContainerLifetime)
-            {
+
+        private void EmitLifetime(ServiceRegistration serviceRegistration, Action<IEmitter> emitMethod, IEmitter emitter) {
+            if (serviceRegistration.Lifetime is PerContainerLifetime) {
                 Func<object> instanceDelegate =
-                    WrapAsFuncDelegate(CreateDynamicMethodDelegate(emitMethod));                        
+                    WrapAsFuncDelegate(CreateDynamicMethodDelegate(emitMethod));
                 var instance = serviceRegistration.Lifetime.GetInstance(instanceDelegate, null);
                 var instanceIndex = constants.Add(instance);
-                emitter.PushConstant(instanceIndex, instance.GetType());                
-            }
-            else
-            {
+                emitter.PushConstant(instanceIndex, instance.GetType());
+            } else {
                 int instanceDelegateIndex = CreateInstanceDelegateIndex(emitMethod);
                 int lifetimeIndex = CreateLifetimeIndex(serviceRegistration.Lifetime);
                 int scopeManagerProviderIndex = CreateScopeManagerProviderIndex();
@@ -3964,65 +3366,45 @@ namespace Restival.Api.WebApi.LightInject
                 emitter.Call(getInstanceMethod);
             }
         }
-       
-        private int CreateScopeManagerProviderIndex()
-        {
+
+        private int CreateScopeManagerProviderIndex() {
             return constants.Add(ScopeManagerProvider);
         }
 
-        private int CreateInstanceDelegateIndex(Action<IEmitter> emitMethod)
-        {
+        private int CreateInstanceDelegateIndex(Action<IEmitter> emitMethod) {
             return constants.Add(WrapAsFuncDelegate(CreateDynamicMethodDelegate(emitMethod)));
-        }                
+        }
 
-        private int CreateLifetimeIndex(ILifetime lifetime)
-        {
+        private int CreateLifetimeIndex(ILifetime lifetime) {
             return constants.Add(lifetime);
         }
 
-        private GetInstanceDelegate CreateDefaultDelegate(Type serviceType, bool throwError)
-        {
+        private GetInstanceDelegate CreateDefaultDelegate(Type serviceType, bool throwError) {
             var instanceDelegate = CreateDelegate(serviceType, string.Empty, throwError);
-            if (instanceDelegate == null)
-            {
-                return c => null;
-            }
+            if (instanceDelegate == null) return c => null;
 
             Interlocked.Exchange(ref delegates, delegates.Add(serviceType, instanceDelegate));
             return instanceDelegate;
         }
 
-        private GetInstanceDelegate CreateNamedDelegate(Tuple<Type, string> key, bool throwError)
-        {
+        private GetInstanceDelegate CreateNamedDelegate(Tuple<Type, string> key, bool throwError) {
             var instanceDelegate = CreateDelegate(key.Item1, key.Item2, throwError);
-            if (instanceDelegate == null)
-            {
-                return c => null;
-            }
+            if (instanceDelegate == null) return c => null;
 
             Interlocked.Exchange(ref namedDelegates, namedDelegates.Add(key, instanceDelegate));
             return instanceDelegate;
         }
 
-        private GetInstanceDelegate CreateDelegate(Type serviceType, string serviceName, bool throwError)
-        {            
-            lock (lockObject)
-            {
+        private GetInstanceDelegate CreateDelegate(Type serviceType, string serviceName, bool throwError) {
+            lock (lockObject) {
                 var serviceEmitter = GetEmitMethod(serviceType, serviceName);
-                if (serviceEmitter == null && throwError)
-                {
+                if (serviceEmitter == null && throwError) {
                     throw new InvalidOperationException(
                         string.Format("Unable to resolve type: {0}, service name: {1}", serviceType, serviceName));
                 }
 
-                if (serviceEmitter != null)
-                {
-                    try
-                    {
-                        return CreateDynamicMethodDelegate(serviceEmitter);                        
-                    }
-                    catch (InvalidOperationException ex)
-                    {
+                if (serviceEmitter != null) {
+                    try { return CreateDynamicMethodDelegate(serviceEmitter); } catch (InvalidOperationException ex) {
                         dependencyStack.Clear();
                         throw new InvalidOperationException(
                             string.Format("Unable to resolve type: {0}, service name: {1}", serviceType, serviceName),
@@ -4033,61 +3415,44 @@ namespace Restival.Api.WebApi.LightInject
                 return null;
             }
         }
-                    
-        private void RegisterValue(Type serviceType, object value, string serviceName)
-        {
+
+        private void RegisterValue(Type serviceType, object value, string serviceName) {
             var serviceRegistration = new ServiceRegistration { ServiceType = serviceType, ServiceName = serviceName, Value = value, Lifetime = new PerContainerLifetime() };
-            Register(serviceRegistration);            
+            Register(serviceRegistration);
         }
 
         private void RegisterServiceFromLambdaExpression<TService>(
-            LambdaExpression factory, ILifetime lifetime, string serviceName)
-        {
+            LambdaExpression factory, ILifetime lifetime, string serviceName) {
             var serviceRegistration = new ServiceRegistration { ServiceType = typeof(TService), FactoryExpression = factory, ServiceName = serviceName, Lifetime = lifetime };
-            Register(serviceRegistration);            
+            Register(serviceRegistration);
         }
 
-        private class Storage<T>
-        {            
+        private class Storage<T> {
             public T[] Items = new T[0];
 
             private readonly object lockObject = new object();
 
-            public int Add(T value)
-            {
+            public int Add(T value) {
                 int index = Array.IndexOf(Items, value);
-                if (index == -1)
-                {
-                    return TryAddValue(value);
-                }
+                if (index == -1) return TryAddValue(value);
 
                 return index;
             }
 
-            public void Clear()
-            {
-                lock (lockObject)
-                {
-                    Items = new T[0];
-                }
+            public void Clear() {
+                lock (lockObject) { Items = new T[0]; }
             }
 
-            private int TryAddValue(T value)
-            {
-                lock (lockObject)
-                {
+            private int TryAddValue(T value) {
+                lock (lockObject) {
                     int index = Array.IndexOf(Items, value);
-                    if (index == -1)
-                    {
-                        index = AddValue(value);
-                    }
+                    if (index == -1) index = AddValue(value);
 
                     return index;
                 }
             }
 
-            private int AddValue(T value)
-            {
+            private int AddValue(T value) {
                 int index = Items.Length;
                 T[] snapshot = CreateSnapshot();
                 snapshot[index] = value;
@@ -4095,48 +3460,39 @@ namespace Restival.Api.WebApi.LightInject
                 return index;
             }
 
-            private T[] CreateSnapshot()
-            {
+            private T[] CreateSnapshot() {
                 var snapshot = new T[Items.Length + 1];
                 Array.Copy(Items, snapshot, Items.Length);
                 return snapshot;
             }
         }
 
-        private class DynamicMethodSkeleton : IMethodSkeleton
-        {            
+        private class DynamicMethodSkeleton : IMethodSkeleton {
             private IEmitter emitter;
             private DynamicMethod dynamicMethod;
 
-            public DynamicMethodSkeleton(Type returnType, Type[] parameterTypes)
-            {         
+            public DynamicMethodSkeleton(Type returnType, Type[] parameterTypes) {
                 CreateDynamicMethod(returnType, parameterTypes);
             }
 
-            public IEmitter GetEmitter()
-            {
+            public IEmitter GetEmitter() {
                 return emitter;
             }
 
-            public Delegate CreateDelegate(Type delegateType)
-            {                                                                       
+            public Delegate CreateDelegate(Type delegateType) {
                 return dynamicMethod.CreateDelegate(delegateType);
             }
 
-            private void CreateDynamicMethod(Type returnType, Type[] parameterTypes)
-            {
+            private void CreateDynamicMethod(Type returnType, Type[] parameterTypes) {
                 dynamicMethod = new DynamicMethod(
                     "DynamicMethod", returnType, parameterTypes, typeof(ServiceContainer).Module, true);
                 emitter = new Emitter(dynamicMethod.GetILGenerator(), parameterTypes);
             }
         }
 
-        private class ServiceRegistry<T> : ThreadSafeDictionary<Type, ThreadSafeDictionary<string, T>>
-        {
-        }
-        
-        private class FactoryRule
-        {
+        private class ServiceRegistry<T> : ThreadSafeDictionary<Type, ThreadSafeDictionary<string, T>> { }
+
+        private class FactoryRule {
             public Func<Type, string, bool> CanCreateInstance { get; set; }
 
             public Func<ServiceRequest, object> Factory { get; set; }
@@ -4144,15 +3500,13 @@ namespace Restival.Api.WebApi.LightInject
             public ILifetime LifeTime { get; set; }
         }
 
-        private class Initializer
-        {
+        private class Initializer {
             public Func<ServiceRegistration, bool> Predicate { get; set; }
 
             public Action<IServiceFactory, object> Initialize { get; set; }
         }
 
-        private class ServiceOverride
-        {
+        private class ServiceOverride {
             public Func<ServiceRegistration, bool> CanOverride { get; set; }
 
             public Func<IServiceFactory, ServiceRegistration, ServiceRegistration> ServiceRegistrationFactory { get; set; }
@@ -4163,8 +3517,7 @@ namespace Restival.Api.WebApi.LightInject
     /// A <see cref="IScopeManagerProvider"/> that provides a <see cref="ScopeManager"/> per thread.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerThreadScopeManagerProvider : IScopeManagerProvider
-    {
+    internal class PerThreadScopeManagerProvider : IScopeManagerProvider {
         private readonly ThreadLocal<ScopeManager> scopeManagers =
             new ThreadLocal<ScopeManager>(() => new ScopeManager());
 
@@ -4172,8 +3525,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Returns the <see cref="ScopeManager"/> that is responsible for managing scopes.
         /// </summary>
         /// <returns>The <see cref="ScopeManager"/> that is responsible for managing scopes.</returns>
-        public ScopeManager GetScopeManager()
-        {
+        public ScopeManager GetScopeManager() {
             return scopeManagers.Value;
         }
     }
@@ -4183,18 +3535,16 @@ namespace Restival.Api.WebApi.LightInject
     /// <see cref="CallContext"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerLogicalCallContextScopeManagerProvider : IScopeManagerProvider
-    {
+    internal class PerLogicalCallContextScopeManagerProvider : IScopeManagerProvider {
         private readonly LogicalThreadStorage<ScopeManager> scopeManagers =
             new LogicalThreadStorage<ScopeManager>(() => new ScopeManager());
-                
+
         /// <summary>
         /// Returns the <see cref="ScopeManager"/> that is responsible for managing scopes.
         /// </summary>
         /// <returns>The <see cref="ScopeManager"/> that is responsible for managing scopes.</returns>
-        public ScopeManager GetScopeManager()
-        {
-            return scopeManagers.Value;                        
+        public ScopeManager GetScopeManager() {
+            return scopeManagers.Value;
         }
     }
 
@@ -4204,14 +3554,11 @@ namespace Restival.Api.WebApi.LightInject
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ThreadSafeDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>
-    {
+    internal class ThreadSafeDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue> {
         /// <summary>
         /// Initializes a new instance of the <see cref="ThreadSafeDictionary{TKey,TValue}"/> class.
         /// </summary>
-        public ThreadSafeDictionary()
-        {
-        }
+        public ThreadSafeDictionary() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThreadSafeDictionary{TKey,TValue}"/> class using the 
@@ -4219,25 +3566,21 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing keys</param>
         public ThreadSafeDictionary(IEqualityComparer<TKey> comparer)
-            : base(comparer)
-        {
-        }
+            : base(comparer) { }
     }
 
     /// <summary>
     /// Selects the <see cref="ConstructionInfo"/> from a given type that represents the most resolvable constructor.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class MostResolvableConstructorSelector : IConstructorSelector
-    {
+    internal class MostResolvableConstructorSelector : IConstructorSelector {
         private readonly Func<Type, string, bool> canGetInstance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MostResolvableConstructorSelector"/> class.
         /// </summary>
         /// <param name="canGetInstance">A function delegate that determines if a service type can be resolved.</param>
-        public MostResolvableConstructorSelector(Func<Type, string, bool> canGetInstance)
-        {
+        public MostResolvableConstructorSelector(Func<Type, string, bool> canGetInstance) {
             this.canGetInstance = canGetInstance;
         }
 
@@ -4247,26 +3590,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="implementingType">The <see cref="Type"/> for which to return a <see cref="ConstructionInfo"/>.</param>
         /// <returns>A <see cref="ConstructionInfo"/> instance that represents the constructor to be used
         /// when creating a new instance of the <paramref name="implementingType"/>.</returns>
-        public ConstructorInfo Execute(Type implementingType)
-        {
+        public ConstructorInfo Execute(Type implementingType) {
             ConstructorInfo[] constructorCandidates = implementingType.GetConstructors();
-            if (constructorCandidates.Length == 0)
-            {
-                throw new InvalidOperationException("Missing public constructor for Type: " + implementingType.FullName);
-            }
+            if (constructorCandidates.Length == 0) throw new InvalidOperationException("Missing public constructor for Type: " + implementingType.FullName);
 
-            if (constructorCandidates.Length == 1)
-            {
-                return constructorCandidates[0];
-            }
+            if (constructorCandidates.Length == 1) return constructorCandidates[0];
 
-            foreach (var constructorCandidate in constructorCandidates.OrderByDescending(c => c.GetParameters().Count()))
-            {
+            foreach (var constructorCandidate in constructorCandidates.OrderByDescending(c => c.GetParameters().Count())) {
                 ParameterInfo[] parameters = constructorCandidate.GetParameters();
-                if (CanCreateParameterDependencies(parameters))
-                {
-                    return constructorCandidate;
-                }
+                if (CanCreateParameterDependencies(parameters)) return constructorCandidate;
             }
 
             throw new InvalidOperationException("No resolvable constructor found for Type: " + implementingType.FullName);
@@ -4277,48 +3609,42 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="parameter">The <see cref="ParameterInfo"/> for which to get the service name.</param>
         /// <returns>The name of the service for the given <paramref name="parameter"/>.</returns>
-        protected virtual string GetServiceName(ParameterInfo parameter)
-        {
+        protected virtual string GetServiceName(ParameterInfo parameter) {
             return parameter.Name;
         }
 
-        private bool CanCreateParameterDependencies(IEnumerable<ParameterInfo> parameters)
-        {
+        private bool CanCreateParameterDependencies(IEnumerable<ParameterInfo> parameters) {
             return parameters.All(CanCreateParameterDependency);
         }
 
-        private bool CanCreateParameterDependency(ParameterInfo parameterInfo)
-        {
+        private bool CanCreateParameterDependency(ParameterInfo parameterInfo) {
             return canGetInstance(parameterInfo.ParameterType, string.Empty) || canGetInstance(parameterInfo.ParameterType, GetServiceName(parameterInfo));
-        }       
+        }
     }
 
     /// <summary>
     /// Selects the constructor dependencies for a given <see cref="ConstructorInfo"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConstructorDependencySelector : IConstructorDependencySelector
-    {
+    internal class ConstructorDependencySelector : IConstructorDependencySelector {
         /// <summary>
         /// Selects the constructor dependencies for the given <paramref name="constructor"/>.
         /// </summary>
         /// <param name="constructor">The <see cref="ConstructionInfo"/> for which to select the constructor dependencies.</param>
         /// <returns>A list of <see cref="ConstructorDependency"/> instances that represents the constructor
         /// dependencies for the given <paramref name="constructor"/>.</returns>
-        public virtual IEnumerable<ConstructorDependency> Execute(ConstructorInfo constructor)
-        {
+        public virtual IEnumerable<ConstructorDependency> Execute(ConstructorInfo constructor) {
             return
                 constructor.GetParameters()
-                           .OrderBy(p => p.Position)
-                           .Select(
-                               p =>
-                               new ConstructorDependency
-                                   {
-                                       ServiceName = string.Empty,
-                                       ServiceType = p.ParameterType,
-                                       Parameter = p,
-                                       IsRequired = true
-                                   });
+                    .OrderBy(p => p.Position)
+                    .Select(
+                        p =>
+                            new ConstructorDependency {
+                                ServiceName = string.Empty,
+                                ServiceType = p.ParameterType,
+                                Parameter = p,
+                                IsRequired = true
+                            });
         }
     }
 
@@ -4326,15 +3652,13 @@ namespace Restival.Api.WebApi.LightInject
     /// Selects the property dependencies for a given <see cref="Type"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PropertyDependencySelector : IPropertyDependencySelector
-    {
+    internal class PropertyDependencySelector : IPropertyDependencySelector {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDependencySelector"/> class.
         /// </summary>
         /// <param name="propertySelector">The <see cref="IPropertySelector"/> that is 
         /// responsible for selecting a list of injectable properties.</param>
-        public PropertyDependencySelector(IPropertySelector propertySelector)
-        {
+        public PropertyDependencySelector(IPropertySelector propertySelector) {
             PropertySelector = propertySelector;
         }
 
@@ -4350,8 +3674,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="type">The <see cref="Type"/> for which to select the property dependencies.</param>
         /// <returns>A list of <see cref="PropertyDependency"/> instances that represents the property
         /// dependencies for the given <paramref name="type"/>.</returns>
-        public virtual IEnumerable<PropertyDependency> Execute(Type type)
-        {
+        public virtual IEnumerable<PropertyDependency> Execute(Type type) {
             return PropertySelector.Execute(type).Select(
                 p => new PropertyDependency { Property = p, ServiceName = string.Empty, ServiceType = p.PropertyType });
         }
@@ -4361,8 +3684,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Builds a <see cref="ConstructionInfo"/> instance based on the implementing <see cref="Type"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class TypeConstructionInfoBuilder : ITypeConstructionInfoBuilder
-    {
+    internal class TypeConstructionInfoBuilder : ITypeConstructionInfoBuilder {
         private readonly IConstructorSelector constructorSelector;
         private readonly IConstructorDependencySelector constructorDependencySelector;
         private readonly IPropertyDependencySelector propertyDependencySelector;
@@ -4386,8 +3708,7 @@ namespace Restival.Api.WebApi.LightInject
             IConstructorDependencySelector constructorDependencySelector,
             IPropertyDependencySelector propertyDependencySelector,
             Func<Type, string, Expression> getConstructorDependencyExpression,
-            Func<Type, string, Expression> getPropertyDependencyExpression)
-        {
+            Func<Type, string, Expression> getPropertyDependencyExpression) {
             this.constructorSelector = constructorSelector;
             this.constructorDependencySelector = constructorDependencySelector;
             this.propertyDependencySelector = propertyDependencySelector;
@@ -4400,26 +3721,22 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="registration">The <see cref="Registration"/> that represents the implementing type to analyze.</param>
         /// <returns>A <see cref="ConstructionInfo"/> instance.</returns>
-        public ConstructionInfo Execute(Registration registration)
-        {
+        public ConstructionInfo Execute(Registration registration) {
             var implementingType = registration.ImplementingType;
-            var constructionInfo = new ConstructionInfo();            
+            var constructionInfo = new ConstructionInfo();
             constructionInfo.ImplementingType = implementingType;
             constructionInfo.PropertyDependencies.AddRange(GetPropertyDependencies(implementingType));
-            if (!registration.IgnoreConstructorDependencies)
-            {                
+            if (!registration.IgnoreConstructorDependencies) {
                 constructionInfo.Constructor = constructorSelector.Execute(implementingType);
-                constructionInfo.ConstructorDependencies.AddRange(GetConstructorDependencies(constructionInfo.Constructor));    
-            }          
-  
+                constructionInfo.ConstructorDependencies.AddRange(GetConstructorDependencies(constructionInfo.Constructor));
+            }
+
             return constructionInfo;
         }
 
-        private IEnumerable<ConstructorDependency> GetConstructorDependencies(ConstructorInfo constructorInfo)
-        {
+        private IEnumerable<ConstructorDependency> GetConstructorDependencies(ConstructorInfo constructorInfo) {
             var constructorDependencies = constructorDependencySelector.Execute(constructorInfo).ToArray();
-            foreach (var constructorDependency in constructorDependencies)
-            {
+            foreach (var constructorDependency in constructorDependencies) {
                 constructorDependency.FactoryExpression =
                     getConstructorDependencyExpression(
                         constructorDependency.ServiceType,
@@ -4429,11 +3746,9 @@ namespace Restival.Api.WebApi.LightInject
             return constructorDependencies;
         }
 
-        private IEnumerable<PropertyDependency> GetPropertyDependencies(Type implementingType)
-        {
+        private IEnumerable<PropertyDependency> GetPropertyDependencies(Type implementingType) {
             var propertyDependencies = propertyDependencySelector.Execute(implementingType).ToArray();
-            foreach (var property in propertyDependencies)
-            {
+            foreach (var property in propertyDependencies) {
                 property.FactoryExpression =
                     getPropertyDependencyExpression(
                         property.ServiceType,
@@ -4448,8 +3763,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Keeps track of a <see cref="ConstructionInfo"/> instance for each <see cref="Registration"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConstructionInfoProvider : IConstructionInfoProvider
-    {
+    internal class ConstructionInfoProvider : IConstructionInfoProvider {
         private readonly IConstructionInfoBuilder constructionInfoBuilder;
         private readonly ThreadSafeDictionary<Registration, ConstructionInfo> cache = new ThreadSafeDictionary<Registration, ConstructionInfo>();
 
@@ -4458,8 +3772,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="constructionInfoBuilder">The <see cref="IConstructionInfoBuilder"/> that 
         /// is responsible for building a <see cref="ConstructionInfo"/> instance based on a given <see cref="Registration"/>.</param>
-        public ConstructionInfoProvider(IConstructionInfoBuilder constructionInfoBuilder)
-        {
+        public ConstructionInfoProvider(IConstructionInfoBuilder constructionInfoBuilder) {
             this.constructionInfoBuilder = constructionInfoBuilder;
         }
 
@@ -4468,8 +3781,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="registration">The <see cref="Registration"/> for which to get a <see cref="ConstructionInfo"/> instance.</param>
         /// <returns>The <see cref="ConstructionInfo"/> instance that describes how to create an instance of the given <paramref name="registration"/>.</returns>
-        public ConstructionInfo GetConstructionInfo(Registration registration)
-        {
+        public ConstructionInfo GetConstructionInfo(Registration registration) {
             return cache.GetOrAdd(registration, constructionInfoBuilder.Execute);
         }
 
@@ -4477,8 +3789,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Invalidates the <see cref="IConstructionInfoProvider"/> and causes new <see cref="ConstructionInfo"/> instances 
         /// to be created when the <see cref="IConstructionInfoProvider.GetConstructionInfo"/> method is called.
         /// </summary>
-        public void Invalidate()
-        {
+        public void Invalidate() {
             cache.Clear();
         }
     }
@@ -4488,11 +3799,10 @@ namespace Restival.Api.WebApi.LightInject
     /// that describes how to create a service instance.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConstructionInfoBuilder : IConstructionInfoBuilder
-    {
+    internal class ConstructionInfoBuilder : IConstructionInfoBuilder {
         private readonly Lazy<ILambdaConstructionInfoBuilder> lambdaConstructionInfoBuilder;
         private readonly Lazy<ITypeConstructionInfoBuilder> typeConstructionInfoBuilder;
- 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructionInfoBuilder"/> class.             
         /// </summary>
@@ -4504,8 +3814,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </param>
         public ConstructionInfoBuilder(
             Func<ILambdaConstructionInfoBuilder> lambdaConstructionInfoBuilderFactory,
-            Func<ITypeConstructionInfoBuilder> typeConstructionInfoBuilderFactory)
-        {
+            Func<ITypeConstructionInfoBuilder> typeConstructionInfoBuilderFactory) {
             typeConstructionInfoBuilder = new Lazy<ITypeConstructionInfoBuilder>(typeConstructionInfoBuilderFactory);
             lambdaConstructionInfoBuilder = new Lazy<ILambdaConstructionInfoBuilder>(lambdaConstructionInfoBuilderFactory);
         }
@@ -4515,20 +3824,17 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="registration">The <see cref="Registration"/> for which to return a <see cref="ConstructionInfo"/> instance.</param>
         /// <returns>A <see cref="ConstructionInfo"/> instance that describes how to create a service instance.</returns>
-        public ConstructionInfo Execute(Registration registration)
-        {
+        public ConstructionInfo Execute(Registration registration) {
             return registration.FactoryExpression != null
                 ? CreateConstructionInfoFromLambdaExpression(registration.FactoryExpression)
                 : CreateConstructionInfoFromImplementingType(registration);
         }
-        
-        private ConstructionInfo CreateConstructionInfoFromLambdaExpression(LambdaExpression lambdaExpression)
-        {
+
+        private ConstructionInfo CreateConstructionInfoFromLambdaExpression(LambdaExpression lambdaExpression) {
             return lambdaConstructionInfoBuilder.Value.Execute(lambdaExpression);
         }
-        
-        private ConstructionInfo CreateConstructionInfoFromImplementingType(Registration registration)
-        {
+
+        private ConstructionInfo CreateConstructionInfoFromImplementingType(Registration registration) {
             return typeConstructionInfoBuilder.Value.Execute(registration);
         }
     }
@@ -4537,22 +3843,16 @@ namespace Restival.Api.WebApi.LightInject
     /// Parses a <see cref="LambdaExpression"/> into a <see cref="ConstructionInfo"/> instance.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class LambdaConstructionInfoBuilder : ILambdaConstructionInfoBuilder
-    {                
+    internal class LambdaConstructionInfoBuilder : ILambdaConstructionInfoBuilder {
         /// <summary>
         /// Parses the <paramref name="lambdaExpression"/> and returns a <see cref="ConstructionInfo"/> instance.
         /// </summary>
         /// <param name="lambdaExpression">The <see cref="LambdaExpression"/> to parse.</param>
         /// <returns>A <see cref="ConstructionInfo"/> instance.</returns>
-        public ConstructionInfo Execute(LambdaExpression lambdaExpression)
-        {            
-            if (!CanParse(lambdaExpression))
-            {
-                return CreateConstructionInfoBasedOnLambdaExpression(lambdaExpression);
-            }
-            
-            switch (lambdaExpression.Body.NodeType)
-            {
+        public ConstructionInfo Execute(LambdaExpression lambdaExpression) {
+            if (!CanParse(lambdaExpression)) return CreateConstructionInfoBasedOnLambdaExpression(lambdaExpression);
+
+            switch (lambdaExpression.Body.NodeType) {
                 case ExpressionType.New:
                     return CreateConstructionInfoBasedOnNewExpression((NewExpression)lambdaExpression.Body);
                 case ExpressionType.MemberInit:
@@ -4562,22 +3862,18 @@ namespace Restival.Api.WebApi.LightInject
             }
         }
 
-        private static bool CanParse(LambdaExpression lambdaExpression)
-        {
-            return lambdaExpression.Body.AsEnumerable().All(e => e != null && e.NodeType != ExpressionType.Lambda) && lambdaExpression.Parameters.Count <= 1;            
+        private static bool CanParse(LambdaExpression lambdaExpression) {
+            return lambdaExpression.Body.AsEnumerable().All(e => e != null && e.NodeType != ExpressionType.Lambda) && lambdaExpression.Parameters.Count <= 1;
         }
 
-        private static ConstructionInfo CreateConstructionInfoBasedOnLambdaExpression(LambdaExpression lambdaExpression)
-        {
+        private static ConstructionInfo CreateConstructionInfoBasedOnLambdaExpression(LambdaExpression lambdaExpression) {
             return new ConstructionInfo { FactoryDelegate = lambdaExpression.Compile() };
         }
 
-        private static ConstructionInfo CreateConstructionInfoBasedOnNewExpression(NewExpression newExpression)
-        {
+        private static ConstructionInfo CreateConstructionInfoBasedOnNewExpression(NewExpression newExpression) {
             var constructionInfo = CreateConstructionInfo(newExpression);
             ParameterInfo[] parameters = newExpression.Constructor.GetParameters();
-            for (int i = 0; i < parameters.Length; i++)
-            {
+            for (int i = 0; i < parameters.Length; i++) {
                 ConstructorDependency constructorDependency = CreateConstructorDependency(parameters[i]);
                 ApplyDependencyDetails(newExpression.Arguments[i], constructorDependency);
                 constructionInfo.ConstructorDependencies.Add(constructorDependency);
@@ -4586,34 +3882,26 @@ namespace Restival.Api.WebApi.LightInject
             return constructionInfo;
         }
 
-        private static ConstructionInfo CreateConstructionInfo(NewExpression newExpression)
-        {
+        private static ConstructionInfo CreateConstructionInfo(NewExpression newExpression) {
             var constructionInfo = new ConstructionInfo { Constructor = newExpression.Constructor, ImplementingType = newExpression.Constructor.DeclaringType };
             return constructionInfo;
         }
 
-        private static ConstructionInfo CreateConstructionInfoBasedOnHandleMemberInitExpression(MemberInitExpression memberInitExpression)
-        {
+        private static ConstructionInfo CreateConstructionInfoBasedOnHandleMemberInitExpression(MemberInitExpression memberInitExpression) {
             var constructionInfo = CreateConstructionInfoBasedOnNewExpression(memberInitExpression.NewExpression);
-            foreach (MemberBinding memberBinding in memberInitExpression.Bindings)
-            {
-                HandleMemberAssignment((MemberAssignment)memberBinding, constructionInfo);
-            }
+            foreach (MemberBinding memberBinding in memberInitExpression.Bindings) HandleMemberAssignment((MemberAssignment)memberBinding, constructionInfo);
 
             return constructionInfo;
         }
 
-        private static void HandleMemberAssignment(MemberAssignment memberAssignment, ConstructionInfo constructionInfo)
-        {
+        private static void HandleMemberAssignment(MemberAssignment memberAssignment, ConstructionInfo constructionInfo) {
             var propertyDependency = CreatePropertyDependency(memberAssignment);
             ApplyDependencyDetails(memberAssignment.Expression, propertyDependency);
             constructionInfo.PropertyDependencies.Add(propertyDependency);
         }
 
-        private static ConstructorDependency CreateConstructorDependency(ParameterInfo parameterInfo)
-        {
-            var constructorDependency = new ConstructorDependency
-            {
+        private static ConstructorDependency CreateConstructorDependency(ParameterInfo parameterInfo) {
+            var constructorDependency = new ConstructorDependency {
                 Parameter = parameterInfo,
                 ServiceType = parameterInfo.ParameterType,
                 IsRequired = true
@@ -4621,103 +3909,76 @@ namespace Restival.Api.WebApi.LightInject
             return constructorDependency;
         }
 
-        private static PropertyDependency CreatePropertyDependency(MemberAssignment memberAssignment)
-        {
-            var propertyDependecy = new PropertyDependency
-            {
+        private static PropertyDependency CreatePropertyDependency(MemberAssignment memberAssignment) {
+            var propertyDependecy = new PropertyDependency {
                 Property = (PropertyInfo)memberAssignment.Member,
                 ServiceType = ((PropertyInfo)memberAssignment.Member).PropertyType
             };
             return propertyDependecy;
         }
 
-        private static void ApplyDependencyDetails(Expression expression, Dependency dependency)
-        {
-            if (RepresentsServiceFactoryMethod(expression))
-            {
-                ApplyDependencyDetailsFromMethodCall((MethodCallExpression)expression, dependency);
-            }
-            else
-            {
-                ApplyDependecyDetailsFromExpression(expression, dependency);
-            }
+        private static void ApplyDependencyDetails(Expression expression, Dependency dependency) {
+            if (RepresentsServiceFactoryMethod(expression)) ApplyDependencyDetailsFromMethodCall((MethodCallExpression)expression, dependency);
+            else ApplyDependecyDetailsFromExpression(expression, dependency);
         }
 
-        private static bool RepresentsServiceFactoryMethod(Expression expression)
-        {
+        private static bool RepresentsServiceFactoryMethod(Expression expression) {
             return IsMethodCall(expression) &&
                 IsServiceFactoryMethod(((MethodCallExpression)expression).Method);
         }
 
-        private static bool IsMethodCall(Expression expression)
-        {
+        private static bool IsMethodCall(Expression expression) {
             return expression.NodeType == ExpressionType.Call;
         }
 
-        private static bool IsServiceFactoryMethod(MethodInfo methodInfo)
-        {
+        private static bool IsServiceFactoryMethod(MethodInfo methodInfo) {
             return methodInfo.DeclaringType == typeof(IServiceFactory);
         }
-        
-        private static void ApplyDependecyDetailsFromExpression(Expression expression, Dependency dependency)
-        {
+
+        private static void ApplyDependecyDetailsFromExpression(Expression expression, Dependency dependency) {
             dependency.FactoryExpression = expression;
             dependency.ServiceName = string.Empty;
         }
 
-        private static void ApplyDependencyDetailsFromMethodCall(MethodCallExpression methodCallExpression, Dependency dependency)
-        {
+        private static void ApplyDependencyDetailsFromMethodCall(MethodCallExpression methodCallExpression, Dependency dependency) {
             dependency.ServiceType = methodCallExpression.Method.ReturnType;
-            if (RepresentsGetNamedInstanceMethod(methodCallExpression))
-            {
-                dependency.ServiceName = (string)((ConstantExpression)methodCallExpression.Arguments[0]).Value;
-            }
-            else
-            {
-                dependency.ServiceName = string.Empty;
-            }
+            if (RepresentsGetNamedInstanceMethod(methodCallExpression)) dependency.ServiceName = (string)((ConstantExpression)methodCallExpression.Arguments[0]).Value;
+            else dependency.ServiceName = string.Empty;
         }
 
-        private static bool RepresentsGetNamedInstanceMethod(MethodCallExpression node)
-        {
+        private static bool RepresentsGetNamedInstanceMethod(MethodCallExpression node) {
             return IsGetInstanceMethod(node.Method) && HasOneArgumentRepresentingServiceName(node);
         }
 
-        private static bool IsGetInstanceMethod(MethodInfo methodInfo)
-        {
+        private static bool IsGetInstanceMethod(MethodInfo methodInfo) {
             return methodInfo.Name == "GetInstance";
         }
 
-        private static bool HasOneArgumentRepresentingServiceName(MethodCallExpression node)
-        {
+        private static bool HasOneArgumentRepresentingServiceName(MethodCallExpression node) {
             return HasOneArgument(node) && IsConstantExpression(node.Arguments[0]);
         }
 
-        private static bool HasOneArgument(MethodCallExpression node)
-        {
+        private static bool HasOneArgument(MethodCallExpression node) {
             return node.Arguments.Count == 1;
         }
 
-        private static bool IsConstantExpression(Expression argument)
-        {
+        private static bool IsConstantExpression(Expression argument) {
             return argument.NodeType == ExpressionType.Constant;
         }
     }
-   
+
     /// <summary>
     /// Contains information about a service request that originates from a rule based service registration.
     /// </summary>    
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ServiceRequest
-    {
+    internal class ServiceRequest {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceRequest"/> class.
         /// </summary>
         /// <param name="serviceType">The <see cref="Type"/> of the requested service.</param>
         /// <param name="serviceName">The name of the requested service.</param>
         /// <param name="serviceFactory">The <see cref="IServiceFactory"/> to be associated with this <see cref="ServiceRequest"/>.</param>
-        public ServiceRequest(Type serviceType, string serviceName, IServiceFactory serviceFactory)
-        {
+        public ServiceRequest(Type serviceType, string serviceName, IServiceFactory serviceFactory) {
             ServiceType = serviceType;
             ServiceName = serviceName;
             ServiceFactory = serviceFactory;
@@ -4742,8 +4003,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Base class for concrete registrations within the service container.
     /// </summary>
-    internal abstract class Registration
-    {
+    internal abstract class Registration {
         /// <summary>
         /// Gets or sets the service <see cref="Type"/>.
         /// </summary>
@@ -4769,8 +4029,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Contains information about a registered decorator.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class DecoratorRegistration : Registration
-    {
+    internal class DecoratorRegistration : Registration {
         /// <summary>
         /// Gets or sets a function delegate that determines if the decorator can decorate the service 
         /// represented by the supplied <see cref="ServiceRegistration"/>.
@@ -4790,21 +4049,16 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Gets a value indicating whether this registration has a deferred implementing type.
         /// </summary>
-        public bool HasDeferredImplementingType
-        {
-            get
-            {
-                return ImplementingType == null && FactoryExpression == null;
-            }
-        }       
+        public bool HasDeferredImplementingType {
+            get { return ImplementingType == null && FactoryExpression == null; }
+        }
     }
 
     /// <summary>
     /// Contains information about a registered service.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ServiceRegistration : Registration
-    {
+    internal class ServiceRegistration : Registration {
         /// <summary>
         /// Gets or sets the name of the service.
         /// </summary>
@@ -4833,8 +4087,7 @@ namespace Restival.Api.WebApi.LightInject
         /// A hash code for the current <see cref="T:System.Object"/>.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return ServiceType.GetHashCode() ^ ServiceName.GetHashCode();
         }
 
@@ -4845,30 +4098,24 @@ namespace Restival.Api.WebApi.LightInject
         /// True if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
         /// </returns>
         /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param><filterpriority>2</filterpriority>
-        public override bool Equals(object obj)
-        {
+        public override bool Equals(object obj) {
             var other = obj as ServiceRegistration;
-            if (other == null)
-            {
-                return false;
-            }
+            if (other == null) return false;
 
             var result = ServiceName == other.ServiceName && ServiceType == other.ServiceType;
             return result;
         }
     }
-    
+
     /// <summary>
     /// Contains information about how to create a service instance.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConstructionInfo
-    {
+    internal class ConstructionInfo {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructionInfo"/> class.
         /// </summary>
-        public ConstructionInfo()
-        {
+        public ConstructionInfo() {
             PropertyDependencies = new List<PropertyDependency>();
             ConstructorDependencies = new List<ConstructorDependency>();
         }
@@ -4904,8 +4151,7 @@ namespace Restival.Api.WebApi.LightInject
     /// <summary>
     /// Represents a class dependency.
     /// </summary>
-    internal abstract class Dependency
-    {
+    internal abstract class Dependency {
         /// <summary>
         /// Gets or sets the service <see cref="Type"/> of the <see cref="Dependency"/>.
         /// </summary>
@@ -4920,7 +4166,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Gets or sets the <see cref="FactoryExpression"/> that represent getting the value of the <see cref="Dependency"/>.
         /// </summary>            
         public Expression FactoryExpression { get; set; }
-       
+
         /// <summary>
         /// Gets the name of the dependency accessor.
         /// </summary>
@@ -4935,8 +4181,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Returns textual information about the dependency.
         /// </summary>
         /// <returns>A string that describes the dependency.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             var sb = new StringBuilder();
             return sb.AppendFormat("[Requested dependency: ServiceType:{0}, ServiceName:{1}]", ServiceType, ServiceName).ToString();
         }
@@ -4946,8 +4191,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a property dependency.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PropertyDependency : Dependency
-    {
+    internal class PropertyDependency : Dependency {
         /// <summary>
         /// Gets or sets the <see cref="MethodInfo"/> that is used to set the property value.
         /// </summary>
@@ -4956,20 +4200,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Gets the name of the dependency accessor.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return Property.Name;
-            }
+        public override string Name {
+            get { return Property.Name; }
         }
 
         /// <summary>
         /// Returns textual information about the dependency.
         /// </summary>
         /// <returns>A string that describes the dependency.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("[Target Type: {0}], [Property: {1}({2})]", Property.DeclaringType, Property.Name, Property.PropertyType) + ", " + base.ToString();
         }
     }
@@ -4978,8 +4217,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a constructor dependency.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConstructorDependency : Dependency
-    {
+    internal class ConstructorDependency : Dependency {
         /// <summary>
         /// Gets or sets the <see cref="ParameterInfo"/> for this <see cref="ConstructorDependency"/>.
         /// </summary>
@@ -4994,20 +4232,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Gets the name of the dependency accessor.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return Parameter.Name;
-            }
+        public override string Name {
+            get { return Parameter.Name; }
         }
 
         /// <summary>
         /// Returns textual information about the dependency.
         /// </summary>
         /// <returns>A string that describes the dependency.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("[Target Type: {0}], [Parameter: {1}({2})]", Parameter.Member.DeclaringType, Parameter.Name, Parameter.ParameterType) + ", " + base.ToString();
         }
     }
@@ -5016,8 +4249,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Ensures that only one instance of a given service can exist within the current <see cref="IServiceContainer"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerContainerLifetime : ILifetime, IDisposable
-    {
+    internal class PerContainerLifetime : ILifetime, IDisposable {
         private readonly object syncRoot = new object();
         private volatile object singleton;
 
@@ -5027,20 +4259,10 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="createInstance">The function delegate used to create a new service instance.</param>
         /// <param name="scope">The <see cref="Scope"/> of the current service request.</param>
         /// <returns>The requested services instance.</returns>
-        public object GetInstance(Func<object> createInstance, Scope scope)
-        {
-            if (singleton != null)
-            {
-                return singleton;
-            }
+        public object GetInstance(Func<object> createInstance, Scope scope) {
+            if (singleton != null) return singleton;
 
-            lock (syncRoot)
-            {
-                if (singleton == null)
-                {
-                    singleton = createInstance();
-                }
-            }
+            lock (syncRoot) { if (singleton == null) singleton = createInstance(); }
 
             return singleton;
         }
@@ -5048,13 +4270,9 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Disposes the service instances managed by this <see cref="PerContainerLifetime"/> instance.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             var disposable = singleton as IDisposable;
-            if (disposable != null)
-            {
-                disposable.Dispose();
-            }
+            if (disposable != null) disposable.Dispose();
         }
     }
 
@@ -5062,32 +4280,23 @@ namespace Restival.Api.WebApi.LightInject
     /// Ensures that a new instance is created for each request in addition to tracking disposable instances.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerRequestLifeTime : ILifetime
-    {
+    internal class PerRequestLifeTime : ILifetime {
         /// <summary>
         /// Returns a service instance according to the specific lifetime characteristics.
         /// </summary>
         /// <param name="createInstance">The function delegate used to create a new service instance.</param>
         /// <param name="scope">The <see cref="Scope"/> of the current service request.</param>
         /// <returns>The requested services instance.</returns>
-        public object GetInstance(Func<object> createInstance, Scope scope)
-        {
+        public object GetInstance(Func<object> createInstance, Scope scope) {
             var instance = createInstance();
             var disposable = instance as IDisposable;
-            if (disposable != null)
-            {
-                TrackInstance(scope, disposable);
-            }
+            if (disposable != null) TrackInstance(scope, disposable);
 
             return instance;
         }
 
-        private static void TrackInstance(Scope scope, IDisposable disposable)
-        {
-            if (scope == null)
-            {
-                throw new InvalidOperationException("Attempt to create a disposable instance without a current scope.");
-            }
+        private static void TrackInstance(Scope scope, IDisposable disposable) {
+            if (scope == null) throw new InvalidOperationException("Attempt to create a disposable instance without a current scope.");
 
             scope.TrackInstance(disposable);
         }
@@ -5101,8 +4310,7 @@ namespace Restival.Api.WebApi.LightInject
     /// it will be disposed when the <see cref="Scope"/> ends.
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerScopeLifetime : ILifetime
-    {
+    internal class PerScopeLifetime : ILifetime {
         private readonly ThreadSafeDictionary<Scope, object> instances = new ThreadSafeDictionary<Scope, object>();
 
         /// <summary>
@@ -5111,10 +4319,8 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="createInstance">The function delegate used to create a new service instance.</param>
         /// <param name="scope">The <see cref="Scope"/> of the current service request.</param>
         /// <returns>The requested services instance.</returns>
-        public object GetInstance(Func<object> createInstance, Scope scope)
-        {
-            if (scope == null)
-            {
+        public object GetInstance(Func<object> createInstance, Scope scope) {
+            if (scope == null) {
                 throw new InvalidOperationException(
                     "Attempt to create a scoped instance without a current scope.");
             }
@@ -5122,17 +4328,12 @@ namespace Restival.Api.WebApi.LightInject
             return instances.GetOrAdd(scope, s => CreateScopedInstance(s, createInstance));
         }
 
-        private static void RegisterForDisposal(Scope scope, object instance)
-        {
+        private static void RegisterForDisposal(Scope scope, object instance) {
             var disposable = instance as IDisposable;
-            if (disposable != null)
-            {
-                scope.TrackInstance(disposable);
-            }
+            if (disposable != null) scope.TrackInstance(disposable);
         }
 
-        private object CreateScopedInstance(Scope scope, Func<object> createInstance)
-        {
+        private object CreateScopedInstance(Scope scope, Func<object> createInstance) {
             scope.Completed += OnScopeCompleted;
             var instance = createInstance();
 
@@ -5140,8 +4341,7 @@ namespace Restival.Api.WebApi.LightInject
             return instance;
         }
 
-        private void OnScopeCompleted(object sender, EventArgs e)
-        {
+        private void OnScopeCompleted(object sender, EventArgs e) {
             var scope = (Scope)sender;
             scope.Completed -= OnScopeCompleted;
             object removedInstance;
@@ -5153,8 +4353,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Manages a set of <see cref="Scope"/> instances.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ScopeManager
-    {
+    internal class ScopeManager {
         private readonly object syncRoot = new object();
 
         private Scope currentScope;
@@ -5162,30 +4361,18 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Gets the current <see cref="Scope"/>.
         /// </summary>
-        public Scope CurrentScope
-        {
-            get
-            {
-                lock (syncRoot)
-                {
-                    return currentScope;
-                }
-            }
+        public Scope CurrentScope {
+            get { lock (syncRoot) { return currentScope; } }
         }
 
         /// <summary>
         /// Starts a new <see cref="Scope"/>. 
         /// </summary>
         /// <returns>A new <see cref="Scope"/>.</returns>
-        public Scope BeginScope()
-        {
-            lock (syncRoot)
-            {
+        public Scope BeginScope() {
+            lock (syncRoot) {
                 var scope = new Scope(this, currentScope);
-                if (currentScope != null)
-                {
-                    currentScope.ChildScope = scope;
-                }
+                if (currentScope != null) currentScope.ChildScope = scope;
 
                 currentScope = scope;
                 return scope;
@@ -5196,20 +4383,12 @@ namespace Restival.Api.WebApi.LightInject
         /// Ends the given <paramref name="scope"/> and updates the <see cref="CurrentScope"/> property.
         /// </summary>
         /// <param name="scope">The scope that is completed.</param>
-        public void EndScope(Scope scope)
-        {
-            lock (syncRoot)
-            {
-                if (scope.ChildScope != null)
-                {
-                    throw new InvalidOperationException("Attempt to end a scope before all child scopes are completed.");
-                }
+        public void EndScope(Scope scope) {
+            lock (syncRoot) {
+                if (scope.ChildScope != null) throw new InvalidOperationException("Attempt to end a scope before all child scopes are completed.");
 
                 currentScope = scope.ParentScope;
-                if (currentScope != null)
-                {
-                    currentScope.ChildScope = null;
-                }
+                if (currentScope != null) currentScope.ChildScope = null;
             }
         }
     }
@@ -5218,8 +4397,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a scope. 
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class Scope : IDisposable
-    {
+    internal class Scope : IDisposable {
         private readonly IList<IDisposable> disposableObjects = new List<IDisposable>();
 
         private readonly ScopeManager scopeManager;
@@ -5229,8 +4407,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="scopeManager">The <see cref="scopeManager"/> that manages this <see cref="Scope"/>.</param>
         /// <param name="parentScope">The parent <see cref="Scope"/>.</param>
-        public Scope(ScopeManager scopeManager, Scope parentScope)
-        {
+        public Scope(ScopeManager scopeManager, Scope parentScope) {
             this.scopeManager = scopeManager;
             ParentScope = parentScope;
         }
@@ -5254,36 +4431,26 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers the <paramref name="disposable"/> so that it is disposed when the scope is completed.
         /// </summary>
         /// <param name="disposable">The <see cref="IDisposable"/> object to register.</param>
-        public void TrackInstance(IDisposable disposable)
-        {
+        public void TrackInstance(IDisposable disposable) {
             disposableObjects.Add(disposable);
         }
 
         /// <summary>
         /// Disposes all instances tracked by this scope.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             DisposeTrackedInstances();
             OnCompleted();
         }
 
-        private void DisposeTrackedInstances()
-        {
-            foreach (var disposableObject in disposableObjects)
-            {
-                disposableObject.Dispose();
-            }
+        private void DisposeTrackedInstances() {
+            foreach (var disposableObject in disposableObjects) disposableObject.Dispose();
         }
 
-        private void OnCompleted()
-        {
+        private void OnCompleted() {
             scopeManager.EndScope(this);
             var completedHandler = Completed;
-            if (completedHandler != null)
-            {
-                completedHandler(this, new EventArgs());
-            }
+            if (completedHandler != null) completedHandler(this, new EventArgs());
         }
     }
 
@@ -5292,14 +4459,12 @@ namespace Restival.Api.WebApi.LightInject
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class CompositionRootTypeAttribute : Attribute
-    {
+    internal class CompositionRootTypeAttribute : Attribute {
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositionRootTypeAttribute"/> class.
         /// </summary>
         /// <param name="compositionRootType">A <see cref="Type"/> that implements the <see cref="ICompositionRoot"/> interface.</param>
-        public CompositionRootTypeAttribute(Type compositionRootType)
-        {
+        public CompositionRootTypeAttribute(Type compositionRootType) {
             CompositionRootType = compositionRootType;
         }
 
@@ -5313,23 +4478,18 @@ namespace Restival.Api.WebApi.LightInject
     /// Extracts concrete <see cref="ICompositionRoot"/> implementations from an <see cref="Assembly"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class CompositionRootTypeExtractor : ITypeExtractor
-    {
+    internal class CompositionRootTypeExtractor : ITypeExtractor {
         /// <summary>
         /// Extracts concrete <see cref="ICompositionRoot"/> implementations found in the given <paramref name="assembly"/>.
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/> for which to extract types.</param>
         /// <returns>A set of concrete <see cref="ICompositionRoot"/> implementations found in the given <paramref name="assembly"/>.</returns>
-        public Type[] Execute(Assembly assembly)
-        {
+        public Type[] Execute(Assembly assembly) {
             CompositionRootTypeAttribute[] compositionRootAttributes =
                 assembly.GetCustomAttributes(typeof(CompositionRootTypeAttribute))
-                        .Cast<CompositionRootTypeAttribute>().ToArray();
-            
-            if (compositionRootAttributes.Length > 0)
-            {
-                return compositionRootAttributes.Select(a => a.CompositionRootType).ToArray();
-            }
+                    .Cast<CompositionRootTypeAttribute>().ToArray();
+
+            if (compositionRootAttributes.Length > 0) return compositionRootAttributes.Select(a => a.CompositionRootType).ToArray();
 
             return assembly.GetTypes().Where(t => !t.IsAbstract() && typeof(ICompositionRoot).IsAssignableFrom(t)).ToArray();
         }
@@ -5339,8 +4499,7 @@ namespace Restival.Api.WebApi.LightInject
     /// A <see cref="ITypeExtractor"/> cache decorator.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class CachedTypeExtractor : ITypeExtractor
-    {
+    internal class CachedTypeExtractor : ITypeExtractor {
         private readonly ITypeExtractor typeExtractor;
 
         private readonly ThreadSafeDictionary<Assembly, Type[]> cache =
@@ -5350,8 +4509,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Initializes a new instance of the <see cref="CachedTypeExtractor"/> class.
         /// </summary>
         /// <param name="typeExtractor">The target <see cref="ITypeExtractor"/>.</param>
-        public CachedTypeExtractor(ITypeExtractor typeExtractor)
-        {
+        public CachedTypeExtractor(ITypeExtractor typeExtractor) {
             this.typeExtractor = typeExtractor;
         }
 
@@ -5360,8 +4518,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/> for which to extract types.</param>
         /// <returns>A set of types found in the given <paramref name="assembly"/>.</returns>
-        public Type[] Execute(Assembly assembly)
-        {
+        public Type[] Execute(Assembly assembly) {
             return cache.GetOrAdd(assembly, typeExtractor.Execute);
         }
     }
@@ -5370,13 +4527,11 @@ namespace Restival.Api.WebApi.LightInject
     /// Extracts concrete types from an <see cref="Assembly"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class ConcreteTypeExtractor : ITypeExtractor
-    {
+    internal class ConcreteTypeExtractor : ITypeExtractor {
         private static readonly List<Type> InternalTypes = new List<Type>();
-       
-        static ConcreteTypeExtractor()
-        {        
-            InternalTypes.Add(typeof(LambdaConstructionInfoBuilder));       
+
+        static ConcreteTypeExtractor() {
+            InternalTypes.Add(typeof(LambdaConstructionInfoBuilder));
             InternalTypes.Add(typeof(ConstructorDependency));
             InternalTypes.Add(typeof(PropertyDependency));
             InternalTypes.Add(typeof(ThreadSafeDictionary<,>));
@@ -5390,11 +4545,11 @@ namespace Restival.Api.WebApi.LightInject
             InternalTypes.Add(typeof(Registration));
             InternalTypes.Add(typeof(ServiceContainer));
             InternalTypes.Add(typeof(ConstructionInfo));
-            InternalTypes.Add(typeof(AssemblyLoader));            
+            InternalTypes.Add(typeof(AssemblyLoader));
             InternalTypes.Add(typeof(TypeConstructionInfoBuilder));
             InternalTypes.Add(typeof(ConstructionInfoProvider));
-            InternalTypes.Add(typeof(ConstructionInfoBuilder));            
-            InternalTypes.Add(typeof(MostResolvableConstructorSelector));            
+            InternalTypes.Add(typeof(ConstructionInfoBuilder));
+            InternalTypes.Add(typeof(MostResolvableConstructorSelector));
             InternalTypes.Add(typeof(PerContainerLifetime));
             InternalTypes.Add(typeof(PerContainerLifetime));
             InternalTypes.Add(typeof(PerRequestLifeTime));
@@ -5411,7 +4566,7 @@ namespace Restival.Api.WebApi.LightInject
             InternalTypes.Add(typeof(KeyValue<,>));
             InternalTypes.Add(typeof(ImmutableHashTree<,>));
             InternalTypes.Add(typeof(ImmutableHashTable<,>));
-            InternalTypes.Add(typeof(PerThreadScopeManagerProvider));            
+            InternalTypes.Add(typeof(PerThreadScopeManagerProvider));
             InternalTypes.Add(typeof(Emitter));
             InternalTypes.Add(typeof(Instruction));
             InternalTypes.Add(typeof(Instruction<>));
@@ -5426,17 +4581,15 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/> for which to extract types.</param>
         /// <returns>A set of concrete types found in the given <paramref name="assembly"/>.</returns>
-        public Type[] Execute(Assembly assembly)
-        {            
+        public Type[] Execute(Assembly assembly) {
             return assembly.GetTypes().Where(t => t.IsClass()
-                                               && !t.IsNestedPrivate()
-                                               && !t.IsAbstract() 
-                                               && !Equals(t.GetAssembly(), typeof(string).GetAssembly())
-                                               && !IsCompilerGenerated(t)).Except(InternalTypes).ToArray();
+                && !t.IsNestedPrivate()
+                && !t.IsAbstract()
+                && !Equals(t.GetAssembly(), typeof(string).GetAssembly())
+                && !IsCompilerGenerated(t)).Except(InternalTypes).ToArray();
         }
 
-        private static bool IsCompilerGenerated(Type type)
-        {
+        private static bool IsCompilerGenerated(Type type) {
             return type.IsDefined(typeof(CompilerGeneratedAttribute), false);
         }
     }
@@ -5445,20 +4598,18 @@ namespace Restival.Api.WebApi.LightInject
     /// A class that is responsible for instantiating and executing an <see cref="ICompositionRoot"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class CompositionRootExecutor : ICompositionRootExecutor
-    {
+    internal class CompositionRootExecutor : ICompositionRootExecutor {
         private readonly IServiceRegistry serviceRegistry;
 
         private readonly IList<Type> executedCompositionRoots = new List<Type>();
-        
+
         private readonly object syncRoot = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositionRootExecutor"/> class.
         /// </summary>
         /// <param name="serviceRegistry">The <see cref="IServiceRegistry"/> to be configured by the <see cref="ICompositionRoot"/>.</param>
-        public CompositionRootExecutor(IServiceRegistry serviceRegistry)
-        {
+        public CompositionRootExecutor(IServiceRegistry serviceRegistry) {
             this.serviceRegistry = serviceRegistry;
         }
 
@@ -5466,29 +4617,24 @@ namespace Restival.Api.WebApi.LightInject
         /// Creates an instance of the <paramref name="compositionRootType"/> and executes the <see cref="ICompositionRoot.Compose"/> method.
         /// </summary>
         /// <param name="compositionRootType">The concrete <see cref="ICompositionRoot"/> type to be instantiated and executed.</param>
-        public void Execute(Type compositionRootType)
-        {
-            if (!executedCompositionRoots.Contains(compositionRootType))
-            {
-                lock (syncRoot)
-                {
-                    if (!executedCompositionRoots.Contains(compositionRootType))
-                    {
+        public void Execute(Type compositionRootType) {
+            if (!executedCompositionRoots.Contains(compositionRootType)) {
+                lock (syncRoot) {
+                    if (!executedCompositionRoots.Contains(compositionRootType)) {
                         executedCompositionRoots.Add(compositionRootType);
                         var compositionRoot = (ICompositionRoot)Activator.CreateInstance(compositionRootType);
                         compositionRoot.Compose(serviceRegistry);
                     }
                 }
-            }            
-        }       
+            }
+        }
     }
 
     /// <summary>
     /// An assembly scanner that registers services based on the types contained within an <see cref="Assembly"/>.
     /// </summary>    
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class AssemblyScanner : IAssemblyScanner
-    {
+    internal class AssemblyScanner : IAssemblyScanner {
         private readonly ITypeExtractor concreteTypeExtractor;
         private readonly ITypeExtractor compositionRootTypeExtractor;
         private readonly ICompositionRootExecutor compositionRootExecutor;
@@ -5503,8 +4649,7 @@ namespace Restival.Api.WebApi.LightInject
         /// extracting <see cref="ICompositionRoot"/> implementations from the assembly being scanned.</param>
         /// <param name="compositionRootExecutor">The <see cref="ICompositionRootExecutor"/> that is 
         /// responsible for creating and executing an <see cref="ICompositionRoot"/>.</param>
-        public AssemblyScanner(ITypeExtractor concreteTypeExtractor, ITypeExtractor compositionRootTypeExtractor, ICompositionRootExecutor compositionRootExecutor)
-        {
+        public AssemblyScanner(ITypeExtractor concreteTypeExtractor, ITypeExtractor compositionRootTypeExtractor, ICompositionRootExecutor compositionRootExecutor) {
             this.concreteTypeExtractor = concreteTypeExtractor;
             this.compositionRootTypeExtractor = compositionRootTypeExtractor;
             this.compositionRootExecutor = compositionRootExecutor;
@@ -5517,13 +4662,9 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="serviceRegistry">The target <see cref="IServiceRegistry"/> instance.</param>
         /// <param name="lifetimeFactory">The <see cref="ILifetime"/> factory that controls the lifetime of the registered service.</param>
         /// <param name="shouldRegister">A function delegate that determines if a service implementation should be registered.</param>
-        public void Scan(Assembly assembly, IServiceRegistry serviceRegistry, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister)
-        {            
+        public void Scan(Assembly assembly, IServiceRegistry serviceRegistry, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister) {
             Type[] concreteTypes = GetConcreteTypes(assembly);
-            foreach (Type type in concreteTypes)
-            {
-                BuildImplementationMap(type, serviceRegistry, lifetimeFactory, shouldRegister);
-            }
+            foreach (Type type in concreteTypes) BuildImplementationMap(type, serviceRegistry, lifetimeFactory, shouldRegister);
         }
 
         /// <summary>
@@ -5531,89 +4672,57 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/> to scan.</param>        
         /// <param name="serviceRegistry">The target <see cref="IServiceRegistry"/> instance.</param>
-        public void Scan(Assembly assembly, IServiceRegistry serviceRegistry)
-        {
+        public void Scan(Assembly assembly, IServiceRegistry serviceRegistry) {
             Type[] compositionRootTypes = GetCompositionRootTypes(assembly);
-            if (compositionRootTypes.Length > 0 && !Equals(currentAssembly, assembly))
-            {
+            if (compositionRootTypes.Length > 0 && !Equals(currentAssembly, assembly)) {
                 currentAssembly = assembly;
                 ExecuteCompositionRoots(compositionRootTypes);
-            }            
+            }
         }
 
-        private static string GetServiceName(Type serviceType, Type implementingType)
-        {
+        private static string GetServiceName(Type serviceType, Type implementingType) {
             string implementingTypeName = implementingType.Name;
             string serviceTypeName = serviceType.Name;
-            if (implementingType.IsGenericTypeDefinition())
-            {
+            if (implementingType.IsGenericTypeDefinition()) {
                 var regex = new Regex("((?:[a-z][a-z]+))", RegexOptions.IgnoreCase);
                 implementingTypeName = regex.Match(implementingTypeName).Groups[1].Value;
                 serviceTypeName = regex.Match(serviceTypeName).Groups[1].Value;
             }
 
-            if (serviceTypeName.Substring(1) == implementingTypeName)
-            {
-                implementingTypeName = string.Empty;
-            }
+            if (serviceTypeName.Substring(1) == implementingTypeName) implementingTypeName = string.Empty;
 
             return implementingTypeName;
         }
 
-        private static IEnumerable<Type> GetBaseTypes(Type concreteType)
-        {
+        private static IEnumerable<Type> GetBaseTypes(Type concreteType) {
             Type baseType = concreteType;
-            while (baseType != typeof(object) && baseType != null)
-            {
+            while (baseType != typeof(object) && baseType != null) {
                 yield return baseType;
                 baseType = baseType.GetBaseType();
             }
         }
 
-        private void ExecuteCompositionRoots(IEnumerable<Type> compositionRoots)
-        {
-            foreach (var compositionRoot in compositionRoots)
-            {
-                compositionRootExecutor.Execute(compositionRoot);
-            }
+        private void ExecuteCompositionRoots(IEnumerable<Type> compositionRoots) {
+            foreach (var compositionRoot in compositionRoots) compositionRootExecutor.Execute(compositionRoot);
         }
 
-        private Type[] GetConcreteTypes(Assembly assembly)
-        {
-            return concreteTypeExtractor.Execute(assembly);            
+        private Type[] GetConcreteTypes(Assembly assembly) {
+            return concreteTypeExtractor.Execute(assembly);
         }
 
-        private Type[] GetCompositionRootTypes(Assembly assembly)
-        {
+        private Type[] GetCompositionRootTypes(Assembly assembly) {
             return compositionRootTypeExtractor.Execute(assembly);
         }
 
-        private void BuildImplementationMap(Type implementingType, IServiceRegistry serviceRegistry, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister)
-        {
+        private void BuildImplementationMap(Type implementingType, IServiceRegistry serviceRegistry, Func<ILifetime> lifetimeFactory, Func<Type, Type, bool> shouldRegister) {
             Type[] interfaces = implementingType.GetInterfaces();
-            foreach (Type interfaceType in interfaces)
-            {
-                if (shouldRegister(interfaceType, implementingType))
-                {
-                    RegisterInternal(interfaceType, implementingType, serviceRegistry, lifetimeFactory());
-                }
-            }
+            foreach (Type interfaceType in interfaces) if (shouldRegister(interfaceType, implementingType)) RegisterInternal(interfaceType, implementingType, serviceRegistry, lifetimeFactory());
 
-            foreach (Type baseType in GetBaseTypes(implementingType))
-            {
-                if (shouldRegister(baseType, implementingType))
-                {
-                    RegisterInternal(baseType, implementingType, serviceRegistry, lifetimeFactory());
-                }
-            }
+            foreach (Type baseType in GetBaseTypes(implementingType)) if (shouldRegister(baseType, implementingType)) RegisterInternal(baseType, implementingType, serviceRegistry, lifetimeFactory());
         }
 
-        private void RegisterInternal(Type serviceType, Type implementingType, IServiceRegistry serviceRegistry, ILifetime lifetime)
-        {
-            if (serviceType.IsGenericType() && serviceType.ContainsGenericParameters())
-            {
-                serviceType = serviceType.GetGenericTypeDefinition();
-            }
+        private void RegisterInternal(Type serviceType, Type implementingType, IServiceRegistry serviceRegistry, ILifetime lifetime) {
+            if (serviceType.IsGenericType() && serviceType.ContainsGenericParameters()) serviceType = serviceType.GetGenericTypeDefinition();
 
             serviceRegistry.Register(serviceType, implementingType, GetServiceName(serviceType, implementingType), lifetime);
         }
@@ -5623,15 +4732,13 @@ namespace Restival.Api.WebApi.LightInject
     /// Selects the properties that represents a dependency to the target <see cref="Type"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PropertySelector : IPropertySelector
-    {
+    internal class PropertySelector : IPropertySelector {
         /// <summary>
         /// Selects properties that represents a dependency from the given <paramref name="type"/>.
         /// </summary>
         /// <param name="type">The <see cref="Type"/> for which to select the properties.</param>
         /// <returns>A list of properties that represents a dependency to the target <paramref name="type"/></returns>
-        public IEnumerable<PropertyInfo> Execute(Type type)
-        {
+        public IEnumerable<PropertyInfo> Execute(Type type) {
             return type.GetProperties().Where(IsInjectable).ToList();
         }
 
@@ -5640,13 +4747,11 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="propertyInfo">The <see cref="PropertyInfo"/> that describes the target property.</param>
         /// <returns><b>true</b> if the property is injectable, otherwise <b>false</b>.</returns>
-        protected virtual bool IsInjectable(PropertyInfo propertyInfo)
-        {
+        protected virtual bool IsInjectable(PropertyInfo propertyInfo) {
             return !IsReadOnly(propertyInfo);
         }
 
-        private static bool IsReadOnly(PropertyInfo propertyInfo)
-        {
+        private static bool IsReadOnly(PropertyInfo propertyInfo) {
             return propertyInfo.GetSetMethod() == null || propertyInfo.GetSetMethod().IsStatic || propertyInfo.GetSetMethod().IsPrivate || propertyInfo.GetIndexParameters().Length > 0;
         }
     }
@@ -5655,23 +4760,17 @@ namespace Restival.Api.WebApi.LightInject
     /// Loads all assemblies from the application base directory that matches the given search pattern.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class AssemblyLoader : IAssemblyLoader
-    {
+    internal class AssemblyLoader : IAssemblyLoader {
         /// <summary>
         /// Loads a set of assemblies based on the given <paramref name="searchPattern"/>.
         /// </summary>
         /// <param name="searchPattern">The search pattern to use.</param>
         /// <returns>A list of assemblies based on the given <paramref name="searchPattern"/>.</returns>
-        public IEnumerable<Assembly> Load(string searchPattern)
-        {
+        public IEnumerable<Assembly> Load(string searchPattern) {
             string directory = Path.GetDirectoryName(new Uri(typeof(ServiceContainer).Assembly.CodeBase).LocalPath);
-            if (directory != null)
-            {
+            if (directory != null) {
                 string[] searchPatterns = searchPattern.Split('|');
-                foreach (string file in searchPatterns.SelectMany(sp => Directory.GetFiles(directory, sp)).Where(CanLoad))
-                {
-                    yield return Assembly.LoadFrom(file);
-                }
+                foreach (string file in searchPatterns.SelectMany(sp => Directory.GetFiles(directory, sp)).Where(CanLoad)) yield return Assembly.LoadFrom(file);
             }
         }
 
@@ -5680,19 +4779,17 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="fileName">The name of the target file.</param>
         /// <returns><b>true</b> if the file can be loaded, otherwise <b>false</b>.</returns>
-        protected virtual bool CanLoad(string fileName)
-        {
+        protected virtual bool CanLoad(string fileName) {
             return true;
         }
     }
-  
+
     /// <summary>
     /// Defines an immutable representation of a key and a value.  
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
-    internal sealed class KeyValue<TKey, TValue>
-    {
+    internal sealed class KeyValue<TKey, TValue> {
         /// <summary>
         /// The key of this <see cref="KeyValue{TKey,TValue}"/> instance.
         /// </summary>
@@ -5708,8 +4805,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="key">The key of this <see cref="KeyValue{TKey,TValue}"/> instance.</param>
         /// <param name="value">The value of this <see cref="KeyValue{TKey,TValue}"/> instance.</param>
-        public KeyValue(TKey key, TValue value)
-        {
+        public KeyValue(TKey key, TValue value) {
             Key = key;
             Value = value;
         }
@@ -5719,8 +4815,7 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents a simple "add only" immutable list.
     /// </summary>
     /// <typeparam name="T">The type of items contained in the list.</typeparam>
-    internal sealed class ImmutableList<T>
-    {
+    internal sealed class ImmutableList<T> {
         /// <summary>
         /// Represents an empty <see cref="ImmutableList{T}"/>.
         /// </summary>
@@ -5741,16 +4836,14 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="previousList">The list from which the previous items are copied.</param>
         /// <param name="value">The value to be added to the list.</param>
-        public ImmutableList(ImmutableList<T> previousList, T value)
-        {
+        public ImmutableList(ImmutableList<T> previousList, T value) {
             Items = new T[previousList.Items.Length + 1];
             Array.Copy(previousList.Items, Items, previousList.Items.Length);
             Items[Items.Length - 1] = value;
             Count = Items.Length;
         }
 
-        private ImmutableList()
-        {
+        private ImmutableList() {
             Items = new T[0];
         }
 
@@ -5759,8 +4852,7 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="value">The value to be added to the new list.</param>
         /// <returns>A new <see cref="ImmutableList{T}"/> that contains the new <paramref name="value"/>.</returns>
-        public ImmutableList<T> Add(T value)
-        {
+        public ImmutableList<T> Add(T value) {
             return new ImmutableList<T>(this, value);
         }
     }
@@ -5770,18 +4862,17 @@ namespace Restival.Api.WebApi.LightInject
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
-    internal sealed class ImmutableHashTable<TKey, TValue>
-    {
+    internal sealed class ImmutableHashTable<TKey, TValue> {
         /// <summary>
         /// An empty <see cref="ImmutableHashTree{TKey,TValue}"/>.
         /// </summary>
         public static readonly ImmutableHashTable<TKey, TValue> Empty = new ImmutableHashTable<TKey, TValue>();
-        
+
         /// <summary>
         /// Gets the number of items stored in the hash table.
         /// </summary>
         public readonly int Count;
-       
+
         /// <summary>
         /// Gets the hast table buckets.
         /// </summary>
@@ -5791,25 +4882,21 @@ namespace Restival.Api.WebApi.LightInject
         /// Gets the divisor used to calculate the bucket index from the hash code of the key.
         /// </summary>
         internal readonly int Divisor;
-       
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImmutableHashTable{TKey,TValue}"/> class.
         /// </summary>
         /// <param name="previous">The "previous" hash table that contains already existing values.</param>
         /// <param name="key">The key to be associated with the value.</param>
         /// <param name="value">The value to be added to the tree.</param>
-        internal ImmutableHashTable(ImmutableHashTable<TKey, TValue> previous, TKey key, TValue value)
-        {
+        internal ImmutableHashTable(ImmutableHashTable<TKey, TValue> previous, TKey key, TValue value) {
             this.Count = previous.Count + 1;
-            if (previous.Count == previous.Divisor)
-            {
+            if (previous.Count == previous.Divisor) {
                 this.Divisor = previous.Divisor * 2;
                 this.Buckets = new ImmutableHashTree<TKey, TValue>[this.Divisor];
                 InitializeBuckets(0, this.Divisor);
                 this.AddExistingValues(previous);
-            }
-            else
-            {
+            } else {
                 this.Divisor = previous.Divisor;
                 this.Buckets = new ImmutableHashTree<TKey, TValue>[this.Divisor];
                 Array.Copy(previous.Buckets, this.Buckets, previous.Divisor);
@@ -5823,19 +4910,15 @@ namespace Restival.Api.WebApi.LightInject
         /// <summary>
         /// Prevents a default instance of the <see cref="ImmutableHashTable{TKey,TValue}"/> class from being created.
         /// </summary>
-        private ImmutableHashTable()
-        {
+        private ImmutableHashTable() {
             this.Buckets = new ImmutableHashTree<TKey, TValue>[2];
             this.Divisor = 2;
             InitializeBuckets(0, 2);
         }
 
-        private void AddExistingValues(ImmutableHashTable<TKey, TValue> previous)
-        {
-            foreach (ImmutableHashTree<TKey, TValue> bucket in previous.Buckets)
-            {
-                foreach (var keyValue in bucket.InOrder())
-                {
+        private void AddExistingValues(ImmutableHashTable<TKey, TValue> previous) {
+            foreach (ImmutableHashTree<TKey, TValue> bucket in previous.Buckets) {
+                foreach (var keyValue in bucket.InOrder()) {
                     int hashCode = keyValue.Key.GetHashCode();
                     int bucketIndex = hashCode & (this.Divisor - 1);
                     this.Buckets[bucketIndex] = this.Buckets[bucketIndex].Add(keyValue.Key, keyValue.Value);
@@ -5843,12 +4926,8 @@ namespace Restival.Api.WebApi.LightInject
             }
         }
 
-        private void InitializeBuckets(int startIndex, int count)
-        {
-            for (int i = startIndex; i < count; i++)
-            {
-                this.Buckets[i] = ImmutableHashTree<TKey, TValue>.Empty;
-            }
+        private void InitializeBuckets(int startIndex, int count) {
+            for (int i = startIndex; i < count; i++) this.Buckets[i] = ImmutableHashTree<TKey, TValue>.Empty;
         }
     }
 
@@ -5857,8 +4936,7 @@ namespace Restival.Api.WebApi.LightInject
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
-    internal sealed class ImmutableHashTree<TKey, TValue>
-    {
+    internal sealed class ImmutableHashTree<TKey, TValue> {
         /// <summary>
         /// An empty <see cref="ImmutableHashTree{TKey,TValue}"/>.
         /// </summary>
@@ -5915,8 +4993,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="key">The key for this node.</param>
         /// <param name="value">The value for this node.</param>
         /// <param name="hashTree">The <see cref="ImmutableHashTree{TKey,TValue}"/> that contains existing duplicates.</param>
-        public ImmutableHashTree(TKey key, TValue value, ImmutableHashTree<TKey, TValue> hashTree)
-        {
+        public ImmutableHashTree(TKey key, TValue value, ImmutableHashTree<TKey, TValue> hashTree) {
             Duplicates = hashTree.Duplicates.Add(new KeyValue<TKey, TValue>(key, value));
             Key = hashTree.Key;
             Value = hashTree.Value;
@@ -5933,38 +5010,26 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="value">The value for this node.</param>
         /// <param name="left">The left node.</param>
         /// <param name="right">The right node.</param>
-        public ImmutableHashTree(TKey key, TValue value, ImmutableHashTree<TKey, TValue> left, ImmutableHashTree<TKey, TValue> right)
-        {
+        public ImmutableHashTree(TKey key, TValue value, ImmutableHashTree<TKey, TValue> left, ImmutableHashTree<TKey, TValue> right) {
             var balance = left.Height - right.Height;
 
-            if (balance == -2)
-            {
-                if (right.IsLeftHeavy())
-                {
-                    right = RotateRight(right);
-                }
+            if (balance == -2) {
+                if (right.IsLeftHeavy()) right = RotateRight(right);
 
                 // Rotate left
                 Key = right.Key;
                 Value = right.Value;
                 Left = new ImmutableHashTree<TKey, TValue>(key, value, left, right.Left);
                 Right = right.Right;
-            }
-            else if (balance == 2)
-            {
-                if (left.IsRightHeavy())
-                {
-                    left = RotateLeft(left);
-                }
+            } else if (balance == 2) {
+                if (left.IsRightHeavy()) left = RotateLeft(left);
 
                 // Rotate right                    
                 Key = left.Key;
                 Value = left.Value;
                 Right = new ImmutableHashTree<TKey, TValue>(key, value, left.Right, right);
                 Left = left.Left;
-            }
-            else
-            {
+            } else {
                 Key = key;
                 Value = value;
                 Left = left;
@@ -5978,14 +5043,12 @@ namespace Restival.Api.WebApi.LightInject
             HashCode = Key.GetHashCode();
         }
 
-        private ImmutableHashTree()
-        {
+        private ImmutableHashTree() {
             IsEmpty = true;
             Duplicates = ImmutableList<KeyValue<TKey, TValue>>.Empty;
         }
 
-        private static ImmutableHashTree<TKey, TValue> RotateLeft(ImmutableHashTree<TKey, TValue> left)
-        {
+        private static ImmutableHashTree<TKey, TValue> RotateLeft(ImmutableHashTree<TKey, TValue> left) {
             return new ImmutableHashTree<TKey, TValue>(
                 left.Right.Key,
                 left.Right.Value,
@@ -5993,8 +5056,7 @@ namespace Restival.Api.WebApi.LightInject
                 left.Right.Right);
         }
 
-        private static ImmutableHashTree<TKey, TValue> RotateRight(ImmutableHashTree<TKey, TValue> right)
-        {
+        private static ImmutableHashTree<TKey, TValue> RotateRight(ImmutableHashTree<TKey, TValue> right) {
             return new ImmutableHashTree<TKey, TValue>(
                 right.Left.Key,
                 right.Left.Value,
@@ -6002,13 +5064,11 @@ namespace Restival.Api.WebApi.LightInject
                 new ImmutableHashTree<TKey, TValue>(right.Key, right.Value, right.Left.Right, right.Right));
         }
 
-        private bool IsLeftHeavy()
-        {
+        private bool IsLeftHeavy() {
             return Left.Height > Right.Height;
         }
 
-        private bool IsRightHeavy()
-        {
+        private bool IsRightHeavy() {
             return Right.Height > Left.Height;
         }
     }
@@ -6017,16 +5077,14 @@ namespace Restival.Api.WebApi.LightInject
     /// Represents an MSIL instruction to be emitted into a dynamic method.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class Instruction
-    {
+    internal class Instruction {
         /// <summary>
         /// Initializes a new instance of the <see cref="Instruction"/> class.
         /// </summary>
         /// <param name="code">The <see cref="OpCode"/> to be emitted.</param>
         /// <param name="emitAction">The action to be performed against an <see cref="ILGenerator"/>
         /// when this <see cref="Instruction"/> is emitted.</param>
-        public Instruction(OpCode code, Action<ILGenerator> emitAction)
-        {
+        public Instruction(OpCode code, Action<ILGenerator> emitAction) {
             Code = code;
             Emit = emitAction;
         }
@@ -6046,8 +5104,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Returns the string representation of an <see cref="Instruction"/>.
         /// </summary>
         /// <returns>The string representation of an <see cref="Instruction"/>.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return Code.ToString();
         }
     }
@@ -6057,8 +5114,7 @@ namespace Restival.Api.WebApi.LightInject
     /// </summary>
     /// <typeparam name="T">The type of argument used in this instruction.</typeparam>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class Instruction<T> : Instruction
-    {
+    internal class Instruction<T> : Instruction {
         /// <summary>
         /// Initializes a new instance of the <see cref="Instruction{T}"/> class.
         /// </summary>
@@ -6067,8 +5123,7 @@ namespace Restival.Api.WebApi.LightInject
         /// <param name="emitAction">The action to be performed against an <see cref="ILGenerator"/>
         /// when this <see cref="Instruction"/> is emitted.</param>
         public Instruction(OpCode code, T argument, Action<ILGenerator> emitAction)
-            : base(code, emitAction)
-        {
+            : base(code, emitAction) {
             Argument = argument;
         }
 
@@ -6081,8 +5136,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Returns the string representation of an <see cref="Instruction{T}"/>.
         /// </summary>
         /// <returns>The string representation of an <see cref="Instruction{T}"/>.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return base.ToString() + " " + Argument;
         }
     }
@@ -6092,8 +5146,7 @@ namespace Restival.Api.WebApi.LightInject
     /// about the <see cref="Type"/> currently on the stack.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class Emitter : IEmitter
-    {
+    internal class Emitter : IEmitter {
         private readonly ILGenerator generator;
 
         private readonly Type[] parameterTypes;
@@ -6109,162 +5162,69 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="generator">The <see cref="ILGenerator"/> used to emit MSIL instructions.</param>
         /// <param name="parameterTypes">The list of parameter types used by the current dynamic method.</param>
-        public Emitter(ILGenerator generator, Type[] parameterTypes)
-        {
-            this.generator = generator;            
+        public Emitter(ILGenerator generator, Type[] parameterTypes) {
+            this.generator = generator;
             this.parameterTypes = parameterTypes;
         }
 
         /// <summary>
         /// Gets the <see cref="Type"/> currently on the stack.
         /// </summary>
-        public Type StackType
-        {
-            get
-            {
-                return stack.Count == 0 ? null : stack.Peek();
-            }
+        public Type StackType {
+            get { return stack.Count == 0 ? null : stack.Peek(); }
         }
 
         /// <summary>
         /// Gets a list containing each <see cref="Instruction"/> to be emitted into the dynamic method.
         /// </summary>
-        public List<Instruction> Instructions
-        {
-            get
-            {
-                return instructions;
-            }            
+        public List<Instruction> Instructions {
+            get { return instructions; }
         }
 
         /// <summary>
         /// Puts the specified instruction onto the stream of instructions.
         /// </summary>
         /// <param name="code">The Microsoft Intermediate Language (MSIL) instruction to be put onto the stream.</param>
-        public void Emit(OpCode code)
-        {
-            if (code == OpCodes.Ldarg_0)
-            {
-                stack.Push(parameterTypes[0]);
-            }            
-            else if (code == OpCodes.Ldarg_1)
-            {
-                stack.Push(parameterTypes[1]);
-            }
-            else if (code == OpCodes.Ldarg_2)
-            {
-                stack.Push(parameterTypes[2]);
-            }
-            else if (code == OpCodes.Ldarg_3)
-            {
-                stack.Push(parameterTypes[3]);
-            }
-            else if (code == OpCodes.Ldloc_0)
-            {
-                stack.Push(variables[0].LocalType);
-            }
-            else if (code == OpCodes.Ldloc_1)
-            {
-                stack.Push(variables[1].LocalType);
-            }
-            else if (code == OpCodes.Ldloc_2)
-            {
-                stack.Push(variables[2].LocalType);
-            }
-            else if (code == OpCodes.Ldloc_3)
-            {
-                stack.Push(variables[3].LocalType);
-            }
-            else if (code == OpCodes.Stloc_0)
-            {
+        public void Emit(OpCode code) {
+            if (code == OpCodes.Ldarg_0) stack.Push(parameterTypes[0]);
+            else if (code == OpCodes.Ldarg_1) stack.Push(parameterTypes[1]);
+            else if (code == OpCodes.Ldarg_2) stack.Push(parameterTypes[2]);
+            else if (code == OpCodes.Ldarg_3) stack.Push(parameterTypes[3]);
+            else if (code == OpCodes.Ldloc_0) stack.Push(variables[0].LocalType);
+            else if (code == OpCodes.Ldloc_1) stack.Push(variables[1].LocalType);
+            else if (code == OpCodes.Ldloc_2) stack.Push(variables[2].LocalType);
+            else if (code == OpCodes.Ldloc_3) stack.Push(variables[3].LocalType);
+            else if (code == OpCodes.Stloc_0) stack.Pop();
+            else if (code == OpCodes.Stloc_1) stack.Pop();
+            else if (code == OpCodes.Stloc_2) stack.Pop();
+            else if (code == OpCodes.Stloc_3) stack.Pop();
+            else if (code == OpCodes.Ldelem_Ref) {
                 stack.Pop();
-            }
-            else if (code == OpCodes.Stloc_1)
-            {
-                stack.Pop();
-            }
-            else if (code == OpCodes.Stloc_2)
-            {
-                stack.Pop();
-            }
-            else if (code == OpCodes.Stloc_3)
-            {
-                stack.Pop();
-            }
-            else if (code == OpCodes.Ldelem_Ref)
-            {
-                stack.Pop();                
                 Type arrayType = stack.Pop();
                 stack.Push(arrayType.GetElementType());
-            }
-            else if (code == OpCodes.Ldlen)
-            {
+            } else if (code == OpCodes.Ldlen) {
                 stack.Pop();
                 stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Conv_I4)
-            {
+            } else if (code == OpCodes.Conv_I4) {
                 stack.Pop();
                 stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_0)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_1)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_2)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_3)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_4)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_5)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_6)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_7)
-            {
-                stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ldc_I4_8)
-            {
-                stack.Push(typeof(int));
-            }            
-            else if (code == OpCodes.Sub)
-            {
+            } else if (code == OpCodes.Ldc_I4_0) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_1) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_2) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_3) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_4) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_5) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_6) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_7) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldc_I4_8) stack.Push(typeof(int));
+            else if (code == OpCodes.Sub) {
                 stack.Pop();
                 stack.Pop();
                 stack.Push(typeof(int));
-            }
-            else if (code == OpCodes.Ret)
-            {
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+            } else if (code == OpCodes.Ret) { } else throw new NotSupportedException(code.ToString());
 
             instructions.Add(new Instruction(code, il => il.Emit(code)));
-            if (code == OpCodes.Ret)
-            {
-                foreach (var instruction in instructions)
-                {
-                    instruction.Emit(generator);
-                }
-            }
+            if (code == OpCodes.Ret) foreach (var instruction in instructions) instruction.Emit(generator);
         }
 
         /// <summary>
@@ -6272,49 +5232,14 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be put onto the stream.</param>
         /// <param name="arg">The numerical argument pushed onto the stream immediately after the instruction.</param>
-        public void Emit(OpCode code, int arg)
-        {
-            if (code == OpCodes.Ldc_I4)
-            {
-                stack.Push(typeof(int));                
-            }
-            else if (code == OpCodes.Ldarg)
-            {
-                stack.Push(parameterTypes[arg]);
-            }
-            else if (code == OpCodes.Ldloc)
-            {
-                stack.Push(variables[arg].LocalType);
-            }
-            else if (code == OpCodes.Stloc)
-            {
-                stack.Pop();
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+        public void Emit(OpCode code, int arg) {
+            if (code == OpCodes.Ldc_I4) stack.Push(typeof(int));
+            else if (code == OpCodes.Ldarg) stack.Push(parameterTypes[arg]);
+            else if (code == OpCodes.Ldloc) stack.Push(variables[arg].LocalType);
+            else if (code == OpCodes.Stloc) stack.Pop();
+            else throw new NotSupportedException(code.ToString());
 
-            instructions.Add(new Instruction<int>(code, arg, il => il.Emit(code, arg)));            
-        }
-       
-        /// <summary>
-        /// Puts the specified instruction and numerical argument onto the Microsoft intermediate language (MSIL) stream of instructions.
-        /// </summary>
-        /// <param name="code">The MSIL instruction to be put onto the stream.</param>
-        /// <param name="arg">The numerical argument pushed onto the stream immediately after the instruction.</param>
-        public void Emit(OpCode code, sbyte arg)
-        {
-            if (code == OpCodes.Ldc_I4_S)
-            {
-                stack.Push(typeof(sbyte));    
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
-
-            instructions.Add(new Instruction<sbyte>(code, arg, il => il.Emit(code, arg)));            
+            instructions.Add(new Instruction<int>(code, arg, il => il.Emit(code, arg)));
         }
 
         /// <summary>
@@ -6322,26 +5247,25 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be put onto the stream.</param>
         /// <param name="arg">The numerical argument pushed onto the stream immediately after the instruction.</param>
-        public void Emit(OpCode code, byte arg)
-        {
-            if (code == OpCodes.Ldloc_S)
-            {
-                stack.Push(variables[arg].LocalType);
-            }
-            else if (code == OpCodes.Ldarg_S)
-            {
-                stack.Push(parameterTypes[arg]);
-            }
-            else if (code == OpCodes.Stloc_S)
-            {
-                stack.Pop();
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+        public void Emit(OpCode code, sbyte arg) {
+            if (code == OpCodes.Ldc_I4_S) stack.Push(typeof(sbyte));
+            else throw new NotSupportedException(code.ToString());
 
-            instructions.Add(new Instruction<byte>(code, arg, il => il.Emit(code, arg)));            
+            instructions.Add(new Instruction<sbyte>(code, arg, il => il.Emit(code, arg)));
+        }
+
+        /// <summary>
+        /// Puts the specified instruction and numerical argument onto the Microsoft intermediate language (MSIL) stream of instructions.
+        /// </summary>
+        /// <param name="code">The MSIL instruction to be put onto the stream.</param>
+        /// <param name="arg">The numerical argument pushed onto the stream immediately after the instruction.</param>
+        public void Emit(OpCode code, byte arg) {
+            if (code == OpCodes.Ldloc_S) stack.Push(variables[arg].LocalType);
+            else if (code == OpCodes.Ldarg_S) stack.Push(parameterTypes[arg]);
+            else if (code == OpCodes.Stloc_S) stack.Pop();
+            else throw new NotSupportedException(code.ToString());
+
+            instructions.Add(new Instruction<byte>(code, arg, il => il.Emit(code, arg)));
         }
 
         /// <summary>
@@ -6349,40 +5273,26 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be put onto the stream.</param>
         /// <param name="type">A <see cref="Type"/> representing the type metadata token.</param>
-        public void Emit(OpCode code, Type type)
-        {
-            if (code == OpCodes.Newarr)
-            {
+        public void Emit(OpCode code, Type type) {
+            if (code == OpCodes.Newarr) {
                 stack.Pop();
-                stack.Push(type.MakeArrayType());                
-            }
-            else if (code == OpCodes.Stelem)
-            {
+                stack.Push(type.MakeArrayType());
+            } else if (code == OpCodes.Stelem) {
                 stack.Pop();
                 stack.Pop();
-                stack.Pop();                
-            }
-            else if (code == OpCodes.Castclass)
-            {
                 stack.Pop();
-                stack.Push(type);                
-            }
-            else if (code == OpCodes.Box)
-            {
+            } else if (code == OpCodes.Castclass) {
                 stack.Pop();
-                stack.Push(typeof(object));                
-            }
-            else if (code == OpCodes.Unbox_Any)
-            {
+                stack.Push(type);
+            } else if (code == OpCodes.Box) {
                 stack.Pop();
-                stack.Push(type);                
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+                stack.Push(typeof(object));
+            } else if (code == OpCodes.Unbox_Any) {
+                stack.Pop();
+                stack.Push(type);
+            } else throw new NotSupportedException(code.ToString());
 
-            instructions.Add(new Instruction<Type>(code, type, il => il.Emit(code, type)));            
+            instructions.Add(new Instruction<Type>(code, type, il => il.Emit(code, type)));
         }
 
         /// <summary>
@@ -6390,24 +5300,15 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be emitted onto the stream.</param>
         /// <param name="constructor">A <see cref="ConstructorInfo"/> representing a constructor.</param>
-        public void Emit(OpCode code, ConstructorInfo constructor)
-        {
-            if (code == OpCodes.Newobj)
-            {
+        public void Emit(OpCode code, ConstructorInfo constructor) {
+            if (code == OpCodes.Newobj) {
                 var parameterCount = constructor.GetParameters().Length;
-                for (int i = 0; i < parameterCount; i++)
-                {
-                    stack.Pop();
-                }
+                for (int i = 0; i < parameterCount; i++) stack.Pop();
 
                 stack.Push(constructor.DeclaringType);
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+            } else throw new NotSupportedException(code.ToString());
 
-            instructions.Add(new Instruction<ConstructorInfo>(code, constructor, il => il.Emit(code, constructor)));            
+            instructions.Add(new Instruction<ConstructorInfo>(code, constructor, il => il.Emit(code, constructor)));
         }
 
         /// <summary>
@@ -6415,22 +5316,12 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be emitted onto the stream.</param>
         /// <param name="localBuilder">A local variable.</param>
-        public void Emit(OpCode code, LocalBuilder localBuilder)
-        {
-            if (code == OpCodes.Stloc)
-            {
-                stack.Pop();
-            }
-            else if (code == OpCodes.Ldloc)
-            {
-                stack.Push(localBuilder.LocalType);
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
-            
-            instructions.Add(new Instruction<LocalBuilder>(code, localBuilder, il => il.Emit(code, localBuilder)));                        
+        public void Emit(OpCode code, LocalBuilder localBuilder) {
+            if (code == OpCodes.Stloc) stack.Pop();
+            else if (code == OpCodes.Ldloc) stack.Push(localBuilder.LocalType);
+            else throw new NotSupportedException(code.ToString());
+
+            instructions.Add(new Instruction<LocalBuilder>(code, localBuilder, il => il.Emit(code, localBuilder)));
         }
 
         /// <summary>
@@ -6438,32 +5329,17 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="code">The MSIL instruction to be emitted onto the stream.</param>
         /// <param name="methodInfo">A <see cref="MethodInfo"/> representing a method.</param>
-        public void Emit(OpCode code, MethodInfo methodInfo)
-        {
-            if (code == OpCodes.Callvirt || code == OpCodes.Call)
-            {
+        public void Emit(OpCode code, MethodInfo methodInfo) {
+            if (code == OpCodes.Callvirt || code == OpCodes.Call) {
                 var parameterCount = methodInfo.GetParameters().Length;
-                for (int i = 0; i < parameterCount; i++)
-                {
-                    stack.Pop();
-                }
+                for (int i = 0; i < parameterCount; i++) stack.Pop();
 
-                if (!methodInfo.IsStatic)
-                {
-                    stack.Pop();
-                }
+                if (!methodInfo.IsStatic) stack.Pop();
 
-                if (methodInfo.ReturnType != typeof(void))
-                {
-                    stack.Push(methodInfo.ReturnType);
-                }
-            }
-            else
-            {
-                throw new NotSupportedException(code.ToString());
-            }
+                if (methodInfo.ReturnType != typeof(void)) stack.Push(methodInfo.ReturnType);
+            } else throw new NotSupportedException(code.ToString());
 
-            instructions.Add(new Instruction<MethodInfo>(code, methodInfo, il => il.Emit(code, methodInfo)));                                   
+            instructions.Add(new Instruction<MethodInfo>(code, methodInfo, il => il.Emit(code, methodInfo)));
         }
 
         /// <summary>
@@ -6471,21 +5347,19 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="type">A <see cref="Type"/> object that represents the type of the local variable.</param>
         /// <returns>The declared local variable.</returns>
-        public LocalBuilder DeclareLocal(Type type)
-        {
+        public LocalBuilder DeclareLocal(Type type) {
             var localBuilder = generator.DeclareLocal(type);
             variables.Add(localBuilder);
             return localBuilder;
         }
     }
-    
+
     /// <summary>
     /// Provides storage per logical thread of execution.
     /// </summary>
     /// <typeparam name="T">The type of the value contained in this <see cref="LogicalThreadStorage{T}"/>.</typeparam>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class LogicalThreadStorage<T>
-    {      
+    internal class LogicalThreadStorage<T> {
         private readonly Func<T> valueFactory;
 
         private readonly string key;
@@ -6496,8 +5370,7 @@ namespace Restival.Api.WebApi.LightInject
         /// Initializes a new instance of the <see cref="LogicalThreadStorage{T}"/> class.
         /// </summary>
         /// <param name="valueFactory">The value factory used to create an instance of <typeparamref name="T"/>.</param>
-        public LogicalThreadStorage(Func<T> valueFactory)
-        {
+        public LogicalThreadStorage(Func<T> valueFactory) {
             this.valueFactory = valueFactory;
             key = Guid.NewGuid().ToString();
         }
@@ -6508,21 +5381,14 @@ namespace Restival.Api.WebApi.LightInject
         /// <value>
         /// The value for the current logical thread of execution.
         /// </value>
-        public T Value
-        {
-            get
-            {
+        public T Value {
+            get {
                 var holder = (LogicalThreadValue)CallContext.LogicalGetData(key);
-                if (holder != null)
-                {
-                    return holder.Value;
-                }
+                if (holder != null) return holder.Value;
 
-                lock (lockObject)
-                {
+                lock (lockObject) {
                     holder = (LogicalThreadValue)CallContext.LogicalGetData(key);
-                    if (holder == null)
-                    {
+                    if (holder == null) {
                         holder = new LogicalThreadValue { Value = valueFactory() };
                         CallContext.LogicalSetData(key, holder);
                     }
@@ -6533,22 +5399,13 @@ namespace Restival.Api.WebApi.LightInject
         }
 
         [Serializable]
-        private class LogicalThreadValue : MarshalByRefObject
-        {
-            [NonSerialized]
-            private T value;
+        private class LogicalThreadValue : MarshalByRefObject {
+            [NonSerialized] private T value;
 
-            public T Value
-            {
-                get
-                {
-                    return value;
-                }
+            public T Value {
+                get { return value; }
 
-                set
-                {
-                    this.value = value;
-                }
+                set { this.value = value; }
             }
         }
     }

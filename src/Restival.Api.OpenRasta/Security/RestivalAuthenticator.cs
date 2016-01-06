@@ -18,7 +18,9 @@ namespace Restival.Api.OpenRasta.Security {
             return (new AuthenticationResult.Failed());
         }
 
-        public string Realm { get { return ("Restival.OpenRasta"); } }
+        public string Realm {
+            get { return ("Restival.OpenRasta"); }
+        }
     }
 }
 

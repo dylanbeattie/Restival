@@ -9,7 +9,6 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 
 namespace Restival.Api.WebApi.Security {
-
     public class RequireHttpBasicAuthorizationAttribute : AuthorizeAttribute {
         private readonly string realm;
 

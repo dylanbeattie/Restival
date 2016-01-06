@@ -25,6 +25,7 @@
     http://seesharper.github.io/LightInject/
     http://twitter.com/bernhardrichter    
 ******************************************************************************/
+
 [assembly: System.Web.PreApplicationStartMethod(typeof(Restival.Api.WebApi.LightInject.Web.LightInjectHttpModuleInitializer), "Initialize")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "No inheritance")]
@@ -33,31 +34,27 @@
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1633:FileMustHaveHeader", Justification = "Custom header.")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "All public members are documented.")]
 
-namespace Restival.Api.WebApi.LightInject
-{
+namespace Restival.Api.WebApi.LightInject {
     using Web;
-    
+
     /// <summary>
     /// Extends the <see cref="IServiceContainer"/> interface with a method
     /// to enable services that are scoped per web request.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class WebContainerExtensions
-    {
+    internal static class WebContainerExtensions {
         /// <summary>
         /// Ensures that services registered with the <see cref="PerScopeLifetime"/> is properly 
         /// disposed when the web request ends.
         /// </summary>
         /// <param name="serviceContainer">The target <see cref="IServiceContainer"/>.</param>
-        public static void EnablePerWebRequestScope(this ServiceContainer serviceContainer)
-        {            
+        public static void EnablePerWebRequestScope(this ServiceContainer serviceContainer) {
             serviceContainer.ScopeManagerProvider = new PerWebRequestScopeManagerProvider();
-        }      
+        }
     }
 }
 
-namespace Restival.Api.WebApi.LightInject.Web
-{
+namespace Restival.Api.WebApi.LightInject.Web {
     using System;
     using System.Web;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -65,20 +62,17 @@ namespace Restival.Api.WebApi.LightInject.Web
     /// <summary>
     /// Registers the <see cref="LightInjectHttpModule"/> with the current <see cref="HttpApplication"/>.
     /// </summary>
-    public static class LightInjectHttpModuleInitializer
-    {
+    public static class LightInjectHttpModuleInitializer {
         private static bool isInitialized;
 
         /// <summary>
         /// Executed before the <see cref="HttpApplication"/> is started and registers
         /// the <see cref="LightInjectHttpModule"/> with the current <see cref="HttpApplication"/>.
         /// </summary>
-        public static void Initialize()
-        {
-            if (!isInitialized)
-            {
+        public static void Initialize() {
+            if (!isInitialized) {
                 isInitialized = true;
-                DynamicModuleUtility.RegisterModule(typeof(LightInjectHttpModule));                
+                DynamicModuleUtility.RegisterModule(typeof(LightInjectHttpModule));
             }
         }
     }
@@ -88,14 +82,12 @@ namespace Restival.Api.WebApi.LightInject.Web
     /// with the <see cref="PerScopeLifetime"/> lifetime is scoped per web request.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    public class LightInjectHttpModule : IHttpModule
-    {                      
+    public class LightInjectHttpModule : IHttpModule {
         /// <summary>
         /// Initializes a module and prepares it to handle requests.
         /// </summary>
         /// <param name="context">An <see cref="HttpApplication"/> that provides access to the methods, properties, and events common to all application objects within an ASP.NET application </param>
-        public void Init(HttpApplication context)
-        {
+        public void Init(HttpApplication context) {
             context.BeginRequest += BeginRequest;
             context.EndRequest += EndRequest;
         }
@@ -103,37 +95,24 @@ namespace Restival.Api.WebApi.LightInject.Web
         /// <summary>
         /// Disposes of the resources (other than memory) used by the module that implements <see cref="T:System.Web.IHttpModule"/>.
         /// </summary>
-        public void Dispose()
-        {            
-        }
-       
-        private static void EndRequest(object sender, EventArgs eventArgs)
-        {
+        public void Dispose() { }
+
+        private static void EndRequest(object sender, EventArgs eventArgs) {
             var application = sender as HttpApplication;
-            if (application == null)
-            {
-                return;
-            }
+            if (application == null) return;
 
             var scopeManager = (ScopeManager)application.Context.Items["ScopeManager"];
-            if (scopeManager != null)
-            {
-                scopeManager.CurrentScope.Dispose();
-            }
+            if (scopeManager != null) scopeManager.CurrentScope.Dispose();
         }
 
-        private static void BeginRequest(object sender, EventArgs eventArgs)
-        {
+        private static void BeginRequest(object sender, EventArgs eventArgs) {
             var application = sender as HttpApplication;
-            if (application == null)
-            {
-                return;
-            }
+            if (application == null) return;
 
             var scopeManager = new ScopeManager();
             scopeManager.BeginScope();
             application.Context.Items["ScopeManager"] = scopeManager;
-        }         
+        }
     }
 
     /// <summary>
@@ -141,19 +120,14 @@ namespace Restival.Api.WebApi.LightInject.Web
     /// used by the current <see cref="HttpRequest"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class PerWebRequestScopeManagerProvider : IScopeManagerProvider
-    {
+    internal class PerWebRequestScopeManagerProvider : IScopeManagerProvider {
         /// <summary>
         /// Returns the <see cref="ScopeManager"/> that is responsible for managing scopes.
         /// </summary>
         /// <returns>The <see cref="ScopeManager"/> that is responsible for managing scopes.</returns>
-        public ScopeManager GetScopeManager()
-        {
+        public ScopeManager GetScopeManager() {
             var scopeManager = (ScopeManager)HttpContext.Current.Items["ScopeManager"];
-            if (scopeManager == null)
-            {
-                throw new InvalidOperationException("Unable to locate a scope manager for the current HttpRequest. Ensure that the LightInjectHttpModule has been added.");
-            }
+            if (scopeManager == null) throw new InvalidOperationException("Unable to locate a scope manager for the current HttpRequest. Ensure that the LightInjectHttpModule has been added.");
 
             return scopeManager;
         }

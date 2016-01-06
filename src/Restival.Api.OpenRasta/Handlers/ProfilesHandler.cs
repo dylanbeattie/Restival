@@ -21,7 +21,6 @@ namespace Restival.Api.OpenRasta.Handlers {
             var userRecord = db.FindUserByUsername(context.User.Identity.Name);
             if (userRecord.Id == id) return new ProfilesResponse(userRecord);
             return new OperationResult.Forbidden() { Description = Messages.YouDoNotHavePermissionToViewThoseProfiles };
-
         }
     }
 }

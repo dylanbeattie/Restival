@@ -30,7 +30,6 @@ namespace Restival.Api.ServiceStack {
                     HtmlRedirect = null
                 };
                 Plugins.Add(auth);
-
             }
         }
     }

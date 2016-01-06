@@ -14,7 +14,6 @@ using System.Net;
 
 namespace Restival.ApiTests {
     public abstract class WhoAmIApiTestsBase<TApi> : ApiTestBase<TApi> where TApi : IApiUnderTest, new() {
-
         private IRestResponse<T> GetResponse<T>(string username, string password, string resource) where T : new() {
             var client = new RestClient(BaseUri);
             var request = new RestRequest(resource ?? "whoami");

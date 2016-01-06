@@ -17,7 +17,6 @@ namespace Restival.Api.OpenRasta {
     public class Configuration : IConfigurationSource {
         public void Configure() {
             using (OpenRastaConfiguration.Manual) {
-
                 ResourceSpace.Uses.CustomDependency<IDataStore, FakeDataStore>(DependencyLifetime.Singleton);
 
                 // In this implementation, we're using the 'deprecated' OpenRasta authentication pipeline - it's 

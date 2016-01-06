@@ -25,6 +25,7 @@
     http://www.lightinject.net/
     http://twitter.com/bernhardrichter    
 ******************************************************************************/
+
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "No inheritance")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Single source file deployment.")]
@@ -32,8 +33,7 @@
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1633:FileMustHaveHeader", Justification = "Custom header.")]
 [module: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "All public members are documented.")]
 
-namespace Restival.Api.WebApi.LightInject
-{
+namespace Restival.Api.WebApi.LightInject {
     using System.Linq;
     using System.Reflection;
     using System.Web.Http;
@@ -46,15 +46,13 @@ namespace Restival.Api.WebApi.LightInject
     /// enables dependency injection in a Web API application.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal static class WebApiContainerExtensions
-    {
+    internal static class WebApiContainerExtensions {
         /// <summary>
         /// Enables dependency injection in a Web API application.
         /// </summary>
         /// <param name="serviceContainer">The target <see cref="IServiceContainer"/>.</param>
         /// <param name="httpConfiguration">The <see cref="HttpConfiguration"/> that represents the configuration of this Web API application.</param>
-        public static void EnableWebApi(this IServiceContainer serviceContainer, HttpConfiguration httpConfiguration)
-        {
+        public static void EnableWebApi(this IServiceContainer serviceContainer, HttpConfiguration httpConfiguration) {
             httpConfiguration.DependencyResolver = new LightInjectWebApiDependencyResolver(serviceContainer);
             var provider = httpConfiguration.Services.GetFilterProviders();
             httpConfiguration.Services.RemoveAll(typeof(IFilterProvider), o => true);
@@ -66,15 +64,10 @@ namespace Restival.Api.WebApi.LightInject
         /// </summary>
         /// <param name="serviceRegistry">The target <see cref="IServiceRegistry"/>.</param>
         /// <param name="assemblies">A list of assemblies from which to register <see cref="ApiController"/> implementations.</param>
-        public static void RegisterApiControllers(this IServiceRegistry serviceRegistry, params Assembly[] assemblies)
-        {
-            foreach (var assembly in assemblies)
-            {
+        public static void RegisterApiControllers(this IServiceRegistry serviceRegistry, params Assembly[] assemblies) {
+            foreach (var assembly in assemblies) {
                 var controllerTypes = assembly.GetTypes().Where(t => !t.IsAbstract && typeof(IHttpController).IsAssignableFrom(t));
-                foreach (var controllerType in controllerTypes)
-                {
-                    serviceRegistry.Register(controllerType, new PerRequestLifeTime());
-                }
+                foreach (var controllerType in controllerTypes) serviceRegistry.Register(controllerType, new PerRequestLifeTime());
             }
         }
 
@@ -82,16 +75,14 @@ namespace Restival.Api.WebApi.LightInject
         /// Registers all <see cref="ApiController"/> implementations found in this assembly.
         /// </summary>
         /// <param name="serviceRegistry">The target <see cref="IServiceRegistry"/>.</param>
-        public static void RegisterApiControllers(this IServiceRegistry serviceRegistry)
-        {
-            RegisterApiControllers(serviceRegistry, Assembly.GetCallingAssembly());            
+        public static void RegisterApiControllers(this IServiceRegistry serviceRegistry) {
+            RegisterApiControllers(serviceRegistry, Assembly.GetCallingAssembly());
         }
     }
 }
 
-namespace Restival.Api.WebApi.LightInject.WebApi
-{
-    using System;    
+namespace Restival.Api.WebApi.LightInject.WebApi {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
@@ -105,25 +96,22 @@ namespace Restival.Api.WebApi.LightInject.WebApi
     /// resolved through the service container.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class LightInjectWebApiDependencyResolver : IDependencyResolver
-    {
-        private readonly IServiceContainer serviceContainer;        
+    internal class LightInjectWebApiDependencyResolver : IDependencyResolver {
+        private readonly IServiceContainer serviceContainer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LightInjectWebApiDependencyResolver"/> class.
         /// </summary>
         /// <param name="serviceContainer">The <see cref="IServiceContainer"/> instance to 
         /// be used for resolving service instances.</param>
-        internal LightInjectWebApiDependencyResolver(IServiceContainer serviceContainer)
-        {
+        internal LightInjectWebApiDependencyResolver(IServiceContainer serviceContainer) {
             this.serviceContainer = serviceContainer;
         }
 
         /// <summary>
         /// Disposes the underlying <see cref="IServiceContainer"/>.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             serviceContainer.Dispose();
         }
 
@@ -132,8 +120,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// </summary>
         /// <param name="serviceType">The type of the requested service.</param>
         /// <returns>The requested service instance if available, otherwise null.</returns>                
-        public object GetService(Type serviceType)
-        {
+        public object GetService(Type serviceType) {
             return serviceContainer.TryGetInstance(serviceType);
         }
 
@@ -142,8 +129,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// </summary>
         /// <param name="serviceType">The type of services to resolve.</param>
         /// <returns>A list that contains all implementations of the <paramref name="serviceType"/>.</returns>                
-        public IEnumerable<object> GetServices(Type serviceType)
-        {
+        public IEnumerable<object> GetServices(Type serviceType) {
             return serviceContainer.GetAllInstances(serviceType);
         }
 
@@ -154,8 +140,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// <returns>
         /// A new <see cref="IDependencyScope"/>.
         /// </returns>
-        public IDependencyScope BeginScope()
-        {
+        public IDependencyScope BeginScope() {
             return new LightInjectWebApiDependencyScope(serviceContainer, serviceContainer.BeginScope());
         }
     }
@@ -164,8 +149,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
     /// An <see cref="IDependencyScope"/> implementation that wraps a <see cref="Scope"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class LightInjectWebApiDependencyScope : IDependencyScope
-    {
+    internal class LightInjectWebApiDependencyScope : IDependencyScope {
         private readonly IServiceContainer serviceContainer;
         private readonly Scope scope;
 
@@ -174,8 +158,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// </summary>
         /// <param name="serviceContainer">The target <see cref="IServiceContainer"/>.</param>
         /// <param name="scope">The wrapped <see cref="Scope"/>.</param>
-        public LightInjectWebApiDependencyScope(IServiceContainer serviceContainer, Scope scope)
-        {
+        public LightInjectWebApiDependencyScope(IServiceContainer serviceContainer, Scope scope) {
             this.serviceContainer = serviceContainer;
             this.scope = scope;
         }
@@ -185,8 +168,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// </summary>
         /// <param name="serviceType">The type of the requested service.</param>
         /// <returns>The requested service instance if available, otherwise null.</returns>                
-        public object GetService(Type serviceType)
-        {
+        public object GetService(Type serviceType) {
             return serviceContainer.TryGetInstance(serviceType);
         }
 
@@ -195,16 +177,14 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// </summary>
         /// <param name="serviceType">The type of services to resolve.</param>
         /// <returns>A list that contains all implementations of the <paramref name="serviceType"/>.</returns>                
-        public IEnumerable<object> GetServices(Type serviceType)
-        {
+        public IEnumerable<object> GetServices(Type serviceType) {
             return serviceContainer.GetAllInstances(serviceType);
         }
 
         /// <summary>
         /// Disposes the <see cref="Scope"/>.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             scope.Dispose();
         }
     }
@@ -214,8 +194,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
     /// to inject property dependencies into <see cref="IFilter"/> instances.
     /// </summary>    
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    internal class LightInjectWebApiFilterProvider : IFilterProvider
-    {
+    internal class LightInjectWebApiFilterProvider : IFilterProvider {
         private readonly IServiceContainer serviceContainer;
         private readonly IEnumerable<IFilterProvider> filterProviders;
 
@@ -225,8 +204,7 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// <param name="serviceContainer">The <see cref="IServiceContainer"/> instance 
         /// used to inject property dependencies.</param>
         /// <param name="filterProviders">The list of existing filter providers.</param>
-        public LightInjectWebApiFilterProvider(IServiceContainer serviceContainer, IEnumerable<IFilterProvider> filterProviders)
-        {
+        public LightInjectWebApiFilterProvider(IServiceContainer serviceContainer, IEnumerable<IFilterProvider> filterProviders) {
             this.serviceContainer = serviceContainer;
             this.filterProviders = filterProviders;
         }
@@ -238,14 +216,10 @@ namespace Restival.Api.WebApi.LightInject.WebApi
         /// An enumeration of filters.
         /// </returns>
         /// <param name="configuration">The HTTP configuration.</param><param name="actionDescriptor">The action descriptor.</param>
-        public IEnumerable<FilterInfo> GetFilters(HttpConfiguration configuration, HttpActionDescriptor actionDescriptor)
-        {                        
+        public IEnumerable<FilterInfo> GetFilters(HttpConfiguration configuration, HttpActionDescriptor actionDescriptor) {
             var filters = filterProviders.SelectMany(p => p.GetFilters(configuration, actionDescriptor)).ToArray();
 
-            foreach (var filterInfo in filters)
-            {
-                serviceContainer.InjectProperties(filterInfo.Instance);
-            }
+            foreach (var filterInfo in filters) serviceContainer.InjectProperties(filterInfo.Instance);
 
             return filters;
         }
