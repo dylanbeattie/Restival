@@ -161,7 +161,7 @@ namespace Restival.ApiTests {
         }
 
         [Test]
-        public void GET_Profiles_Returns_Unauthorized_Including_StatusDescription() {
+        public void GET_Profiles_Returns_Unauthorized_With_Custom_StatusDescription() {
             var ali = FakeDataStore.Users[0];
             var bob = FakeDataStore.Users[1];
             var profiles = GetResponse<ProfilesResponse>(ali.Username, ali.Password, String.Format("/users/{0}/profiles", bob.Id));
