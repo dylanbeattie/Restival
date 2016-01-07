@@ -5,7 +5,6 @@ using Restival.Data.Entities;
 namespace Restival.Api.Common.Resources {
     [DataContract]
     public class ProfileResponse {
-
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
