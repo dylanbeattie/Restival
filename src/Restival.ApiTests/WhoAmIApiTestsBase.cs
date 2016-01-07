@@ -160,6 +160,7 @@ namespace Restival.ApiTests {
         }
 
         [Test]
+        [Ignore("OpenRasta and WebAPI ")]
         public void GET_Profiles_Returns_Unauthorized_With_Custom_StatusDescription() {
             var ali = FakeDataStore.Users[0];
             var bob = FakeDataStore.Users[1];
@@ -170,10 +171,10 @@ namespace Restival.ApiTests {
         private JObject RetrieveLinkedProfiles(string username, string password) {
             var link = GetLink(username, password, "profiles");
             var profiles = GetResponse<ProfilesResponse>(username, password, (string)link["href"]);
-            Console.WriteLine(String.Empty.PadRight(72, '-'));
-            Console.WriteLine(profiles.Content);
-            Console.WriteLine(String.Empty.PadRight(72, '-'));
             var resource = JObject.Parse(profiles.Content);
+            Console.WriteLine(String.Empty.PadRight(72, '-'));
+            Console.WriteLine(JsonConvert.SerializeObject(resource, Formatting.Indented));
+            Console.WriteLine(String.Empty.PadRight(72, '-'));
             return resource;
         }
     }

@@ -6,7 +6,7 @@ using Restival.Data.Entities;
 namespace Restival.Api.Common.Resources {
     [DataContract]
     public class ProfilesResponse {
-        private IList<ProfileResponse> profiles = new List<ProfileResponse>();
+        private readonly IList<ProfileResponse> profiles = new List<ProfileResponse>();
 
         public IList<ProfileResponse> Profiles {
             get { return (profiles); }
@@ -15,7 +15,7 @@ namespace Restival.Api.Common.Resources {
         public ProfilesResponse() { }
 
         public ProfilesResponse(User user) {
-            profiles = user.Profiles.Select(p => new ProfileResponse() { Name = p.Name, User = user }).ToList();
+            profiles = user.Profiles.Select(p => new ProfileResponse() { Name = p.Name }).ToList();
         }
 
         [DataMember(Name = "links")]
